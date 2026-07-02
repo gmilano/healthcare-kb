@@ -1,0 +1,13 @@
+{
+  "topics": ["healthcare", "medical-ai", "clinical-nlp", "health-informatics", "bioinformatics", "digital-health"],
+  "agentKeywords": "AI healthcare medical clinical NLP agent open source",
+  "repoKeywords": "medical imaging clinical NLP EHR health AI open source",
+  "verticalKeywords": "electronic health records EHR hospital management open source",
+  "minStars": 150,
+  "licenses": ["MIT", "Apache-2.0", "BSD-2-Clause"],
+  "keywords": {
+    "agents": ["clinical NLP", "medical imaging AI", "patient triage", "drug interaction"],
+    "repos": ["OpenMRS", "GNU Health", "medspaCy", "BioBERT", "MONAI"],
+    "verticals": ["OpenMRS", "GNU Health", "OpenEMR", "Bahmni"]
+  }
+}
