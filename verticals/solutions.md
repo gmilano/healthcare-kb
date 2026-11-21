@@ -1,17 +1,69 @@
+---
+industry: healthcare
+region: Global
+updated: 2026-11-21
+---
+
 # 🏭 Verticales de partida — Healthcare
 
-> Plataformas verticales existentes customizables con AI.
-> Modelo: partir de algo funcional, añadir capa agentica arriba.
+> Plataformas verticales reales y en producción, customizables con una capa agéntica arriba.
+> Modelo: partir de algo que ya funciona clínicamente, no construir el EMR de cero.
+> Licencia verificada por bytes. Última verificación: 2026-11-21.
+>
+> Este archivo **estaba vacío** en el remoto (`| — | — | — | — | Por completar |`). Primer contenido real.
 
 ## Plataformas recomendadas
 
-| Plataforma | Licencia | URL | Stack | Caso de uso |
-|------------|----------|-----|-------|-------------|
-| — | — | — | — | Por completar |
+| Plataforma | Licencia | URL | Stack | Caso de uso | Región |
+|------------|----------|-----|-------|-------------|--------|
+| OpenEMR | GPL-3.0 | [openemr/openemr](https://github.com/openemr/openemr) | PHP + MySQL | EMR completo **certificado ONC** con gestión de consulta y facturación; 5614★. El más completo funcionalmente | Global |
+| OpenMRS | MPL-2.0 + Healthcare Disclaimer | [openmrs/openmrs-core](https://github.com/openmrs/openmrs-core) | Java + React | Plataforma EMR modular pensada para **construir encima**, no para usar tal cual; base de despliegues nacionales | Global |
+| Medplum | Apache-2.0 | [medplum/medplum](https://github.com/medplum/medplum) | TypeScript | Backend FHIR-native con auth, bots y subscripciones; **la licencia más permisiva del grupo** | Global |
+| Mirth Connect | MPL-2.0 | [nextgenhealthcare/connect](https://github.com/nextgenhealthcare/connect) | Java | Motor de integración HL7v2/FHIR/X12; el bus de mensajería hospitalario de facto; 1220★ | Global |
+| dcm4chee Archive 5 | MPL-1.1 | [dcm4che/dcm4chee-arc-light](https://github.com/dcm4che/dcm4chee-arc-light) | Java + WildFly | Archivo DICOM / PACS de grado producción; 508★ | Global |
+| Bahmni | MPL-2.0 | [bahmni/bahmni-core](https://github.com/bahmni/bahmni-core) | Java + OpenMRS + Odoo + dcm4chee | Distribución hospitalaria completa (EMR + ERP + PACS) para entornos de recursos limitados | Global |
+| OpenELIS Global 2 | MPL-2.0 | [I-TECH-UW/OpenELIS-Global-2](https://github.com/I-TECH-UW/OpenELIS-Global-2) | Java + React | LIS (sistema de información de laboratorio) usado en programas de salud pública | Global |
+| CARE | MIT | [ohcnetwork/care](https://github.com/ohcnetwork/care) | Python/Django | Gestión de capacidad hospitalaria y teleconsulta; **Digital Public Good**, nacido en India; 426★ | APAC |
+| OHDSI ATLAS | Apache-2.0 | [OHDSI/Atlas](https://github.com/OHDSI/Atlas) | Java + JS | Analítica observacional y definición de cohortes sobre OMOP | Global |
+| openIMIS | AGPL-3.0 | [openimis/openimis-be_py](https://github.com/openimis/openimis-be_py) | Python/Django | Gestión de seguros y claims de salud para sistemas públicos; respaldo de cooperación suiza/alemana | Global |
+| open-health-sync | AGPL-3.0 | [soma-intelligence/open-health-sync](https://github.com/soma-intelligence/open-health-sync) | TypeScript | Sincronización de datos de salud entre fuentes; 71★, activo | Global |
+| Frappe/Marley Health | GPL-3.0 (declarada en README) | [frappe/health](https://github.com/frappe/health) | Python/Frappe | HIS sobre el framework Frappe/ERPNext. **Ojo: el proyecto fue renombrado a "Marley Health"** y no hay archivo LICENSE en la raíz | Global |
 
-## Cómo customizar con AI
+### Lectura de licencias para esta tabla
 
-1. Fork del repo base
-2. Añadir endpoint AI (OpenAI / Anthropic / Ollama local)
-3. Wrappear flujos existentes con agentes
-4. UI conversacional sobre el sistema base
+- **Apache-2.0 / MIT (Medplum, CARE, ATLAS)** — se puede vendorizar y entregar al cliente sin fricción.
+- **MPL-2.0 (OpenMRS, Mirth, Bahmni, OpenELIS)** — copyleft *por archivo*. Modificar el núcleo obliga a
+  publicar esos archivos; **construir módulos al lado no contamina**. Es el patrón de OpenMRS por diseño.
+- **GPL-3.0 / AGPL-3.0 (OpenEMR, openIMIS, open-health-sync, Marley)** — AGPL alcanza el uso en red.
+  Para estos, la arquitectura sana es *agente al lado, no fork*: hablar con su API FHIR/REST y dejar
+  la plataforma intacta. Así el entregable del cliente no hereda la obligación.
+- **MPL-1.1 (dcm4chee)** — declarada en el README, **sin archivo LICENSE** en la raíz. Usable como
+  servicio; pedir el fix de una línea upstream antes de vendorizar.
+
+### Correcciones de slug y licencia respecto de ciclos anteriores
+
+| Lo que se registró antes | Medición de este pase |
+|--------------------------|------------------------|
+| `Bahmni (AGPL-3.0)` | El LICENSE de [bahmni/bahmni-core](https://github.com/bahmni/bahmni-core) son 18072 B de **MPL-2.0** + disclaimer sanitario. Los listicles dicen AGPL; el archivo manda |
+| `bahmni/openmrs-module-bahmnicore` | Slug muerto (refs=0). El real es `bahmni/bahmni-core` |
+| `OpenELIS` (sin slug) | El slug real es `I-TECH-UW/OpenELIS-Global-2`; `OpenELIS-Global/OpenELIS-Global-2` tiene refs=0 |
+| `MirthConnect (MPL-2.0)` | **Correcto**, y ahora byte-verificado: el LICENSE abre con *"Copyright (c) NextGen Healthcare. All rights reserved."* seguido del texto completo de MPL 2.0. El encabezado del vendor no cambia la licencia |
+| `LibreHealthIO/lh-ehr` | Existe pero **sin archivo de licencia** y sin sección de licencia en el README; el upstream vivo está en GitLab. Degradado, no recomendado |
+
+## Cómo customizar con AI (concreto, no genérico)
+
+El error de arquitectura más común es forkear el EMR. No hace falta y, con GPL/AGPL, es caro.
+
+1. **Hablar FHIR, no SQL.** OpenEMR, OpenMRS y Medplum exponen FHIR R4. El agente nunca toca la base.
+2. **Poner un servidor MCP delante del FHIR.** [wso2/fhir-mcp-server](https://github.com/wso2/fhir-mcp-server)
+   (Apache-2.0) o [the-momentum/fhir-mcp-server](https://github.com/the-momentum/fhir-mcp-server) (MIT)
+   convierten los recursos FHIR en herramientas tipadas. Esto es lo que evita que el agente invente campos.
+3. **De-identificar antes de salir del perímetro.** [openmed](https://github.com/maziyarpanahi/openmed)
+   (Apache-2.0) corre local: NER clínico + PII de-ID antes de cualquier llamada a un LLM externo.
+4. **Desarrollar contra pacientes sintéticos.** [synthea](https://github.com/synthetichealth/synthea)
+   carga historias completas en el servidor FHIR: se construye y demuestra sin un solo dato real.
+5. **Aprobación humana en todo paso consecuente.** El patrón de
+   [Hospilot](https://github.com/Carer-Healthcare-AI/Hospilot) (MIT) sobre el FHIR de OpenEMR es la
+   referencia: orquestación multi-agente con humano aprobando cada acción con efecto clínico.
+6. **Dejar la traza desde el día uno.** Es requisito regulatorio en al menos tres regiones
+   (ver `intel/market.md`), no una mejora opcional.
