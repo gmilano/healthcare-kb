@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # 🎯 Agentes AI — Healthcare
@@ -67,3 +67,124 @@ y detecta la fabricación**. Ninguna cifra de estrellas tomada de una nota de ro
 
 ---
 *Verificado a mano con `git ls-remote` + sonda de bytes en `raw.githubusercontent.com`. No generado por el pipeline automático.*
+
+---
+
+## Pase 2026-11-22 — la capa de juicio, medida
+
+> Este pase **no reescribe** la tabla de arriba: la valida y añade una capa que no estaba.
+> Validación de las filas heredadas: `synthea` 3472→3477, `medplum` 2807→2812,
+> `mirobody` 1633→1660, `HealthChain` 232→232, `openmed` 5833→5833 (exacto),
+> `MedAgentBench` MIT/352→MIT/353. **Las cifras que el ciclo 5 midió reprodujeron a un día;
+> las que fallaron en su día fueron las que venía arrastrando de listicles.** El método
+> aguanta: medir sale barato, heredar sale caro.
+
+### Hallazgo central: la frontera de la especificación se mueve, y se ve venir
+
+La ley que trajo el pase financiero —*el open source sigue al formato de fichero, no a la
+decisión*— **se confirma en salud y además se refina**. Medido con 15 consultas a
+`search/repositories`, tabuladas abajo. Donde el trabajo es un formato con especificación a
+nivel de bytes, el repo líder es maduro y permisivo. Donde es un juicio clínico, no hay nada
+por encima de ~40 estrellas.
+
+**Pero el límite no es fijo.** Cuando un regulador convierte un juicio en un artefacto
+**computable**, aparece open source permisivo para ese juicio — y aparece **antes** del
+mandato, no después. La autorización previa es el caso de prueba: CMS-0057-F exige una API de
+prior auth para el **1 de enero de 2027**, y las implementaciones de referencia Da Vinci
+(Apache-2.0) ya están publicadas y **se forkean más de lo que se estrellan**.
+
+| Capa | Consulta medida | Resultados | Líder |
+|------|-----------------|-----------|-------|
+| Formato | `x12 edi stars:>=5` | 62 | indice-co/EDI.Net — 491★, MIT |
+| Formato | `edi 837` | 106 | BerryWorksSoftware/edireader — 142★, GPL-3.0 |
+| Formato | `HL7 v2 parser stars:>=50` | 4 | crs4/hl7apy — 284★, MIT |
+| Formato | `snomed stars:>=30` | 22 | IHTSDO/snowstorm — 401★, Apache-2.0 |
+| Formato | `icd10 stars:>=50` | 3 | bryand1/icd10-cm — 97★, MIT |
+| Juicio-ya-especificado | `org:HL7-DaVinci` | 43 | HL7-DaVinci/CRD — 45★/24f, Apache-2.0 |
+| Juicio-ya-especificado | `cds-hooks stars:>=20` | 7 | cds-hooks/docs — 180★/67f, Apache-2.0 |
+| Juicio puro | `claim denial stars:>=3` | 12 | microsoft/RHAIL-Claims-Denial-Navigator — 12★ |
+| Juicio puro | `revenue cycle stars:>=3` | 16 | nada propio del sector por encima de 11★ |
+| Juicio puro | `claims adjudication stars:>=3` | 10 | top del sector 4★ |
+| Juicio puro | `medical necessity` | 78 | **los seis primeros suman 3 estrellas** |
+
+`medical necessity` es el resultado más limpio del pase: 78 repositorios y los seis más
+relevantes tienen 0, 2, 0, 1, 0 y 0 estrellas. Es un campo de repos vacíos. Nadie ha
+publicado un criterio de necesidad médica reutilizable porque no existe uno compartido que
+publicar.
+
+### La capa de juicio ya especificada — Da Vinci y CQL (Apache-2.0, verificada por bytes)
+
+Estos repos tienen pocas estrellas y **muchos forks**: la firma de infraestructura que se
+despliega, no que se comenta. Son invisibles en cualquier listicle y son lo único permisivo
+que existe para autorización previa.
+
+| Nombre | Licencia | Descripción | Stars/Forks | Último push | Región |
+|--------|----------|-------------|-------------|-------------|--------|
+| [cqframework/clinical-reasoning](https://github.com/cqframework/clinical-reasoning) | Apache-2.0 | Motor CQL: el vehículo por el que un juicio clínico se vuelve ejecutable; refs=1067 | 52★/46f | 2026-11 | North America |
+| [HL7-DaVinci/CRD](https://github.com/HL7-DaVinci/CRD) | Apache-2.0 | Coverage Requirements Discovery: descubre en el acto si un servicio necesita autorización | 45★/24f | 2026-07 | North America |
+| [HL7-DaVinci/prior-auth](https://github.com/HL7-DaVinci/prior-auth) | Apache-2.0 | Implementación de referencia de Da Vinci PAS, la API que CMS-0057-F vuelve obligatoria | 38★/24f | 2026-07 | North America |
+| [HL7-DaVinci/dtr](https://github.com/HL7-DaVinci/dtr) | Apache-2.0 | Documentation Templates and Rules: rellena la documentación exigida desde el EHR | 23★/18f | 2026-07 | North America |
+| [AHRQ-CDS/AHRQ-CDS-Connect-CQL-SERVICES](https://github.com/AHRQ-CDS/AHRQ-CDS-Connect-CQL-SERVICES) | Apache-2.0 | Servicio CQL de la agencia federal AHRQ; fuente oficial, no comunitaria | 27★/12f | 2026-05 | North America |
+| [HL7-DaVinci/test-ehr](https://github.com/HL7-DaVinci/test-ehr) | Apache-2.0 | EHR de pruebas para validar un flujo CRD/DTR/PAS; **más forks que estrellas** | 8★/11f | 2025-09 | North America |
+
+### La capa de juicio NO especificada — aceleradores de proveedor, dicho sin adornos
+
+Lo único permisivo que existe aquí son plantillas de proveedor, no plataformas comunitarias.
+Sirven como referencia de arquitectura; **no son una base sobre la que construir un producto**.
+
+| Nombre | Licencia | Descripción | Stars | Último push | Región |
+|--------|----------|-------------|-------|-------------|--------|
+| [microsoft/Prior-Authorization-Multi-Agent-Solution-Accelerator](https://github.com/microsoft/Prior-Authorization-Multi-Agent-Solution-Accelerator) | MIT | Acelerador multi-agente de autorización previa; útil como forma, no como producto | 21 | 2026-08 | North America |
+| [Azure-Samples/autoauth-solution-accelerator](https://github.com/Azure-Samples/autoauth-solution-accelerator) | MIT | Acelerador de autorización automatizada sobre Azure | 20 | 2026-11 | North America |
+| [microsoft/RHAIL-Claims-Denial-Navigator](https://github.com/microsoft/RHAIL-Claims-Denial-Navigator) | MIT | Navegador de denegaciones de siniestros; **refs=3**, es una demo, no una plataforma | 12 | 2026-02 | North America |
+
+### Agentes nuevos verificados este pase
+
+| Nombre | Licencia | Descripción | Stars/Forks | Último push | Región |
+|--------|----------|-------------|-------------|-------------|--------|
+| [genomoncology/biomcp](https://github.com/genomoncology/biomcp) | MIT | Servidor MCP biomédico (ensayos, variantes, literatura); el MCP médico más adoptado tras mirobody | 683 | 2026-11 | North America |
+| [hastimal/gemini-healthcare-agentic-platform](https://github.com/hastimal/gemini-healthcare-agentic-platform) | Apache-2.0 | Búsqueda sanitaria agéntica con fan-out de consultas, *grounding* y cita obligatoria; **39★ y 36 forks** | 39★/36f | 2026-11 | Global |
+| [JuneYaooo/open-medical](https://github.com/JuneYaooo/open-medical) | MIT | Agente de escritorio local-first para médicos: gestión de pacientes y conocimiento acumulado | 21★/7f | 2026-11 | APAC |
+
+### Capa de corrección — añadidos de este pase
+
+No borramos filas erróneas: se corrigen en esta capa explícita, porque suprimirlas invita a
+readoptarlas.
+
+- **`FreedomIntelligence/OpenClaw-Medical-Skills` — 3120★, 424 forks, SIN FICHERO DE LICENCIA
+  y sin push desde 2026-07-21.** Aparece en listas de *trending* de noviembre de 2026. Es el
+  repo médico con más estrellas de los que no se pueden usar. Entra en la categoría «sin
+  licencia» de la puerta P8, junto a MDAgents y EPFLiGHT/Meditron.
+- **`DIGI-UW/OpenELIS-Global-2` es el slug canónico**; `I-TECH-UW/OpenELIS-Global-2` sigue
+  resolviendo (ambos refs=4795, es un renombrado con redirección). MPL-2.0 confirmada por
+  bytes: 16727 B, el canónico exacto.
+- **`stanfordmlgroup/MedAgentBench`: la fila de esta KB ya era correcta** (MIT, 352→353). El
+  error «Apache-2.0, ~780★» vive solo en la nota de rotación heredada del ciclo 4. Se registra
+  aquí para que nadie «corrija» una fila que está bien.
+- **NOASSERTION → permisiva genuina: ahora 8 de 8.** Añaden a la racha `azoner/pyx12`
+  (BSD-3-Clause, 1426 B, cláusula de *endorsement* presente), `imsweb/x12-parser`
+  (BSD-3-Clause, 1577 B), `bryand1/icd10-cm` (MIT clásico, 1052 B) y `crs4/hl7apy`
+  (MIT, 1054 B). El metadato de GitHub sigue siendo un mal testigo; los bytes no.
+
+### Prueba nueva y barata: la razón estrellas/forks
+
+El ciclo 5 dejó una regla: *una métrica que sube mientras `last_push` no se mueve es la firma
+de un número inventado*. Este pase añade una segunda, que viene **gratis en la misma llamada**
+a `search/repositories`:
+
+> **La infraestructura real se forkea; el repo promocionado se estrella y no se forkea.**
+> Una razón estrellas/forks cercana a 1 indica gente que despliega. Por encima de ~50 indica
+> atención sin uso.
+
+Medido: `HL7-DaVinci/test-ehr` 8★/11f (0,7) y `hastimal/gemini-healthcare-agentic-platform`
+39★/36f (1,1) son reales y útiles pese a sus cifras pequeñas. En el otro extremo,
+`muhammadusamakhan911-bit/fabric-mlv-agent-healthcare-starter` tiene 149★ y **1 fork** (149)
+con 16 días de vida, y `xxPcy/PharmaLLM-Agent` 205★ y 5 forks (41) sin push desde el 2 de
+noviembre.
+
+**El corolario incomoda y es el dato del pase:** la consulta de referencia del ciclo 5,
+`healthcare agent created:>2026-08-01 stars:>=50`, sigue devolviendo **total=1** — y ese único
+resultado es precisamente el `fabric-mlv-...-starter` de 149★/1 fork. Es decir: **el único
+punto de crecimiento aparente del sector en casi cuatro meses es un artefacto de la métrica.**
+Cuarta medición consecutiva —tras legal, financial y el propio ciclo 5— de que no hay *boom*
+de agentes verticales permisivos.

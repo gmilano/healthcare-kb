@@ -1,12 +1,52 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # 📈 Repos trending — Healthcare
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
+
+## 2026-11-22 — lo que se forkea, no lo que se estrella
+
+Este pase cambió el criterio de selección de esta lista. Hasta ahora ordenábamos por
+estrellas; a partir de hoy se registra también **la razón estrellas/forks**, porque mide algo
+distinto: las estrellas miden atención y los forks miden despliegue. En salud la diferencia es
+grande, porque la infraestructura sanitaria real tiene pocos usuarios y todos la forkean.
+
+### Repos en movimiento — verificados por `ls-remote` + bytes de licencia
+
+| Nombre | Licencia | Descripción | Stars/Forks | Razón | Push |
+|--------|----------|-------------|-------------|-------|------|
+| [maziyarpanahi/openmed](https://github.com/maziyarpanahi/openmed) | Apache-2.0 | NER clínico y desidentificación de PII; refs=4613. Cifra idéntica a la de ayer: estable, no inflada | 5833★/773f | 7,5 | 2026-11-21 |
+| [openemr/openemr](https://github.com/openemr/openemr) | GPL-3.0 | El EMR open source con más tracción; certificado ONC | 5618 | — | 2026-11 |
+| [synthetichealth/synthea](https://github.com/synthetichealth/synthea) | Apache-2.0 | Generador de historiales sintéticos; 975 forks es la señal de que todo el mundo lo despliega | 3477★/975f | 3,6 | 2026-11-20 |
+| [medplum/medplum](https://github.com/medplum/medplum) | Apache-2.0 | Backend FHIR-native; **1029 forks**, el núcleo abierto más adoptable de esta KB | 2812★/1029f | 2,7 | 2026-11-22 |
+| [thetahealth/mirobody](https://github.com/thetahealth/mirobody) | Apache-2.0 | Registro de salud personal local-first sobre MCP; +27 estrellas en un día, push diario | 1660★/282f | 5,9 | 2026-11-22 |
+| [ZainZhao/HIS](https://github.com/ZainZhao/HIS) | Apache-2.0 | Sistema de información hospitalaria completo (China); sin push desde 2025-02 | 1642 | — | 2025-02 |
+| [cqframework/clinical-reasoning](https://github.com/cqframework/clinical-reasoning) | Apache-2.0 | Motor CQL; **46 forks sobre 52 estrellas**, refs=1067. Invisible y fundamental | 52★/46f | **1,1** | 2026-11 |
+| [hastimal/gemini-healthcare-agentic-platform](https://github.com/hastimal/gemini-healthcare-agentic-platform) | Apache-2.0 | Búsqueda sanitaria agéntica con cita obligatoria; **36 forks sobre 39 estrellas** | 39★/36f | **1,1** | 2026-11-22 |
+| [HL7-DaVinci/test-ehr](https://github.com/HL7-DaVinci/test-ehr) | Apache-2.0 | EHR de pruebas para flujos CRD/DTR/PAS; **más forks que estrellas** | 8★/11f | **0,7** | 2025-09 |
+
+### Lo que la razón descarta
+
+| Nombre | Stars/Forks | Razón | Veredicto |
+|--------|-------------|-------|-----------|
+| [muhammadusamakhan911-bit/fabric-mlv-agent-healthcare-starter](https://github.com/muhammadusamakhan911-bit/fabric-mlv-agent-healthcare-starter) | 149★/1f | **149** | Plantilla de demo de 16 días. Es el **único** repo que pasa el filtro `healthcare agent created:>2026-08-01 stars:>=50`. No usar. |
+| [xxPcy/PharmaLLM-Agent](https://github.com/xxPcy/PharmaLLM-Agent) | 205★/5f | 41 | Sin push desde 2026-11-02. MIT verificada, pero sin señal de uso. |
+| [mdexa-ai/mdexa-ai-native-database](https://github.com/mdexa-ai/mdexa-ai-native-database) | 201★/11f | 18 | 201 estrellas en 7 días y un solo push. Concepto relevante (procedencia y licencia de datasets médicos), respaldo aún inexistente. |
+| [duyunzhoudyz/dyz-med-paper-skills](https://github.com/duyunzhoudyz/dyz-med-paper-skills) | 374★/4f | 94 | 32 *skills* de redacción de artículos médicos, incluida la respuesta a revisores. NOASSERTION. Uso delicado en integridad académica: no recomendable en trabajo de cliente. |
+
+### Verticales descubiertas este pase
+
+| Nombre | Licencia | Bytes | Descripción | Stars | Push | Región |
+|--------|----------|-------|-------------|-------|------|--------|
+| [DIGI-UW/OpenELIS-Global-2](https://github.com/DIGI-UW/OpenELIS-Global-2) | MPL-2.0 | 16727 | LIS de laboratorio; **slug canónico nuevo**, el anterior redirige. refs=4795 | 294 | 2026-11 | Global |
+| [hmislk/hmis](https://github.com/hmislk/hmis) | GPL-3.0 | 35149 | HMIS hospitalario de Sri Lanka, **refs=12900**: uno de los proyectos sanitarios más activos de APAC | 245 | 2026-11 | APAC |
+| [open-dicom/awesome-dicom](https://github.com/open-dicom/awesome-dicom) | CC0-1.0 | 7047 | Índice curado del ecosistema DICOM | 415 | 2026-11 | Global |
+
+---
 
 ## 2026-11-21 — repos fundacionales con actividad real
 

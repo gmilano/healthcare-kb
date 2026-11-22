@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # 📡 Tendencias — Healthcare
@@ -93,3 +93,65 @@ el capital se mueve en producto cerrado, no en commons.
 ingesta automática sin filtro de relevancia (incluía un generador de esquemas MySQL y un bolsa de
 empleo). Se reemplazaron por tendencias con evidencia; el historial de repos trending vive, como
 corresponde, en `repos/trending.md` y `agents/trending.md`.*
+
+---
+
+## Pase 2026-11-22 — las tendencias que sí tienen fecha
+
+### 1. La autorización previa es la primera tarea de juicio clínico con fecha de corte
+
+No es una previsión de proveedor: es una regla. **CMS-0057-F exige una API de autorización
+previa operativa el 1 de enero de 2027** para Medicare Advantage, Medicaid/CHIP FFS estatal, y
+—con periodos de tarificación o años de plan que empiecen a partir de esa fecha— Medicaid/CHIP
+*managed care* y emisores QHP de los *marketplaces*. Partes del paquete **ya están vigentes
+desde 2026**: decisión en 72 horas para solicitudes urgentes, 7 días naturales para las
+ordinarias, y obligación de motivar la denegación.
+
+**El matiz que decide una arquitectura:** la API es obligatoria, **la guía de implementación
+no**. CMS lista Da Vinci CRD/DTR/PAS STU 2.0.1 **y** 2.1.0 como *recomendadas*. Es la regla de
+la segunda pierna del patrón P9 aplicada antes de perder una recomendación: la pierna firme es
+«hay que exponer una API el 2027-01-01»; la pierna blanda es «tiene que ser Da Vinci PAS».
+Se construye con Da Vinci porque es lo que existe en Apache-2.0 y lo que el mercado va a
+interoperar, **no porque la ley lo nombre**.
+
+### 2. El ciclo de ingresos es donde la IA sanitaria tiene el retorno medido más alto
+
+Una encuesta de BVP/Bain citada en prensa sectorial sitúa el retorno de la IA de ciclo de
+ingresos en **4× su coste, el más alto de cualquier función**, y la adopción en autorización
+previa pasando del **32 % al 46 %**. ⚠️ Cifra de encuesta citada por proveedores, sin
+metodología publicada: usarla como dirección, no como número defendible ante un CFO.
+
+Lo que sí es verificable es la forma del mercado: los análisis coinciden en que lo que está en
+producción es autorización previa, codificación de media cadena y analítica de denegaciones,
+**siempre con revisión humana de lo que tiene consecuencia económica**, y que el ciclo de
+ingresos plenamente autónomo es una afirmación de 2027 en adelante.
+
+### 3. La vigilancia agéntica sigue en consulta, no en norma
+
+El documento de debate de la FDA sobre dispositivos con IA generativa es del **18 de agosto de
+2026**, con comentarios cerrados el **19 de octubre de 2026** (expediente FDA-2026-N-7874), y
+pregunta explícitamente por IA agéntica, modelos fundacionales y vigilancia post-mercado.
+Sigue siendo **consulta, no regla**. Un comentario presentado al expediente sostiene que las
+trayectorias conversacionales multi-turno deben evaluarse de forma holística.
+
+Corolario sin cambios respecto al ciclo 5, y reforzado: no hay manual de examinador que
+heredar, así que **quien escriba ahora un marco de control defendible para agentes fija el
+estándar de facto**.
+
+### 4. El contenido se encarece aunque el código sea gratis
+
+Tendencia estructural que esta KB no había registrado: los conjuntos de códigos clínicos
+siguen trayectorias de licencia divergentes. ICD-10-CM es dominio público y los CDC lo
+publican gratis; **CPT sigue con copyright de la AMA y cuotas por usuario**, con una disputa
+viva en 2026 sobre si debería pasar a dominio público —**no resuelta**—; SNOMED CT exige
+Licencia de Afiliado incluso donde es gratuita, y cobra por banda de renta del Banco Mundial
+fuera de sus 54 Miembros. El efecto práctico: **el coste marginal de un despliegue sanitario
+multi-país está cada vez más en el contenido y menos en el software.**
+
+### 5. La métrica de GitHub dejó de informar, y hay un sustituto
+
+Cuarta medición consecutiva: `healthcare agent created:>2026-08-01 stars:>=50` devuelve **1**
+resultado en casi cuatro meses, y ese resultado tiene **1 fork**. `FHIR mcp stars:>=30`
+devuelve 11, igual que ayer. La tendencia real no está en el recuento de estrellas sino en la
+**razón estrellas/forks**: los repos que importan en salud tienen pocas estrellas y casi
+tantos forks como estrellas, porque los despliega poca gente y todos los despliegan de verdad.

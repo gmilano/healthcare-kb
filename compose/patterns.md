@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # 🧩 Patrones de composición — Healthcare
@@ -251,3 +251,120 @@ del AI Act por completo.
 
 En LATAM la pierna firme es además la más fuerte de las cuatro regiones: es la única norma ya
 exigible que pide artefactos concretos. Ahí la propuesta no necesita apoyarse en un calendario.
+
+---
+
+## P10 — Agente de autorización previa sobre la especificación Da Vinci
+
+**Cuándo.** Cliente pagador (o proveedor que negocia con pagadores) en EE. UU. con la fecha de
+CMS-0057-F encima: **API de autorización previa operativa el 1 de enero de 2027**.
+
+**La disciplina de la segunda pierna, aplicada antes de perderla (ver P9).** La API es
+**obligatoria**; la guía Da Vinci PAS es **recomendada** (CMS lista STU 2.0.1 y 2.1.0). Nunca
+decirle al cliente «la ley exige Da Vinci»: lo verifica y se cae la credibilidad del resto de
+la propuesta. Lo correcto, y además más fuerte: *«la ley exige exponer una API en una fecha; la
+única implementación de referencia permisiva que existe es Apache-2.0 y es la que el mercado va
+a interoperar»*.
+
+**Piezas, todas Apache-2.0 verificadas por bytes:**
+
+| Pieza | Repo | Papel |
+|-------|------|-------|
+| Descubrimiento | [HL7-DaVinci/CRD](https://github.com/HL7-DaVinci/CRD) | Decide, en el momento de la orden, si el servicio requiere autorización |
+| Documentación | [HL7-DaVinci/dtr](https://github.com/HL7-DaVinci/dtr) | Rellena desde el EHR la documentación que el pagador exige |
+| Envío | [HL7-DaVinci/prior-auth](https://github.com/HL7-DaVinci/prior-auth) | Implementación de referencia de PAS |
+| Reglas | [cqframework/clinical-reasoning](https://github.com/cqframework/clinical-reasoning) | Motor CQL: **aquí vive el juicio y aquí está el margen** |
+| Enganche | [cds-hooks/docs](https://github.com/cds-hooks/docs) | Punto de inserción del agente en el flujo clínico |
+| Banco de pruebas | [HL7-DaVinci/test-ehr](https://github.com/HL7-DaVinci/test-ehr) | EHR de pruebas para el ciclo completo |
+| Datos | [synthetichealth/synthea](https://github.com/synthetichealth/synthea) | Historiales sintéticos: cero PHI en desarrollo y demo |
+
+**Montaje.**
+
+1. `synthea` genera la cohorte → se carga en `medplum` o HAPI con
+   [microsoft/fhir-loader](https://github.com/microsoft/fhir-loader) (MIT).
+2. `test-ehr` + `CRD` responden al *hook* `order-sign`: ¿requiere autorización?
+3. `dtr` resuelve el cuestionario; **las reglas se escriben en CQL**, no en el prompt.
+4. El agente redacta y arma el paquete; `prior-auth` lo envía como PAS.
+5. **Una persona aprueba todo lo que tenga consecuencia económica.** No es prudencia
+   decorativa: es lo que los análisis de 2026 describen como la única configuración en
+   producción, y lo que la obligación de motivar la denegación exige poder justificar.
+
+**El entregable con margen es la biblioteca CQL.** El parser X12 es gratis y el conjunto CPT no
+es de nadie que participe en el proyecto; la **regla** sí es del cliente, y es versionable,
+auditable y reutilizable entre líneas de negocio. Facturar ahí.
+
+**Lo que este patrón NO debe prometer:** una plataforma de ciclo de ingresos «todo open
+source». Su salida se expresa en CPT, propietario de la AMA. Ver P11.
+
+---
+
+## P11 — Puerta de conjuntos de códigos: la licencia del código no es la del contenido
+
+**Extiende P8 con una cuarta categoría.** P8 clasificaba repos en verificada /
+declarada-pero-no-depositada / sin licencia. Falta la categoría que más caro sale:
+**código permisivo con contenido encumbrado**.
+
+El caso que lo motiva: `IHTSDO/snowstorm` es Apache-2.0 (9939 B verificados) y sirve SNOMED CT,
+que exige **Licencia de Afiliado una por país**, gratis en los 54 Miembros y **con cuotas por
+banda de renta del Banco Mundial fuera**. La puerta P8 lo aprobaría sin pestañear y el problema
+aparecería en la auditoría del cliente.
+
+**Matriz que debe acompañar a todo entregable sanitario:**
+
+| Artefacto | Licencia del CÓDIGO | Licencia del CONTENIDO | Acción en el proyecto |
+|-----------|--------------------|------------------------|----------------------|
+| ICD-10-CM (`icd10-cm`, `simple_icd_10_CM`) | MIT | **Dominio público** | Libre. Poner aquí los componentes abiertos. |
+| CPT | — | **AMA, cuota por usuario** | Registrar el identificador de licencia del cliente. Nunca redistribuir el conjunto. |
+| SNOMED CT (`snowstorm`, `snow-owl`) | Apache-2.0 | **Afiliado, por país** | Una licencia por territorio del despliegue. Es partida de coste. |
+| LOINC | — | Gratis con registro | Registrar y seguir. |
+| X12 (`pyx12`, `stupidedi`, `EDI.Net`) | BSD-3 / MIT | Estructura libre | Adoptar, no reescribir. |
+
+**Regla de CI, añadida a `licence-gate.sh`:** si una ruta de código puede **emitir un código
+CPT** y no existe un identificador de licencia AMA registrado en el manifiesto del proyecto,
+**el build falla**. Es la única comprobación de esta KB que protege al cliente de una
+reclamación de copyright en lugar de protegerlo de un problema de licencia de software.
+
+Y la verificación que este pase añade al método, barata y ya validada 8 de 8:
+**`NOASSERTION` en GitHub no significa nada.** Abrir el fichero. `pyx12`, `imsweb/x12-parser`,
+`bryand1/icd10-cm` y `crs4/hl7apy` son todas permisivas genuinas y GitHub no lo dice.
+
+---
+
+## P12 — Vigilar la frontera de la especificación (cómo ver venir el próximo hueco)
+
+**El patrón que generaliza el hallazgo del pase.** El open source permisivo no aparece donde
+hay demanda; aparece donde hay una **especificación compartida**. Y la frontera entre «juicio»
+y «formato» **se mueve por acción regulatoria**, con un adelanto observable.
+
+**Secuencia observada en la autorización previa:**
+
+1. Un regulador declara una obligación (CMS-0057-F, enero de 2024).
+2. Un organismo de estándares publica la guía de implementación (Da Vinci CRD/DTR/PAS).
+3. **Aparecen implementaciones de referencia permisivas** — y aquí está la señal temprana:
+   suben los **forks** antes que las estrellas. `test-ehr` tiene 8★ y 11 forks; `CRD` 45★ y 24.
+4. El mandato entra en vigor (2027-01-01) y la capa ya es *commodity*.
+5. El margen se desplaza a la capa de juicio inmediatamente superior.
+
+**Qué vigilar, en orden de valor informativo:**
+
+- Calendario de *ballots* de guías de implementación de HL7 y reglas propuestas de CMS. Dan
+  entre uno y dos ciclos de ventaja sobre GitHub.
+- **La razón estrellas/forks** de los repos del organismo de estándares. Una razón que baja
+  hacia 1 indica adopción real en curso.
+- Qué tareas de juicio están recibiendo una representación computable. **CQL es el vehículo**:
+  cuando una regla de necesidad médica se puede escribir en CQL, deja de ser defendible como
+  propiedad intelectual y pasa a ser infraestructura.
+
+**Dos pruebas baratas de autenticidad, ambas gratis en una llamada a `search/repositories`:**
+
+| Firma | Qué indica |
+|-------|-----------|
+| Una métrica sube mientras `pushed_at` no se mueve | Número inventado (regla del ciclo 5; así se detectó que MDAgents «crecía» de 2,1k a 2,5k★ sin push desde 2024) |
+| Razón estrellas/forks por encima de ~50 | Atención sin uso. 149★/1f en una plantilla de 16 días es el caso límite, y es **el único repo** que pasa el filtro de agentes nuevos del sector |
+
+**Predicción falsable para los próximos pases de esta KB**, en el espíritu de la que dejó el
+pase financiero: *si* durante 2027 aparece una implementación de referencia permisiva para
+**codificación clínica automatizada**, aparecerá **después** de que un regulador o un organismo
+de estándares publique una representación computable del criterio de codificación —y **no**
+antes, por mucha demanda de mercado que haya. Si aparece antes, esta tesis está mal y hay que
+revisarla aquí.

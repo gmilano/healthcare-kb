@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # 🗺️ Mapa de mercado — Healthcare
@@ -78,6 +78,23 @@ y ahí es donde conviene construir.
   diagnóstico autónomo y que HHS emitió un RFI sobre agentes autónomos en octubre de 2026.
   Ninguna fuente primaria lo confirma. **No citar.**
 
+- **(2026-11-22) Construir contra la fecha firme de CMS-0057-F.** La API de autorización previa
+  es obligatoria el **1 de enero de 2027**; la guía Da Vinci PAS es solo *recomendada* (CMS lista
+  STU 2.0.1 y 2.1.0). Vender «hay que cumplir Da Vinci» es frágil y un revisor lo detecta. Vender
+  «hay que exponer una API en una fecha, y la única implementación de referencia permisiva que
+  existe es Apache-2.0» es exacto y además cierto. Piezas:
+  [HL7-DaVinci/prior-auth](https://github.com/HL7-DaVinci/prior-auth),
+  [CRD](https://github.com/HL7-DaVinci/CRD), [dtr](https://github.com/HL7-DaVinci/dtr),
+  [cqframework/clinical-reasoning](https://github.com/cqframework/clinical-reasoning).
+- **(2026-11-22) La biblioteca CQL como activo del cliente.** Las reglas de necesidad médica
+  escritas en CQL son el único artefacto del ciclo de ingresos que el cliente puede poseer, versionar
+  y auditar sin tocar un conjunto de códigos propietario. Es el entregable con margen: el parser X12
+  es gratis y el CPT no es nuestro, pero la regla sí.
+- **(2026-11-22) Matiz de alcance sobre el hueco de ciclo de ingresos.** Rebaja la oportunidad de
+  arriba: **no se puede entregar una plataforma de ciclo de ingresos «todo open source»**, porque su
+  salida se expresa en CPT, propietario de la AMA. Se vende la capa de juicio sobre un conjunto de
+  códigos que **el cliente ya licencia** para facturar.
+
 ### EMEA
 - A marzo de 2026 los dispositivos médicos con IA se certifican **exclusivamente bajo MDR/IVDR**;
   las obligaciones de alto riesgo del AI Act **todavía no aplican** a ellos.
@@ -93,6 +110,21 @@ y ahí es donde conviene construir.
 - **gematik**, la agencia alemana de salud digital, publica sus especificaciones de API
   (e-receta, ePA, TI-Messenger, VZD) bajo **Apache-2.0**. Es una fuente oficial citable.
 
+- **(2026-11-22) El hueco del NHS empeoró y eso lo hace vendible.** No es que no haya tooling FHIR
+  oficial del NHS: **sí lo hay y no tiene licencia.**
+  [NHSDigital/NHSEngland-FHIR-SCR-IPS](https://github.com/NHSDigital/NHSEngland-FHIR-SCR-IPS)
+  existe (refs=61, push 2026-06) y **no contiene fichero de licencia**, verificado con 9 variantes de
+  nombre. Sin licencia no hay derecho de uso, así que es inutilizable aunque sea público. Frente a
+  gematik —que publica sus especificaciones en Apache-2.0— el contraste es directo y un cliente
+  británico lo entiende en una frase.
+- **(2026-11-22) Escalado antes que aprobación.** Solo **Alemania y Francia** tienen vías
+  estructuradas de reembolso para escalar herramientas de IA; en España e Italia se aprueban
+  herramientas que luego no tienen base presupuestaria. El riesgo real de un proyecto en el sur de
+  Europa no es la aprobación regulatoria, es que no haya quien lo pague. Dimensionar en consecuencia.
+- **(2026-11-22) Cuello de botella de organismos notificados.** Hay 51 organismos designados bajo MDR,
+  pero la designación para AI Act exige competencias de IA adicionales. El calendario de evaluación
+  es un riesgo de planificación, no un trámite.
+
 ### APAC
 - **Singapur**: MOH y HSA publicaron las *AI in Healthcare Guidelines* en **marzo de 2026**. El enfoque
   asigna responsabilidad más que aprobar productos.
@@ -106,6 +138,21 @@ y ahí es donde conviene construir.
 - Adopción: IDC proyecta que **para 2030 el 33% de los hospitales de primer nivel** de Asia-Pacífico
   desplegarán agentes de IA. Hoy solo ~**30% de los pilotos** llegan a uso clínico, y el cuello de
   botella declarado es explicabilidad y validación local.
+
+- **(2026-11-22) La guía de Singapur tiene nombre y versión: AIHGle 2.0** (MOH + HSA,
+  **10 de marzo de 2026**). El ciclo 5 la registró sin nombre. Asigna deberes a desarrollador,
+  institución y clínico a lo largo de todo el ciclo de vida: el entregable que la satisface es una
+  matriz de responsabilidades por fase, no un informe de precisión del modelo.
+- **(2026-11-22) Hueco nuevo y simétrico al del NHS: India.** La consulta
+  `ABDM health India stars:>=10` devuelve **1** resultado (11★, 1 fork). India tiene una pila
+  nacional de salud digital (ABDM) y prácticamente **ninguna herramienta permisiva** que la hable.
+  Con una puerta regulatoria más ligera que Japón o China —sin ley específica de IA, aplicando el
+  régimen de dispositivos— es la región donde un cliente llega antes a volumen clínico.
+- **(2026-11-22) Diferenciar la puerta por país antes de prometer plazos.** China trata el software
+  diagnóstico con IA como **Clase III** vía NMPA, y la adopción la deciden el precio provincial y la
+  compra hospitalaria, no la aprobación. Japón se mantiene en principios (Ley de Promoción de la IA
+  de 2025) con aprobación de producto por la ley de productos farmacéuticos y dispositivos. Mismo
+  producto, tres calendarios.
 
 ### LATAM
 - **Brasil — el hallazgo accionable de la región.** La **Resolución CFM 2.454/2026** entró en vigor el
@@ -176,6 +223,24 @@ y ahí es donde conviene construir.
   tracción (ver gaps). Para un grupo hospitalario hispanohablante esto es trabajo a medida con
   pocos competidores.
 
+- **(2026-11-22) Primera cifra de adopción con granularidad de país en la región.** El 18 % de los
+  establecimientos de salud brasileños ya usa IA, con **25 % en la red privada frente a 11 % en la
+  pública**. Cierra parcialmente el hueco (d) que el ciclo 5 dejó abierto por falta de datos
+  granulares, y además orienta la venta: el comprador de LATAM con presupuesto es privado, y el
+  argumento al sector público es el programa **SUS Digital**, que integra IA y salud digital en el SUS
+  durante 2026. ⚠️ Cifra de informe citado en prensa sectorial; usar como dirección.
+- **(2026-11-22) Advertencia de licenciamiento específica de la región.** La membresía de SNOMED
+  International determina si el contenido de terminología es gratis o se paga por banda de renta del
+  Banco Mundial, **y se licencia por país**. Confirmados como Miembros recientes en la región
+  **Costa Rica (mayo de 2026), Belice, El Salvador y Jamaica**. **No se pudo confirmar** el estado de
+  Brasil, Argentina, Uruguay, Chile, México ni Colombia: `snomed.org` no resuelve desde este entorno
+  (política de red de la sesión), y las fuentes secundarias no lo cubren. **Verificar por país antes
+  de presupuestar un despliegue regional de terminología** — es una partida de coste, no un trámite.
+- **(2026-11-22) Marcos de telemedicina ya operativos como vía de entrada.** Brasil (CFM 2.314/2022),
+  Chile (**Ley 21.541**) y México (**NOM-024-SSA3**) tienen marcos vigentes, y COFEPRIS avanza en
+  regulación de software médico y dispositivos con IA. La vía de menor resistencia en la región sigue
+  siendo el flujo de telemedicina, no el dispositivo diagnóstico.
+
 ## Gaps verificados — por función, no por silencio
 
 - **(a) No hay capa agéntica permisiva para ciclo de ingresos / denegación de claims.** Lo más cercano
@@ -210,3 +275,113 @@ y ahí es donde conviene construir.
 5. **Higiene de licencias como entregable.** Ver `compose/patterns.md` P8: la auditoría de procedencia
    de licencias con evidencia de bytes es exactamente el artefacto que un hospital brasileño necesita
    para su registro de riesgo bajo CFM 2.454/2026. Se cobra dos veces por el mismo trabajo.
+
+---
+
+## Pase 2026-11-22 — estructura de la oferta, regulación y huecos
+
+### La estructura de la oferta, medida con 15 consultas
+
+La ley del pase financiero —*el open source permisivo sigue al formato de fichero, no a la
+decisión*— **se confirma en salud y se refina**. El refinamiento es la parte útil:
+
+| Capa | Qué hay | Evidencia |
+|------|---------|-----------|
+| **Formato** (X12, HL7 v2, terminología) | Maduro, permisivo, mantenido | EDI.Net 491★ MIT · stupidedi 293★ BSD-3 · hl7apy 284★ MIT · snowstorm 401★ Apache-2.0 · pyx12 190★ BSD-3 |
+| **Juicio ya convertido en especificación** | Existe, es Apache-2.0 y **se forkea más que se estrella** | `org:HL7-DaVinci` = 43 repos · CRD 45★/24f · prior-auth 38★/24f · dtr 23★/18f · clinical-reasoning 52★/46f |
+| **Juicio sin especificar** | Nada por encima de ~40★; solo aceleradores de proveedor | `claim denial`→12 resultados, líder 12★ · `claims adjudication`→10, líder 4★ · `medical necessity`→78 resultados y **los seis primeros suman 3 estrellas** |
+
+**El mecanismo nuevo: la frontera se mueve, y se ve venir.** Cuando un regulador convierte un
+juicio en un artefacto **computable**, aparece open source permisivo para ese juicio —y
+aparece **antes** del mandato. La autorización previa es el caso de prueba en curso: la API es
+obligatoria el 2027-01-01 por CMS-0057-F y las implementaciones de referencia Da Vinci llevan
+meses publicadas. El vehículo técnico de esa conversión tiene nombre, **CQL**, y tiene motor
+permisivo, [cqframework/clinical-reasoning](https://github.com/cqframework/clinical-reasoning)
+(Apache-2.0, refs=1067).
+
+Consecuencia operable, y es una posición de inversión, no una observación: **las tareas de
+juicio que están a punto de recibir una especificación computable son predecibles**, porque la
+guía de implementación se publica uno o dos ciclos de estandarización antes del mandato. Se
+vigila el calendario de *ballots* de HL7 y las reglas de CMS, no GitHub.
+
+### La capa que explica el hueco: el conjunto de códigos
+
+Hallazgo independiente y, para una propuesta, el más importante del pase. **Un formato abierto
+puede transportar contenido propietario**, y la obligación viaja con el contenido:
+
+- **ICD-10-CM**: dominio público (CMS/NCHS; los CDC publican cada actualización gratis).
+- **CPT**: copyright de la AMA con cuotas por usuario; incorporarlo o redistribuirlo en un
+  producto exige licencia. Disputa viva en 2026 sobre su paso a dominio público, **sin
+  resolver** — no construir un caso de negocio sobre ella.
+- **SNOMED CT**: Licencia de Afiliado obligatoria incluso donde es gratuita (54 Miembros),
+  con cuotas por banda de renta del Banco Mundial fuera, **y una licencia por país**.
+- **LOINC**: gratis con registro.
+
+Por tanto **el hueco (a) del ciclo 5 queda reclasificado**: la ausencia de plataforma
+agéntica permisiva de ciclo de ingresos **no es un descuido del mercado, es una imposibilidad
+de licenciamiento**, porque la salida del proceso se expresa obligatoriamente en CPT. No se
+puede comprar abierta ni construir abierta. Lo que sí se puede es construir la capa de juicio
+sobre el conjunto de códigos que el cliente ya licencia — y eso es precisamente la forma de un
+*engagement*, no un obstáculo.
+
+### Regulación — lo nuevo o más preciso que en el ciclo 5
+
+**North America.** CMS-0057-F: API de autorización previa el **1-ene-2027** (MA y
+Medicaid/CHIP FFS estatal; *managed care* y QHP según periodo de tarificación o año de plan).
+Ya vigente en 2026: 72 h urgente / 7 días naturales ordinario, y denegación motivada. **La API
+es obligatoria; la guía Da Vinci es recomendada** (STU 2.0.1 y 2.1.0). Modelo **WISeR** desde
+enero de 2026: autorización previa asistida por IA en Medicare tradicional, seis estados.
+Documento de debate de la FDA sobre IA generativa del **18-ago-2026**, comentarios cerrados el
+**19-oct-2026**, expediente **FDA-2026-N-7874**: consulta, no norma.
+
+**EMEA.** El *Digital Omnibus* de 2026 habría movido el plazo de alto riesgo para IA integrada
+en productos regulados —dispositivos médicos incluidos— de agosto de 2027 a **agosto de 2028**,
+coherente con el Reg. (UE) 2026/1744 ya registrado. Las fuentes secundarias se contradicen
+entre sí (una sitúa las obligaciones en agosto de 2026, otra la entrada en vigor a finales de
+2027): **la pierna firme sigue siendo MDR/IVDR, que no se movió, más el Art. 50 vigente desde
+agosto de 2026.** Evaluación de preparación de **WHO/Europe de 2026**
+(WHO-EURO-2026-12707) como fuente institucional. Reembolso estructurado para escalar IA: solo
+Alemania y Francia.
+
+**APAC.** **AIHGle 2.0** (MOH + HSA de Singapur, **10-mar-2026**): asigna deberes a
+desarrollador, institución y clínico en todo el ciclo de vida. Japón: principios bajo la **Ley
+de Promoción de la IA de 2025**, con aprobación de producto por la ley de productos
+farmacéuticos y dispositivos. China: software diagnóstico con IA como **Clase III** (NMPA);
+precio provincial y compra hospitalaria deciden la adopción. India: sin ley específica de IA,
+régimen de dispositivos, **puerta más ligera**. Sandboxes ampliándose en Japón, India,
+Singapur y Corea.
+
+**LATAM.** CFM 2.454/2026 **en vigor desde el 10-ago-2026** (reconfirmada). **18 % de los
+establecimientos brasileños ya usan IA (25 % privada / 11 % pública)**, y **SUS Digital**
+integra IA en el SUS en 2026. ANVISA ya tiene marco SaMD que cubre algoritmos de IA
+diagnóstica. Telemedicina operativa: Brasil CFM 2.314/2022, Chile **Ley 21.541**, México
+**NOM-024-SSA3**; COFEPRIS avanzando en software médico con IA.
+
+### ⚠️ Marcado explícitamente como NO CITABLE
+
+Se añade a la lista que abrió el ciclo 5:
+
+- **Que el PL 2338 brasileño «ya está vigente y en implementación, con multas de hasta el 2 %
+  de los ingresos».** Lo afirma un blog; **contradice el estado legislativo conocido** y no se
+  confirmó en fuente oficial. No usar en ninguna propuesta. La norma brasileña citable y en
+  vigor es **CFM 2.454/2026**, que es de un consejo profesional, no una ley de IA.
+- **El retorno «4× el coste» de la IA de ciclo de ingresos y la adopción «32 %→46 %» en
+  autorización previa** (encuesta BVP/Bain citada en prensa sectorial): sin metodología
+  publicada. Dirección sí, número ante un CFO no.
+- **La previsión de que los agentes de autorización previa gestionarán «70-80 %» de las
+  solicitudes de forma autónoma**: guía de proveedor, es previsión y no resultado medido.
+- Siguen no citables, del ciclo 5: las cuotas de mercado de documentación ambiental
+  (Nuance 33 / Abridge 30 / Ambience 13) y la afirmación de que la FDA autorizó un dispositivo
+  diagnóstico autónomo con una RFI de HHS en octubre de 2026.
+
+### Huecos — estado actualizado
+
+| Hueco | Estado tras este pase |
+|-------|----------------------|
+| (a) Plataforma permisiva de ciclo de ingresos / denegaciones | **Reclasificado, no cerrado.** No es un hueco de mercado sino una imposibilidad de licenciamiento (CPT). Lo único permisivo son aceleradores de proveedor: microsoft/RHAIL-Claims-Denial-Navigator (12★, refs=3), autoauth-solution-accelerator (20★). |
+| (b) Tooling FHIR oficial del NHS | **Refinado y peor de lo descrito.** [NHSDigital/NHSEngland-FHIR-SCR-IPS](https://github.com/NHSDigital/NHSEngland-FHIR-SCR-IPS) existe (refs=61) **sin fichero de licencia** (9 variantes comprobadas). Público pero inutilizable. |
+| (c) NLP clínico en español con tracción | **Sigue abierto.** Sin hallazgos nuevos este pase. |
+| (d) Porcentajes de adopción por país en APAC | **Sigue abierto en APAC**, pero **parcialmente cerrado en LATAM**: Brasil 18 % (25 % privada / 11 % pública). |
+| (e) Cuotas de mercado de documentación ambiental | **Sigue sin fuente fiable.** |
+| (f) **NUEVO** — Tooling permisivo para ABDM (India) | `ABDM health India stars:>=10` → **1** resultado (11★/1f, MIT). Pila nacional sin ecosistema abierto. Simétrico al hueco del NHS. |
+| (g) **NUEVO** — Membresía SNOMED de los grandes países LATAM | **Hueco informado, no silencio.** `snomed.org` no resuelve desde este entorno (política de red). Confirmados Costa Rica, Belice, El Salvador y Jamaica; sin confirmar Brasil, México, Argentina, Chile, Uruguay, Colombia. **Importa porque decide si el contenido se paga.** |

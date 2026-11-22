@@ -1,13 +1,68 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # 📈 Agentes trending — Healthcare
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 > Reescribir este archivo destruiría la tendencia que existe para registrar.
+
+## 2026-11-22 — la autorización previa cruza de «juicio» a «formato»
+
+El pase anterior (2026-11-21) dejó anotado el hueco más grande de esta KB: **no existe
+plataforma agéntica permisiva de ciclo de ingresos ni de denegación de siniestros**, la mayor
+partida de presupuesto de IA sanitaria en EE. UU. Este pase fue a medir ese hueco y encontró
+algo mejor que una confirmación: encontró **por qué** existe, y que ya se está cerrando por un
+lado inesperado.
+
+### Lo nuevo de la semana: Da Vinci y CQL, invisibles y forkeados
+
+Lo que se mueve esta semana no es un agente: es la capa que convierte un juicio clínico en una
+API. CMS-0057-F obliga a las aseguradoras a exponer una **API de autorización previa el 1 de
+enero de 2027**, y las implementaciones de referencia llevan meses publicadas en Apache-2.0.
+
+| Nombre | Licencia | Qué aporta | Stars/Forks | Push | Región |
+|--------|----------|------------|-------------|------|--------|
+| [cqframework/clinical-reasoning](https://github.com/cqframework/clinical-reasoning) | Apache-2.0 | Motor CQL: el juicio clínico escrito como especificación ejecutable | 52★/46f | 2026-11 | North America |
+| [HL7-DaVinci/CRD](https://github.com/HL7-DaVinci/CRD) | Apache-2.0 | Descubrimiento de requisitos de cobertura en el momento de la orden | 45★/24f | 2026-07 | North America |
+| [HL7-DaVinci/prior-auth](https://github.com/HL7-DaVinci/prior-auth) | Apache-2.0 | Implementación de referencia de Da Vinci PAS | 38★/24f | 2026-07 | North America |
+| [HL7-DaVinci/dtr](https://github.com/HL7-DaVinci/dtr) | Apache-2.0 | Plantillas y reglas de documentación exigida | 23★/18f | 2026-07 | North America |
+| [genomoncology/biomcp](https://github.com/genomoncology/biomcp) | MIT | MCP biomédico: ensayos clínicos, variantes genómicas y literatura | 683 | 2026-11 | North America |
+| [hastimal/gemini-healthcare-agentic-platform](https://github.com/hastimal/gemini-healthcare-agentic-platform) | Apache-2.0 | Búsqueda sanitaria agéntica con *grounding* y cita obligatoria; forks ≈ estrellas | 39★/36f | 2026-11 | Global |
+| [ChristianHinge/dicom-mcp](https://github.com/ChristianHinge/dicom-mcp) | MIT | Servidor MCP sobre DICOM: consulta de estudios de imagen por un agente | 108 | 2026-10 | EMEA |
+| [the-momentum/fhir-mcp-server](https://github.com/the-momentum/fhir-mcp-server) | MIT | Segundo servidor MCP↔FHIR independiente, alternativa a wso2 | 102★/20f | 2025-10 | EMEA |
+| [JuneYaooo/open-medical](https://github.com/JuneYaooo/open-medical) | MIT | Agente de escritorio local-first para la consulta médica | 21★/7f | 2026-11 | APAC |
+
+### El contador de agentes verticales no se mueve — cuarta medición
+
+| Consulta | Ciclo 5 (2026-11-21) | Hoy (2026-11-22) |
+|----------|----------------------|------------------|
+| `healthcare agent created:>2026-08-01 stars:>=50` | 1 | **1** |
+| `FHIR mcp stars:>=30` | 11 | **11** |
+| `clinical AI agent created:>2026-06-01 stars:>=100` | 0 | no re-medida |
+
+Y el único resultado de la primera consulta es
+`muhammadusamakhan911-bit/fabric-mlv-agent-healthcare-starter`: 149 estrellas, **1 fork**, 16
+días de vida, una plantilla de demo. **El único indicio de crecimiento del sector en casi
+cuatro meses no sobrevive a mirarle los forks.** Lo que un pase añade sigue siendo deuda de
+descubrimiento, no crecimiento sectorial.
+
+### Advertencias de este pase
+
+- **`FreedomIntelligence/OpenClaw-Medical-Skills`** aparece en listas de *trending* de
+  noviembre con 3120★ y 424 forks: **no tiene fichero de licencia** y no recibe push desde el
+  2026-07-21. No usar.
+- **`xxPcy/PharmaLLM-Agent`** (205★, 5 forks) y
+  **`mdexa-ai/mdexa-ai-native-database`** (201★ en 7 días, 11 forks, sin segundo push) tienen
+  la firma de atención comprada o promocionada. El segundo tiene un concepto valioso
+  —procedencia y licencia de los datasets que alimentan IA médica— pero no hay aún proyecto
+  que respalde la cifra.
+- **`soma-intelligence/open-health-sync`** (72★) y **`pacharanero/sct`** (32★) son **AGPL-3.0**
+  (34523 B verificados): copyleft de red, fuera del perímetro entregable por defecto.
+
+---
 
 ## 2026-11-21 — primer pase verificado; el remoto llevaba 112 días sin tocarse
 

@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # 🏭 Verticales de partida — Healthcare
@@ -67,3 +67,46 @@ El error de arquitectura más común es forkear el EMR. No hace falta y, con GPL
    referencia: orquestación multi-agente con humano aprobando cada acción con efecto clínico.
 6. **Dejar la traza desde el día uno.** Es requisito regulatorio en al menos tres regiones
    (ver `intel/market.md`), no una mejora opcional.
+
+---
+
+## Pase 2026-11-22 — el patrón «Odoo» no se traslada a salud
+
+El guion de esta KB pide plataformas al estilo de Odoo para ERP: sistemas reales,
+personalizables, con IA encima. **En salud ese patrón falla, y conviene decirlo antes de que
+alguien lo prometa en una propuesta.**
+
+Odoo *core* es open source, pero los módulos sanitarios de su marketplace **no lo son**: se
+distribuyen bajo «Odoo Proprietary License v1.0» o, en el mejor caso, LGPL-3
+(`ts_health`). Revisado el catálogo de módulos de salud de las versiones 10 a 19
+(`pragtech_medical`, `oehealth`, `healthcare_management`, `abs_hospital_management_community`,
+`healthcare_management_system_knk`, `tvs_hms`): son add-ons de terceros con licencia por
+módulo, no una base comunitaria. **Un *engagement* que planee «Odoo + IA» para un hospital
+hereda una licencia propietaria por cada módulo clínico.**
+
+La alternativa correcta en salud no es un ERP con módulo médico, sino un sistema clínico
+dedicado. Los que sí cumplen el criterio:
+
+| Plataforma | Licencia | Bytes | Qué es | Stars / refs | Región |
+|-----------|----------|-------|--------|--------------|--------|
+| [medplum/medplum](https://github.com/medplum/medplum) | Apache-2.0 | 9765 | Backend FHIR-native con 1029 forks; **la base permisiva más adoptable para construir encima** | 2812★ / refs=9471 | Global |
+| [openemr/openemr](https://github.com/openemr/openemr) | GPL-3.0 | — | EMR certificado ONC, el más instalado; consumir su FHIR, **no forkearlo** | 5618★ | Global |
+| [DIGI-UW/OpenELIS-Global-2](https://github.com/DIGI-UW/OpenELIS-Global-2) | MPL-2.0 | 16727 | LIS de laboratorio de referencia; slug canónico nuevo | 294★ / refs=4795 | Global |
+| [hmislk/hmis](https://github.com/hmislk/hmis) | GPL-3.0 | 35149 | HMIS hospitalario completo de Sri Lanka; **refs=12900**, actividad diaria | 245★ | APAC |
+| [ZainZhao/HIS](https://github.com/ZainZhao/HIS) | Apache-2.0 | 11357 | Sistema de información hospitalaria completo, origen China; sin push desde 2025-02 | 1642★ | APAC |
+| [IHTSDO/snowstorm](https://github.com/IHTSDO/snowstorm) | Apache-2.0 | 9939 | Servidor de terminología oficial de SNOMED International | 401★ | Global |
+| [b2ihealthcare/snow-owl](https://github.com/b2ihealthcare/snow-owl) | Apache-2.0 | 11357 | Servidor de terminología multi-esquema con autoría | 292★ | Global |
+
+### La regla de personalización, por licencia
+
+| Licencia de la plataforma | Cómo se le pone IA encima |
+|---------------------------|---------------------------|
+| **Apache-2.0 / MIT** (medplum, snowstorm, snow-owl, ZainZhao/HIS) | Fork o dependencia directa. Sin restricción en el entregable. |
+| **MPL-2.0** (OpenELIS, OpenMRS, Bahmni, Mirth) | Copyleft **por fichero**: añadir ficheros nuevos es seguro; modificar los suyos obliga a publicar esos ficheros. Arquitectura: módulos nuevos, no parches. |
+| **GPL-3.0 / AGPL-3.0** (OpenEMR, hmis, GNU Health, openIMIS) | **No incorporar al entregable.** Consumir su API FHIR/REST desde un proceso separado. Es el patrón P2 y existe precisamente por esto. |
+| **Odoo Proprietary v1.0** (módulos de salud de Odoo) | Fuera del perímetro. No hay forma de cumplir y entregar código abierto. |
+
+> Y la advertencia que atraviesa todo lo anterior: la licencia de la plataforma **no cubre el
+> contenido de terminología**. Un despliegue de snowstorm es Apache-2.0; el SNOMED CT que
+> sirve necesita Licencia de Afiliado, una por país. Ver la tabla de conjuntos de códigos en
+> `repos/foundations.md`.
