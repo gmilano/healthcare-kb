@@ -319,3 +319,72 @@ LATAM con diferencia**: Corea tiene las reclamaciones nacionales de **HIRA** map
 no es que LATAM esté mal posicionada, sino que **el encargo es distinto**: en Corea y Australia se
 vende capa analítica sobre un nodo existente; en LATAM se vende **el primer nodo y su vocabulario**.
 ⚠️ Cifras de material de la propia comunidad OHDSI.
+
+---
+
+## Pase 2026-11-25 (c9) — una fórmula no es un oráculo
+
+### 1. La tendencia estructural del año, vista por fin con un control
+
+Esta KB lleva ocho pases sosteniendo que la oferta permisiva sigue a un «oráculo publicable».
+Este pase aporta el primer **experimento controlado** del sector: dos subplanos de la misma
+industria, el mismo año, con mandato y formato publicados en ambos, que difieren sólo en si
+**alguien publica la salida esperada**. Sumisión CDISC (fixture publicado en
+[`cdisc-org/cdisc-open-rules`](https://github.com/cdisc-org/cdisc-open-rules), MIT): 176 repos
+permisivos, hasta 328★, push diario. Farmacovigilancia (fórmula PRR/ROR y formato E2B(R3)
+publicados, **sin fixture**): cero adoptables, máximo 1★. **Una fórmula no es un oráculo; un
+oráculo es una salida esperada publicada.**
+
+### 2. CORE v1.0 es el acontecimiento del plano, y llegó este mes
+
+[`cdisc-org/cdisc-rules-engine`](https://github.com/cdisc-org/cdisc-rules-engine) — MIT, 126★,
+50 forks, **push el día del pase** — tiene tag `v1.0.0` (verificado con `ls-remote --tags`).
+Un motor de reglas de conformidad regulatoria, open source y versión 1.0, cambia la economía del
+plano: deja de hacer falta comprar el validador para saber si una sumisión pasa. Lo que queda
+por construir es la capa que **corrige** el dataset, no la que lo juzga. *(El número de reglas
+y la fecha exacta del release están marcados NO CITABLES en `intel/market.md`.)*
+
+### 3. El sector sigue publicando «open source» que no lo es — y ahora con autodeclaración
+
+[`dfci/matchminer-ai-inference`](https://github.com/dfci/matchminer-ai-inference) (29★, push
+2026-11-20) lleva `CC BY-NC-ND 4.0` mientras su paper se titula *«An Open-Source Solution»* y su
+README afirma *«MatchMiner-AI is open source»*. Es la primera vez en nueve pases que la KB mide
+un proyecto que **se contradice dentro de su propio repositorio**. La tendencia que esto marca no
+es jurídica, es de método: **el vocabulario de marketing del open source sanitario se ha
+desacoplado de los ficheros de licencia**, y el único canal fiable sigue siendo abrir el fichero.
+
+### 4. Novedad de método con efecto inmediato: el stub de licencia de R
+
+`R` es el lenguaje del ensayo clínico, y su convención `License: MIT + file LICENSE` produce un
+`LICENSE` de dos líneas sin texto legal. Resultado: **diez falsos negativos de licencia en un
+solo pase** (`teal`, `rtables`, `cards`, `cardinal`, `logrx`, `metatools`, `xportr`, `metacore`,
+`cdiscdata`, `coreval`), todos permisivos de verdad, todos marcados `NOASSERTION` por la API de
+GitHub. La puerta de licencia de P18 queda extendida con la regla de R. Y aparece una segunda:
+cuando todos los `LICENSE*` dan 404, la conclusión no es «sin licencia» sino «clona y mira»
+— así se encontró el `COPYING.txt` con CC0-1.0 de [`FDA/openfda`](https://github.com/FDA/openfda).
+
+### 5. El dominio público entra como categoría propia
+
+Dos activos del plano no son permisivos **ni** copyleft: no tienen copyright.
+[`ncbi-nlp/TrialGPT`](https://github.com/ncbi-nlp/TrialGPT) (NCBI Public Domain Notice, obra del
+Gobierno de EE.UU.) y [`FDA/openfda`](https://github.com/FDA/openfda) (CC0-1.0, 720★). Uso máximo
+y **cero garantía**: la tendencia útil aquí es que el aseguramiento sobre activos públicos es un
+entregable en sí mismo. Taxonomía de licencia de esta KB: **seis categorías**.
+
+### 6. La línea captura/sumisión, y por qué es una tendencia y no un detalle
+
+El plano de captura de datos clínicos está copyleft, sin procedencia o parado — OpenClinica
+519★/317f **sin fichero de licencia** y sin push en 13 meses; senaite GPL-2.0; REDCap
+directamente no es open source. El plano de sumisión es permisivo, corporativo y activo.
+La tendencia: **el dinero de las farmacéuticas se ha ido al lado del regulador**, no al lado del
+investigador. GSK, Roche, Atorus y Bayer mantienen el substrato de sumisión; nadie mantiene el EDC.
+
+### 7. Asimetría regional, y la primera ausencia LATAM con mecanismo
+
+APAC y LATAM dan **0 repos** en el canal de precisión para su propio tooling de sumisión
+(`PMDA CDISC submission`, `NMPA clinical data`, y cuatro consultas ANVISA/español). EMEA da **3**
+para todo CTIS, y el único activo tiene 0★. Pero por primera vez en esta KB **la ausencia LATAM
+no indica retraso**: ANVISA no publica una clave de respuestas ejecutable, y por la ley refinada
+de este pase la ausencia de oferta es *lo que el modelo predice*. Como los sponsors de la región
+someten a FDA y EMA, el producto vendible es el mismo que en Norteamérica. Segunda ausencia
+LATAM consecutiva sin penalización regional.

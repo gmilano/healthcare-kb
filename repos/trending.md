@@ -8,6 +8,63 @@ updated: 2026-11-25
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 
+## 2026-11-25 (c9) — 176 repos de substrato de sumisión, y la frontera de licencia cae entre capturar y someter
+
+Tercer pase del día, plano nuevo: **investigación clínica**. La medición de este pase separa el
+plano en dos mitades con licencias opuestas, y la línea no es tecnológica: es funcional.
+
+### Tamaño del substrato — canal de precisión (`search/repositories`)
+
+| Organización | Repos | Licencia dominante (verificada por bytes) |
+|---|---|---|
+| `org:OHDSI` (uso secundario, ya en la KB desde c8) | **398** | Apache-2.0 |
+| `org:pharmaverse` | **86** | Apache-2.0 / MIT |
+| `org:atorus-research` | **48** | MIT (vía `DESCRIPTION`) |
+| `org:cdisc-org` | **42** | MIT |
+
+**176 repos** permisivos en el plano de sumisión regulatoria, mantenidos por GSK, Roche, Atorus
+y CDISC. Es el segundo substrato más grande que esta KB ha medido, después de OHDSI.
+
+### Y encima, otra vez, casi nada — séptima medición del mismo patrón
+
+| Consulta | Repos |
+|---|---|
+| `SDTM agent LLM` | **4** |
+| `ADaM automation LLM` | **2** |
+| `pharmacovigilance agent LLM` | 22 (ninguno adoptable: máximo 1★) |
+
+### Trending real, por push reciente — cinco piezas del substrato movidas esta semana
+
+| Repo | ★ | Licencia (abierta) | Último push |
+|---|---|---|---|
+| [senaite/senaite.core](https://github.com/senaite/senaite.core) | 412★ | GPL-2.0 (`LICENSE`) | **2026-11-25** |
+| [pharmaverse/teal](https://github.com/pharmaverse/teal) | 268★ | Apache-2.0 (`LICENSE`) | **2026-11-25** |
+| [cdisc-org/cdisc-rules-engine](https://github.com/cdisc-org/cdisc-rules-engine) | 126★/50f | MIT (`LICENSE`) | **2026-11-25** |
+| [pharmaverse/cards](https://github.com/pharmaverse/cards) | 61★ | Apache-2.0 (`LICENSE.md`) | **2026-11-25** |
+| [LabKey/platform](https://github.com/LabKey/platform) | 13★ | Apache-2.0 (`LICENSE`) | **2026-11-25** |
+| [pharmaverse/admiral](https://github.com/pharmaverse/admiral) | 328★ | Apache-2.0 (`LICENSE.md`) | 2026-11-24 |
+
+Cinco repos del plano con push **el día del pase**. El plano está vivo; lo que falta es la capa de arriba.
+
+### La regla que sale de la medición
+
+> El plano de **captura** (EDC/LIMS) es copyleft, sin procedencia o parado:
+> OpenClinica 519★ **sin fichero de licencia** y 13 meses sin push; LibreClinica GPL;
+> senaite GPL-2.0. El plano de **sumisión** es permisivo y lo mantienen las farmacéuticas.
+> **No se forkea el EDC: se construye encima, por su interfaz.**
+
+`pharmaverse/sdtm.oak` (Apache-2.0, motor ODM→SDTM **agnóstico de EDC**) es la bisagra que hace
+ejecutable esa regla.
+
+### Nota de canal — octavo falso negativo de `search` y una ausencia que sí está medida
+
+`search/repositories` devolvió **nulo** para `krishagni/openspecimen` y `ddRPB/LibreClinica`;
+`git ls-remote` confirma que ambos existen (octavo y noveno falso negativo acumulados en esta KB).
+Y `FDA/openfda` **no tiene ningún `LICENSE*`**: su licencia (CC0-1.0) está en `COPYING.txt`, que
+sólo apareció al **clonar**. Regla: cuando los candidatos `LICENSE*` dan 404 y el repo existe,
+la respuesta no es «sin licencia», es «clona y mira».
+
+
 ## 2026-11-25 (c8) — OMOP/OHDSI: el substrato con más forks por estrella que la KB ha medido
 
 Segundo pase del día, plano nuevo: **uso secundario del dato**. Y trae la medición que mejor

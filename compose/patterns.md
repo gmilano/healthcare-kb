@@ -644,3 +644,138 @@ margen del sector y el substrato ya está construido.
 señalar discrepancias con la guía— **nunca en la llamada de variantes**, que es determinista,
 está benchmarkeada y no mejora con un LLM. Confundir las dos capas es el error que el oráculo
 sirve para hacer evidente.
+
+---
+
+## Pase 2026-11-25 (c9) — patrones P21 a P24
+
+### P21 · Automatización de sumisión regulatoria con el juez ya escrito
+
+**El hueco:** 176 repos permisivos de substrato (pharmaverse 86 + atorus-research 48 +
+cdisc-org 42) y **2 repos** en `ADaM automation LLM`. El juez existe y es MIT; la capa que
+produce y corrige el entregable, no.
+
+**Las piezas, todas verificadas por bytes:**
+
+| Rol | Repo | Licencia |
+|---|---|---|
+| Juez / oráculo | [cdisc-org/cdisc-rules-engine](https://github.com/cdisc-org/cdisc-rules-engine) `v1.0.0` | MIT |
+| Clave de respuestas | [cdisc-org/cdisc-open-rules](https://github.com/cdisc-org/cdisc-open-rules) | MIT |
+| ODM → SDTM | [pharmaverse/sdtm.oak](https://github.com/pharmaverse/sdtm.oak) | Apache-2.0 |
+| SDTM → ADaM | [pharmaverse/admiral](https://github.com/pharmaverse/admiral) | Apache-2.0 |
+| Especificación legible por máquina | [atorus-research/metacore](https://github.com/atorus-research/metacore) | MIT (`DESCRIPTION`) |
+| Escritura conforme XPT / Dataset-JSON | [atorus-research/xportr](https://github.com/atorus-research/xportr) · [atorus-research/datasetjson](https://github.com/atorus-research/datasetjson) | MIT · Apache-2.0 |
+| Tablas de seguridad FDA | [pharmaverse/cardinal](https://github.com/pharmaverse/cardinal) | Apache-2.0 |
+| Traza de ejecución | [pharmaverse/logrx](https://github.com/pharmaverse/logrx) | MIT (`DESCRIPTION`) |
+| Datos de prueba sin PHI | [pharmaverse/pharmaversesdtm](https://github.com/pharmaverse/pharmaversesdtm) · [pharmaverse/pharmaverseadam](https://github.com/pharmaverse/pharmaverseadam) | Apache-2.0 |
+
+**El cableado, y el orden importa:**
+
+1. `metacore` carga la especificación del estudio como metadatos, no como Word.
+2. `sdtm.oak` mapea el extracto ODM del EDC del cliente a SDTM. **No se forkea el EDC** (ver P23).
+3. `admiral` deriva ADaM.
+4. **El agente entra aquí y sólo aquí:** propone los mapeos y las derivaciones que faltan.
+5. `cdisc-rules-engine` ejecuta las reglas de `cdisc-open-rules` sobre la salida. **El agente no
+   se autoevalúa: lo evalúa el motor del regulador.** Cada hallazgo vuelve al paso 4 como tarea.
+6. `xportr` / `datasetjson` escriben el entregable; `logrx` deja la traza.
+7. Criterio de parada: **cero hallazgos del motor**, no «el LLM dice que está bien».
+
+**Por qué este patrón se vende:** el cliente no tiene que creerse al agente. El criterio de
+aceptación es un ejecutable MIT que publica el propio custodio del estándar, y corre sobre
+`pharmaversesdtm` (datos de prueba sin PHI) antes de tocar un dato real.
+
+### P22 · Cuando no hay fixture, el fixture ES el entregable (farmacovigilancia)
+
+Caso inverso de P21, y la aplicación directa de la ley refinada en este pase. En
+farmacovigilancia hay fórmula (PRR/ROR/BCPNN), hay formato (ICH E2B(R3)), hay mandato — y la
+oferta permisiva máxima es **1★**:
+
+| Repo | Licencia | ★ | Estado |
+|---|---|---|---|
+| [PrashantRGore/icsr-multi-agent-pipeline](https://github.com/PrashantRGore/icsr-multi-agent-pipeline) | MIT | 1★ | LangGraph + Ollama, export E2B(R3), humano en el bucle |
+| [WeDoCareGlobal-CC/pharma-intelligence-os](https://github.com/WeDoCareGlobal-CC/pharma-intelligence-os) | Apache-2.0 | 0★ | Revisión ICSR, PRR/ROR, borradores PSUR/PBRER |
+| [InfOmics/TEDAR](https://github.com/InfOmics/TEDAR) | MIT | 0★ | Método de detección de señal; parado desde 2021 |
+| [FreeVigilance/E2B](https://github.com/FreeVigilance/E2B) | GPL-3.0 | 1★ | Copyleft; parado desde 2024 |
+
+**La receta:** no empezar por el agente, empezar por **construir y publicar el corpus de
+aceptación** — casos ICSR sintéticos con la clasificación correcta acordada, y las señales
+esperadas calculadas sobre un extracto de [`FDA/openfda`](https://github.com/FDA/openfda)
+(CC0-1.0: redistribuible sin fricción, a diferencia de VigiBase, que es de acceso restringido).
+Con ese fixture publicado, PRR/ROR pasa de fórmula a oráculo y el agente se puede medir. **Sin
+él, cualquier agente de farmacovigilancia es una demo**, y por eso el plano entero tiene 1★.
+Quien publique el fixture define el plano: es P29 del pase financiero, aplicado a salud.
+
+### P23 · Integrar la captura, construir en la sumisión (la línea de licencia)
+
+**La regla:** la frontera de licencia cae entre capturar y someter.
+
+- **No partir de** [OpenClinica/OpenClinica](https://github.com/OpenClinica/OpenClinica): 519★ y
+  317 forks, pero **ningún fichero de licencia en el repo** (los seis candidatos dan 404 con
+  `README.md` a 200 → ausencia **medida**) y sin push desde 2025-10-28. El README enlaza a una
+  página del *vendor*: eso no es procedencia.
+- **No forkear** [senaite/senaite.core](https://github.com/senaite/senaite.core) (GPL-2.0, 412★,
+  muy activo) ni [ddRPB/LibreClinica](https://github.com/ddRPB/LibreClinica) (GPL): integrarlos
+  por interfaz. Un derivado arrastra copyleft a la entrega.
+- **Sí partir de** [LabKey/platform](https://github.com/LabKey/platform) (Apache-2.0, push
+  2026-11-25) y [krishagni/openspecimen](https://github.com/krishagni/openspecimen) (BSD-3-Clause).
+- **No llamar open source a REDCap** en ningún documento: se licencia a instituciones
+  consorciadas, no tiene repositorio público.
+
+**La bisagra que lo hace ejecutable:** `pharmaverse/sdtm.oak` es Apache-2.0 y **agnóstico de EDC**.
+El contrato de integración es el extracto ODM, no el código del EDC. Así la entrega vive entera
+en el lado permisivo aunque el cliente tenga el EDC que tenga.
+
+### P24 · Puerta de licencia, sexta y séptima categoría (regla de CI reutilizable en las 12 industrias)
+
+Extiende P8/P16/P18 con lo aprendido en este pase. Las dos reglas nuevas son de implementación,
+no de criterio:
+
+```bash
+#!/usr/bin/env bash
+# licence-gate v4 — añade: (6) stub de R, (7) clona antes de declarar ausencia,
+# y bloqueo explícito de CC-NC-ND presentada como open source.
+slug="$1"
+raw="https://raw.githubusercontent.com/$slug/HEAD"
+
+# (7) El repo tiene que existir en canal primario. search/repositories da falsos
+#     negativos (9 acumulados en esta KB): krishagni/openspecimen, ddRPB/LibreClinica...
+git ls-remote -h "https://github.com/$slug" >/dev/null 2>&1 || { echo "NO EXISTE: $slug"; exit 2; }
+
+lic=""
+for f in LICENSE LICENSE.md LICENSE.txt COPYING COPYING.txt; do
+  body=$(curl -sf "$raw/$f") || continue
+  # (6) Stub de R: "YEAR:" + "COPYRIGHT HOLDER:" y NADA de texto legal.
+  #     Diez falsos negativos en un solo pase si se omite esta rama.
+  if printf '%s' "$body" | grep -q '^COPYRIGHT HOLDER:'; then
+    lic=$(curl -sf "$raw/DESCRIPTION" | sed -n 's/^[Ll]icense: *//p' | head -1)
+    echo "R-STUB -> DESCRIPTION dice: ${lic:-NADA}"; break
+  fi
+  lic="$f"; break
+done
+
+# (7b) Ningún LICENSE* respondió: NO concluir "sin licencia". FDA/openfda esconde
+#      CC0-1.0 en COPYING.txt y sólo aparece al clonar.
+if [ -z "$lic" ]; then
+  if curl -sf -o /dev/null "$raw/README.md"; then
+    tmp=$(mktemp -d); git clone --quiet --depth 1 "https://github.com/$slug" "$tmp/r" 2>/dev/null
+    find "$tmp/r" -maxdepth 2 -iname '*licen*' -o -maxdepth 2 -iname '*copying*' | head
+    echo "AUSENCIA MEDIDA tras clonar (README=200)"; rm -rf "$tmp"
+  else
+    echo "INDETERMINADO: ningún fichero de control respondió 200"; exit 3
+  fi
+fi
+
+# Bloqueos duros. NC y ND no son 'open source' aunque el README lo diga.
+for f in LICENSE LICENSE.md COPYING.txt; do
+  b=$(curl -sf "$raw/$f") || continue
+  printf '%s' "$b" | grep -qi 'NonCommercial'   && { echo "BLOQUEO: NonCommercial"; exit 1; }
+  printf '%s' "$b" | grep -qi 'NoDerivatives'   && { echo "BLOQUEO: NoDerivatives"; exit 1; }
+  printf '%s' "$b" | grep -qi 'AFFERO'          && { echo "AVISO: AGPL, copyleft de red"; }
+done
+```
+
+**La prueba de que esta puerta hace falta:** `dfci/matchminer-ai-inference` pasa cualquier
+revisión humana que lea el README (*«MatchMiner-AI is open source»*) y el título del paper
+(*«An Open-Source Solution»*), y falla en la línea 1 de su `LICENSE`
+(`Attribution-NonCommercial-NoDerivatives 4.0 International`). La puerta la habría parado;
+la lectura, no.

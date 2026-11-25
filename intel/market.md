@@ -226,6 +226,22 @@ y ahí es donde conviene construir.
   entregable multiestado eso significa **que el conjunto de obligaciones puede cambiar durante el
   proyecto**: el diseño defendible es el que **parametriza** la regla por jurisdicción en lugar de
   codificarla. Es el mismo argumento que la biblioteca CQL del ciclo 6, aplicado a jurisdicción.
+
+**[c9 · Investigación clínica] El único regulador del mundo cuyo oráculo es ejecutable y público.**
+CORE v1.0 ([`cdisc-org/cdisc-rules-engine`](https://github.com/cdisc-org/cdisc-rules-engine),
+MIT, 126★, push 2026-11-25) ejecuta reglas de conformidad **de la FDA** publicadas junto con sus
+datos de prueba en [`cdisc-org/cdisc-open-rules`](https://github.com/cdisc-org/cdisc-open-rules)
+(MIT). Es el caso más limpio de la ley del oráculo en las doce industrias: el regulador publica
+la clave de respuestas, y encima hay 176 repos permisivos. **Oferta:** automatización agéntica
+de la sumisión (SDTM/ADaM/Define) con CORE como juez — `SDTM agent LLM` devuelve 4 repos y
+`ADaM automation LLM` devuelve 2, así que el hueco es cuantificado, no supuesto.
+Activos federales en dominio público utilizables sin fricción: [`FDA/openfda`](https://github.com/FDA/openfda)
+(CC0-1.0, 720★) y [`ncbi-nlp/TrialGPT`](https://github.com/ncbi-nlp/TrialGPT) (NCBI Public Domain Notice).
+**Contexto de compra:** el 81% de los médicos encuestados por la AMA declara usar IA
+profesionalmente (recogido en la guía Chambers *Healthcare AI 2026*), NA concentraba el 44,5%
+del mercado global de IA sanitaria en 2025, y la política federal apunta a un estándar nacional
+«minimally burdensome» (orden ejecutiva de diciembre de 2025) mientras **los estados legislan por
+su cuenta** — es decir, el comprador necesita una arquitectura que sobreviva a 50 regímenes.
 ### EMEA
 - **Anclar el agente en la especificación oficial alemana.** [gematik/api-erp](https://github.com/gematik/api-erp)
   y [gematik/api-ePA](https://github.com/gematik/api-ePA) son Apache-2.0 y oficiales. Generar el cliente
@@ -293,6 +309,20 @@ y ahí es donde conviene construir.
   de uso **secundario**. Una letra de diferencia, dos cosas distintas, y buscar «EHDS» devuelve
   sobre todo el primero. La OCDE, por su parte, pide **guía consolidada** entre GDPR, MDR y AI
   Act — señal de que la carga de interpretación, hoy, la paga el integrador.
+
+**[c9 · Investigación clínica] El plano con mandato y sin herramienta: 3 repos para todo CTIS.**
+El EU CTR centralizó la sumisión de ensayos en **CTIS**, y el ecosistema permisivo que lo toca
+cabe en una tabla: [`pipeworx-io/mcp-eu-ctis`](https://github.com/pipeworx-io/mcp-eu-ctis)
+(MIT, **0★**, push 2026-11-09), [`JulHeg/euclinicaltrials.py`](https://github.com/JulHeg/euclinicaltrials.py)
+(MIT, 7★, parado desde 2022) y, para el registro anterior,
+[`PaulinCharliquart/eudract-py`](https://github.com/PaulinCharliquart/eudract-py) (MIT, 10★,
+push 2026-11-04). Consulta `CTIS clinical trial EU` = **3 repos en total**; `EMA clinical trial
+regulation tool` = **0**. **Oferta:** ser quien construya la capa CTIS, porque el mandato existe
+y la herramienta no — es el patrón «segunda pierna regulatoria» (P9) con el hueco ya medido.
+**Contexto:** un estudio de la Comisión de marzo de 2026 reporta que el 94% de los proveedores
+sanitarios usa o planea usar IA; el AI Act impone a los sistemas de alto riesgo supervisión
+humana, transparencia y documentación; y la OCDE pide explícitamente guía consolidada entre
+GDPR, MDR y AI Act — esa fragmentación es el argumento de venta de una arquitectura única.
 ### APAC
 - **Terminología como columna vertebral.** [Taiwan-Health-MCP](https://github.com/healthymind-tech/Taiwan-Health-MCP)
   (MIT, 73 herramientas) ya resuelve ICD-10-CM/PCS, SNOMED CT, LOINC y fármacos TFDA. Es la base
@@ -356,6 +386,22 @@ y ahí es donde conviene construir.
   mejor recepción declarada, con la barrera de **coste al 67 %** (HIMSS, 13 mercados). Es decir:
   **la objeción no es de concepto, es de precio** — argumentar con coste autoalojado publicado
   (ver el patrón de scribe del pase de la mañana) y con substrato Apache-2.0 que no añade licencia.
+
+**[c9 · Investigación clínica] Mandato CDISC sin tooling regional: 0 repos.**
+Las consultas `PMDA CDISC submission` y `NMPA clinical data` devuelven **0 repos** en el canal de
+precisión. Japón exige sumisión electrónica en estándares CDISC para registro de nuevos fármacos
+(requisito establecido desde la segunda mitad de la década pasada; **el hecho normativo es
+conocido, pero esta KB no lo ha verificado en fuente primaria este pase — tratar como pendiente
+de verificación, no como cita**), y aun así el tooling abierto específico de la región no existe:
+se usa el del plano global (pharmaverse/CDISC), en inglés. **Oferta:** aseguramiento y validación
+de sumisión sobre CORE para sponsors regionales, que es exactamente lo que el mercado dice
+necesitar: Roche reporta que sólo ~30% de las PoC de IA sanitaria en APAC llegan a producción
+clínica, y HIMSS (13 mercados) sitúa el coste como barrera principal para el 67%. IDC añade que
+el 75% de los proveedores de la región considera que la IA agéntica rinde más que la generativa.
+**Regulación que ayuda a vender aseguramiento:** la guía nacional de Singapur de 2026 está
+orientada a **asignar responsabilidad** más que a aprobar producto, y la *AI Basic Act* de Corea
+del Sur está en vigor desde enero de 2026 con obligaciones de gestión de riesgo para sistemas de
+alto impacto. Donde la norma asigna responsabilidad, el entregable es la evidencia.
 ### LATAM
 - **Convertir CFM 2.454/2026 en producto.** Es la única norma de la región que ya está **en vigor** y
   que exige artefactos concretos: clasificación de riesgo por sistema, auditoría continua y registro
@@ -468,6 +514,25 @@ y ahí es donde conviene construir.
   **ANPD y la LGPD en el interlocutor principal**, no a ANVISA — un nodo de investigación no es
   dispositivo médico. Los ministerios de Argentina, Brasil, Chile y Colombia tienen iniciativas
   de fomento de IA en salud: puerta de entrada al sector público.
+
+**[c9 · Investigación clínica] Ausencia TOTAL medida, y por primera vez con mecanismo que la explica.**
+Cuatro consultas al canal de precisión — `ANVISA ensaio clinico software`, `ANVISA clinical trial
+open source`, `ensaios clinicos plataforma open source`, `CDISC SDTM espanol` — devuelven
+**0 repos cada una**. No es escasez: es cero. Y a diferencia de los huecos LATAM de pases
+anteriores, **aquí hay una explicación causal y no un retraso regional**: ANVISA no publica un
+conjunto de reglas de conformidad ejecutable con sus datos de prueba, como sí hace la FDA vía
+`cdisc-open-rules`. Por la ley del oráculo refinada en este pase (*una fórmula no es un oráculo;
+hace falta la clave de respuestas publicada*), **la ausencia de oferta es lo que el modelo
+predice**. El trabajo no es «ponerse al día»: es que el oráculo aplicable es el global.
+**Oferta:** los sponsors de la región someten a FDA y EMA, así que el entregable vendible es
+sumisión conforme con CORE como juez — el mismo producto que en NA, sin penalización regional,
+porque CDISC es un estándar global. El margen local está en el mapeo y en el idioma, que es el
+patrón P19 de este KB (*el mapeo terminológico como producto*).
+**Contexto de compra:** Brasil no tiene marco unificado de IA y la supervisión está repartida
+—el CFM cubre el uso médico, ANVISA y ANPD los sistemas (análisis de la IBA)—; los ministerios
+de salud de Argentina, Brasil, Chile y Colombia han lanzado iniciativas de IA; y el mercado
+regional de IA sanitaria se estimaba en USD 0,59 bn en 2025 (IMARC, previsión de *vendor*:
+**usar la dirección, no el punto**).
 ## Gaps verificados — por función, no por silencio
 
 - **(a) No hay capa agéntica permisiva para ciclo de ingresos / denegación de claims.** Lo más cercano
@@ -809,3 +874,83 @@ que imagen no tiene: fechas de obligación legal en el calendario europeo.**
 | (j) **NUEVO** — capa agéntica sobre uso secundario / OMOP | **Abierto y es ahora el más extremo de la KB**: `omop agent stars:>=5` → **2** sobre 398 repos de substrato desplegado |
 | (k) **NUEVO** — mapeo terminológico OMOP para pt-BR y es | **Abierto, con comprador y con causa raíz identificada.** Herramienta gratis (Usagi/WhiteRabbit, Apache-2.0), contenido ausente. **El entregable con margen del plano en LATAM** |
 | (l) **NUEVO** — tooling permisivo específico de EHDS | **Abierto, y es un hueco INFORMADO de los valiosos**: el mayor repo «EHDS» tiene 16★ y `NOASSERTION`. No es descuido: **es consecuencia de que el reglamento no nombre artefacto** (ver arriba) |
+
+---
+
+## Pase 2026-11-25 (c9) — una fórmula no es un oráculo: la ley del ciclo 8, corregida por experimento controlado
+
+### El hallazgo central
+
+El pase c8 (esta mañana) estableció que la frontera de la especificación necesita **dos**
+condiciones: mandato **y** artefacto. Este pase, en un plano nuevo, encuentra el caso que
+**separa el artefacto en dos cosas distintas** y obliga a refinar la ley una vez más.
+
+La investigación clínica contiene dos subplanos que comparten industria, año, lenguaje y
+comunidad, y difieren en **una sola** propiedad:
+
+| | Sumisión regulatoria (CDISC) | Farmacovigilancia |
+|---|---|---|
+| Fórmula / estadístico público | sí (reglas de conformidad) | sí (PRR, ROR, BCPNN) |
+| Formato de intercambio público | sí (SDTM/ADaM, Dataset-JSON) | sí (ICH E2B(R3)) |
+| Mandato regulatorio | sí (FDA, EMA, PMDA) | sí (y con responsabilidad penal en algunos regímenes) |
+| **Salida esperada publicada (fixture)** | **SÍ** (`cdisc-open-rules`: reglas **+ datos de prueba**, MIT) | **NO** |
+| **Oferta permisiva medida** | **176 repos**, hasta 328★, push diario | **0 adoptables**, máximo 1★ |
+
+Todo coincide menos el fixture, y el resultado se invierte por completo.
+
+> **Ley corregida: una FÓRMULA NO ES UN ORÁCULO. Un oráculo es una SALIDA ESPERADA PUBLICADA.**
+> Mientras nadie publique la respuesta correcta contra la que medirse, el mandato y el formato
+> no generan oferta permisiva: generan consultoría propietaria.
+
+Esto importa porque **confirma en una segunda industria, por vía independiente, el patrón P29
+del pase financiero («el fixture es el entregable»)**. Allí se derivó del cálculo de capital
+bancario; aquí aparece solo, en salud, desde el lado opuesto. Dos industrias no relacionadas,
+misma ley: deja de ser una observación de un plano y pasa a ser **regla transversal a las doce
+industrias de esta KB**. Y es inmediatamente operativa: ante un plano nuevo, la primera pregunta
+ya no es «¿hay mandato?» ni «¿hay formato?», sino **«¿alguien publica la respuesta correcta?»**.
+Si la respuesta es no, el entregable de Globant **es publicar el fixture**.
+
+### Estructura de la oferta: cuarta medición del patrón, y la línea de licencia es funcional
+
+| Organización / consulta | Repos | Lectura |
+|---|---|---|
+| `org:OHDSI` | 398 | Uso secundario (c8) |
+| `org:pharmaverse` | 86 | Sumisión, mantenido por GSK/Roche/Atorus |
+| `org:atorus-research` | 48 | Sumisión |
+| `org:cdisc-org` | 42 | El estándar y su motor |
+| `SDTM agent LLM` | **4** | La capa de arriba |
+| `ADaM automation LLM` | **2** | La capa de arriba |
+
+Y el hallazgo arquitectónico del pase, que no es una métrica sino una línea:
+
+> **La frontera de licencia de este plano cae entre CAPTURAR y SOMETER.** Captura (EDC/LIMS):
+> OpenClinica 519★ **sin fichero de licencia** y 13 meses parado, LibreClinica GPL, senaite
+> GPL-2.0, REDCap **no open source**. Sumisión: Apache-2.0 y MIT, mantenido por las farmacéuticas,
+> con push diario. Se integra la captura; se construye en la sumisión.
+
+### ⚠️ Marcado explícitamente como NO CITABLE en este pase
+
+- **El recuento de reglas de CORE v1.0** (se leyó «500 reglas SDTM y 183 reglas FDA» en un
+  snippet de buscador). La existencia del release **sí** está verificada en canal primario: el
+  tag `v1.0.0` aparece en `git ls-remote --tags`. **El número de reglas, no.** No usar en
+  propuesta sin contarlas en `cdisc-open-rules`.
+- **La fecha exacta de release de CORE v1.0** (un secundario la da como 4 de noviembre de 2026).
+  No verificada: `verisian.com` **no resuelve desde esta sesión** y habría que permitirlo en la
+  configuración de red del entorno para comprobarlo.
+- **El requisito CDISC de PMDA (Japón)**. Es conocido y casi con seguridad correcto, pero no se
+  verificó en fuente primaria en este pase.
+- Cifras de mercado de *vendor* usadas sólo por su dirección: USD 0,59 bn LATAM 2025 y 25,06%
+  CAGR (IMARC); 44,5% de cuota NA 2025; 94% de proveedores UE (estudio de la Comisión, marzo 2026).
+- Encuestas de proveedor/consultora citadas como lo que son: AMA 81% de médicos, HIMSS 46%/67%,
+  Roche ~30% de PoC a producción, IDC 75%.
+
+### Huecos — estado al 2026-11-25 (c9)
+
+| Hueco | Estado |
+|---|---|
+| Capa agéntica sobre sumisión regulatoria (SDTM/ADaM) | **ABIERTO y cuantificado**: 176 repos debajo, 2 encima. El mejor hueco medido del plano |
+| Farmacovigilancia agéntica permisiva | **ABIERTO y explicado**: falta el fixture, no el formato. Máximo 1★ |
+| Tooling CTIS (EMEA) | **ABIERTO**: 3 repos en total, el único activo tiene 0★ |
+| Tooling de sumisión APAC (PMDA/NMPA) | **ABIERTO**: 0 repos |
+| Tooling de investigación clínica LATAM | **CERO medido**, con mecanismo: ANVISA no publica clave de respuestas. No implica retraso |
+| Emparejamiento paciente-ensayo adoptable | **PARCIAL**: TrialMatchAI (MIT) y trialthread (Apache-2.0) sirven; **toda la familia MatchMiner, no** |

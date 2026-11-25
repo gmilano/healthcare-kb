@@ -188,3 +188,41 @@ incorpora SNOMED CT (licencia de Afiliado, obligatoria incluso donde es gratis) 
 (propiedad de la AMA, con cuotas). `OHDSI/Vocabulary-v5.0` es **Unlicense en el código que lo
 construye**, lo cual no cubre el contenido cargado. **Nunca prometer un nodo OMOP «todo open
 source»** sin aclarar en qué país está el cliente y qué conjuntos de códigos usa.
+
+---
+
+## Pase 2026-11-25 (c9) — verticales de investigación clínica: dónde sí se puede poner IA encima
+
+El patrón «plataforma real, personalizable, con IA encima» sí tiene equivalentes en este plano,
+pero **la licencia decide si se personaliza o sólo se integra**. Las cuatro reales:
+
+| Plataforma | Licencia (por bytes) | ★ | Push | Qué es | Modelo de personalización |
+|---|---|---|---|---|---|
+| [LabKey/platform](https://github.com/LabKey/platform) | **Apache-2.0** | 13★ | **2026-11-25** | Plataforma de datos de investigación (estudios, cohortes, ensayos, muestras) | **Personalizable y redistribuible.** Es el «Odoo» real de este plano |
+| [krishagni/openspecimen](https://github.com/krishagni/openspecimen) | **BSD-3-Clause** | — | — | Biobanco: participantes, consentimientos, inventario, envíos, API REST | Personalizable; permisivo |
+| [senaite/senaite.core](https://github.com/senaite/senaite.core) | **GPL-2.0** | 412★ | **2026-11-25** | LIMS clínico en producción, muy activo | **Integrar, no forkear.** Copyleft: una entrega derivada arrastra GPL-2.0 |
+| [OpenClinica/OpenClinica](https://github.com/OpenClinica/OpenClinica) | **sin fichero de licencia** (ausencia medida) | 519★/317f | 2025-10-28 | EDC/CDM de referencia del sector | **No partir de aquí.** Sin fichero no hay procedencia, y lleva 13 meses parado |
+
+### Lo que estas cuatro cambian en una propuesta
+
+La regla arquitectónica de este plano, y es nítida:
+
+> **La frontera de licencia cae entre CAPTURAR y SOMETER.** El plano de captura (EDC/LIMS) es
+> copyleft o sin procedencia; el plano de sumisión (CDISC/pharmaverse) es permisivo y está
+> mantenido por las propias farmacéuticas (GSK, Roche, Atorus, Bayer).
+
+Consecuencia directa y vendible: **no se construye el EDC, se construye encima del EDC del
+cliente.** Se integra la captura por su interfaz (ODM, API REST, Dataset-JSON) y se pone la
+capa propia donde la licencia es permisiva y donde además está el entregable que el regulador
+exige. `pharmaverse/sdtm.oak` existe precisamente para eso: es un motor ODM→SDTM
+**agnóstico de EDC**, Apache-2.0. Es la bisagra entre los dos planos, y es la pieza que hace
+que esta regla sea ejecutable y no un consejo.
+
+### Advertencia que este fichero ya tenía y que aquí se repite con un caso nuevo
+
+El ciclo 6 estableció que *la licencia del código no es la licencia del contenido*. En este
+plano reaparece en su forma más caras: la **terminología controlada de CDISC** (los *codelists*
+de SDTM/ADaM) se publica a través de CDISC Library y del NCI EVS con sus propias condiciones,
+distintas del MIT del motor que las consume. [`humanpred/cdiscdata`](https://github.com/humanpred/cdiscdata)
+(MIT vía `DESCRIPTION`) empaqueta terminología versionada, y conviene revisar la procedencia del
+**contenido** antes de redistribuirlo con un entregable, aunque el **código** sea MIT.

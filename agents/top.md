@@ -305,3 +305,94 @@ healthcare agent created:>2026-08-01 stars:>=50   →   total = 1
 
 Mismo `fabric-mlv-agent-healthcare-starter`, **149★ y 1 fork**, idéntico a la medición de esta
 mañana. Sexta medición consecutiva sin *boom* de agentes verticales permisivos.
+
+---
+
+## Pase 2026-11-25 (c9) — la capa agéntica sobre la investigación clínica: un oráculo con clave de respuestas y otro sin ella
+
+Tercer pase del día, y **plano nuevo que la KB no había abierto en seis pases**: la
+investigación clínica (sumisión regulatoria, captura de datos, emparejamiento a ensayo,
+farmacovigilancia). Medición de entrada sobre los 3.107 líneas previas: `CDISC` = 0
+menciones, `SDTM` = 0, `EDC` = 0, `farmacovigilancia` = 0, `ensayo clínico` = 0.
+No era un hueco de profundidad: era un plano entero ausente.
+
+### El hallazgo central: una comparación controlada, misma industria y mismo año
+
+Este plano contiene **dos subplanos con el mismo formato publicado y resultados opuestos**,
+lo que permite por primera vez aislar qué propiedad genera oferta permisiva:
+
+| Subplano | Fórmula pública | Formato público | **Clave de respuestas pública** | Oferta permisiva medida |
+|---|---|---|---|---|
+| Sumisión regulatoria (CDISC) | sí (reglas de conformidad) | sí (SDTM/ADaM/Dataset-JSON) | **SÍ** — [`cdisc-org/cdisc-open-rules`](https://github.com/cdisc-org/cdisc-open-rules) publica *reglas + datos de prueba*, MIT | **176 repos** (pharmaverse 86 + atorus-research 48 + cdisc-org 42) |
+| Farmacovigilancia | sí (PRR/ROR, BCPNN) | sí (ICH E2B(R3)) | **NO** — nadie publica la salida esperada | **0 repos adoptables**; el máximo es 1★ |
+
+**Conclusión que corrige la ley del oráculo de esta KB: una FÓRMULA NO ES UN ORÁCULO.**
+Hace falta que alguien publique **la salida esperada** — el fixture. Farmacovigilancia tiene
+estadístico publicado y formato publicado, y su oferta es de aficionado; CDISC publica
+`rules + test data` bajo MIT y tiene el ecosistema permisivo más maduro del sector sanitario
+después de OHDSI. Esto **confirma en una segunda industria el patrón P29 del pase financiero
+(«el fixture es el entregable»)**: allí se derivó del capital regulatorio, aquí aparece solo,
+en salud, por una vía independiente. Deja de ser una observación y pasa a ser ley transversal.
+
+### Agentes y herramientas agénticas del plano — verificados uno por uno
+
+Licencia **abierta por bytes**; existencia por `git ls-remote`; ★/push por `search/repositories`.
+
+| Agente / herramienta | Licencia (por bytes) | ★ | Último push | Qué hace y por qué está aquí |
+|---|---|---|---|---|
+| [cdisc-org/cdisc-rules-engine](https://github.com/cdisc-org/cdisc-rules-engine) | **MIT** (`LICENSE`) | 126★/50f | **2026-11-25** | CORE: el motor de reglas de conformidad de CDISC. Tag `v1.0.0` confirmado por `ls-remote --tags`. **El oráculo ejecutable del plano.** Push el día del pase |
+| [cdisc-org/cdisc-open-rules](https://github.com/cdisc-org/cdisc-open-rules) | **MIT** (`LICENSE`) | 12★ | **2026-11-25** | Reglas **y datos de prueba** procesables por CORE. 12★ no mide nada: es la clave de respuestas |
+| [ericporres/trialthread](https://github.com/ericporres/trialthread) | **Apache-2.0** (`LICENSE`) | 8★ | 2026-11-22 | Agente que lee los criterios de elegibilidad y explica cada match; no almacena datos de paciente |
+| [cbib/TrialMatchAI](https://github.com/cbib/TrialMatchAI) | **MIT** (`LICENSE`) | 43★ | 2026-11-20 | Emparejamiento paciente-ensayo con LLM abiertos, despliegue local (*Nat Commun* 2026). GitHub lo marcaba `NOASSERTION` |
+| [ncbi-nlp/TrialGPT](https://github.com/ncbi-nlp/TrialGPT) | **Dominio público** (NCBI Public Domain Notice) | 185★ | 2025-01-24 | Recuperación + puntuación de elegibilidad del NIH/NCBI. **Obra del Gobierno de EE.UU.: no es copyrightable.** Parado 22 meses |
+| [PrashantRGore/icsr-multi-agent-pipeline](https://github.com/PrashantRGore/icsr-multi-agent-pipeline) | **MIT** (`LICENSE`) | 1★ | 2026-10-29 | Pipeline ICSR con LangGraph + Ollama, export E2B(R3), humano en el bucle. **Único permisivo y activo de farmacovigilancia — y tiene 1★** |
+| [WeDoCareGlobal-CC/pharma-intelligence-os](https://github.com/WeDoCareGlobal-CC/pharma-intelligence-os) | **Apache-2.0** (`LICENSE`) | 0★ | 2026-10-15 | Workspace de revisión ICSR, E2B(R3), PRR/ROR, borradores PSUR/PBRER |
+| [ai-summer2025/clinical-trial-scout-agent](https://github.com/ai-summer2025/clinical-trial-scout-agent) | **MIT** (`LICENSE`) | 0★ | 2026-10-28 | Pipeline de 5 agentes sobre la API v2 de ClinicalTrials.gov. Sin APIs de pago |
+
+Ocho filas reales, verificadas. No se rellena a diez.
+
+### ⛔ Capa de corrección — la trampa de licencia más grave que esta KB ha encontrado
+
+**[dfci/matchminer-ai-inference](https://github.com/dfci/matchminer-ai-inference) — 29★, push
+2026-11-20, licencia `CC BY-NC-ND 4.0`. NO ADOPTABLE.**
+
+La contradicción es documental y está en el propio repositorio:
+
+- El **título del paper** es *«MatchMiner-AI: An Open-Source Solution for Cancer Clinical Trial Matching»* (arXiv 2412.17228).
+- El **README** afirma literalmente: *«MatchMiner-AI is **open source and uses open-weight models**»*.
+- El **LICENSE**, abierto por bytes, dice: `Attribution-NonCommercial-NoDerivatives 4.0 International`.
+
+`NonCommercial` **y** `NoDerivatives` a la vez: Globant no puede usarlo en una entrega de
+cliente ni modificarlo. Es el primer caso medido en esta KB en que el proyecto **se
+autodescribe como open source en su propio README** y la licencia lo desmiente. Regla que
+sale de aquí: *la palabra «open source» en el README y en el título del paper no es un canal
+de licencia; el único canal es el fichero.*
+
+**El resto de la familia MatchMiner, medida:**
+
+| Repo | ★ | Licencia (por bytes) | Estado real |
+|---|---|---|---|
+| [dfci/matchminer](https://github.com/dfci/matchminer) | 54★ | **ninguna** | **Contiene 4 ficheros y ningún código.** `master` sólo aloja el README de portada; el sitio está en la rama `site`. Las 54★ miden una web |
+| [dfci/matchminer-ai-inference](https://github.com/dfci/matchminer-ai-inference) | 29★ | **CC BY-NC-ND 4.0** | No adoptable (NC + ND) |
+| [dfci/matchminer-ui](https://github.com/dfci/matchminer-ui) | 9★ | **AGPL-3.0** | Copyleft de red |
+| [dfci/matchminer-api](https://github.com/dfci/matchminer-api) | 22★ | **ninguna** (ausencia **medida**: `README.md` responde 200) | Parado desde 2023-12-05 |
+
+El emparejador oncológico «open source» de referencia del sector **no tiene una sola pieza
+adoptable**. Si un cliente lo nombra en un RFP, ésta es la respuesta, con los cuatro ficheros
+de licencia abiertos.
+
+**[ai-summer2025/clinical-trial-matcher-agent](https://github.com/ai-summer2025/clinical-trial-matcher-agent)** — 0★, sin fichero de licencia (ausencia medida). No adoptable aunque el README prometa informe «listo para médico».
+
+### El contador de agentes verticales — séptima medición consecutiva, y sigue clavado
+
+Medición del hueco agéntico sobre el plano de sumisión, con el canal de precisión:
+
+| Consulta | Repos |
+|---|---|
+| `org:pharmaverse` + `org:atorus-research` + `org:cdisc-org` (substrato) | **176** |
+| `SDTM agent LLM` | **4** |
+| `ADaM automation LLM` | **2** |
+
+176 repos de substrato permisivo debajo; **2 repos** de automatización agéntica encima del
+entregable que la FDA exige. Séptima medición consecutiva del mismo patrón en esta KB
+(FHIR, imagen, OMOP, y ahora sumisión regulatoria). Ya no es un hueco: es la forma del sector.

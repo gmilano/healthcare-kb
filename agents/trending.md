@@ -9,6 +9,45 @@ updated: 2026-11-25
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 > Reescribir este archivo destruiría la tendencia que existe para registrar.
 
+## 2026-11-25 (c9) — la investigación clínica entra en la KB, y su emparejador de referencia no es adoptable
+
+Tercer pase del día. Plano nuevo: **investigación clínica**. Lo que trae esta semana no es un
+agente nuevo, es una **corrección de licencia que afecta a un nombre que aparece en RFPs**.
+
+### Nuevo esta semana: agentes del plano, con licencia abierta por bytes
+
+| Repo | Licencia (fichero abierto) | ★ | Último push | Señal |
+|---|---|---|---|---|
+| [cdisc-org/cdisc-rules-engine](https://github.com/cdisc-org/cdisc-rules-engine) | MIT (`LICENSE`) | 126★/50f | **2026-11-25** | CORE. Tag `v1.0.0` confirmado por `ls-remote --tags`. Push el día del pase |
+| [cdisc-org/cdisc-open-rules](https://github.com/cdisc-org/cdisc-open-rules) | MIT (`LICENSE`) | 12★ | **2026-11-25** | Reglas **+ datos de prueba**. La clave de respuestas del plano |
+| [ericporres/trialthread](https://github.com/ericporres/trialthread) | Apache-2.0 (`LICENSE`) | 8★ | 2026-11-22 | Agente de elegibilidad que explica cada match; no persiste datos de paciente |
+| [cbib/TrialMatchAI](https://github.com/cbib/TrialMatchAI) | MIT (`LICENSE`) | 43★ | 2026-11-20 | *Nat Commun* 2026, LLM abiertos, despliegue local. GitHub: `NOASSERTION` |
+| [pipeworx-io/mcp-eu-ctis](https://github.com/pipeworx-io/mcp-eu-ctis) | MIT (`LICENSE`) | 0★ | 2026-11-09 | **MCP sobre el CTIS de la UE.** 0★ y es el único del plano regulatorio europeo |
+| [PrashantRGore/icsr-multi-agent-pipeline](https://github.com/PrashantRGore/icsr-multi-agent-pipeline) | MIT (`LICENSE`) | 1★ | 2026-10-29 | Único permisivo y activo de farmacovigilancia, con 1★ |
+
+### ⛔ La corrección de la semana: «MatchMiner-AI es open source» lo dice su README, y su licencia dice que no
+
+[dfci/matchminer-ai-inference](https://github.com/dfci/matchminer-ai-inference) — 29★, push
+2026-11-20 — lleva **`CC BY-NC-ND 4.0`**: *NonCommercial* **y** *NoDerivatives*. Y sin embargo:
+
+- el paper se titula *«MatchMiner-AI: An Open-Source Solution for Cancer Clinical Trial Matching»*;
+- el README dice *«MatchMiner-AI is open source and uses open-weight models»*.
+
+Primera vez que esta KB mide un proyecto que **se autodeclara open source en su propio README**
+con una licencia que prohíbe uso comercial y derivados. La familia completa:
+`matchminer` 54★ **sin código** (4 ficheros; `master` sólo aloja el README de portada),
+`matchminer-ui` **AGPL-3.0**, `matchminer-api` **sin licencia** (ausencia medida, `README.md`=200).
+**Ninguna pieza adoptable.**
+
+### Tendencia de método: diez falsos negativos de licencia en un pase, todos del mismo lenguaje
+
+`R` es el lenguaje del ensayo clínico y su convención `License: MIT + file LICENSE` deja un
+`LICENSE` de **dos líneas** (`YEAR:` / `COPYRIGHT HOLDER:`) sin texto legal. GitHub devuelve
+`NOASSERTION` y un gate que grep-ea `LICENSE` concluye «sin licencia». Afectados y corregidos
+este pase: `teal`, `rtables`, `cards`, `cardinal`, `logrx`, `metatools`, `xportr`, `metacore`,
+`cdiscdata`, `coreval` — **todos permisivos de verdad**.
+
+
 ## 2026-11-25 (c8) — el uso secundario del dato entra en la KB, y su capa agéntica tiene dos repos
 
 Segundo pase del día. El de la mañana abrió imagen y scribes; este abre **uso secundario del

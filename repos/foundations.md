@@ -336,3 +336,95 @@ Apache-2.0** declarada en el `DESCRIPTION` de R. Una puerta que sólo lea `LICEN
 stack HADES completo. Orden correcto: `LICENSE*` → `DESCRIPTION` → `pyproject.toml`/`setup.py` →
 `pom.xml` → `package.json` → `README`. Patrón **P18**. Y en sentido inverso, `NOASSERTION` siguió
 resolviendo a permisiva genuina: **10 de 10** en la historia de la KB.
+
+---
+
+## Pase 2026-11-25 (c9) — investigación clínica: el substrato de sumisión (permisivo) y el de captura (copyleft)
+
+Plano nuevo. La frontera de licencia de este plano **no cae por tecnología, cae por función**:
+lo que se **somete** al regulador es permisivo; lo que **captura** el dato es copyleft o no tiene
+licencia medible. Esa línea decide la arquitectura, y se puede dibujar con los bytes.
+
+### Substrato de sumisión regulatoria — permisivo, maduro y activo
+
+| Repo | Licencia (canal abierto) | ★/forks | Último push | Función |
+|---|---|---|---|---|
+| [pharmaverse/admiral](https://github.com/pharmaverse/admiral) | Apache-2.0 (`LICENSE.md`) | 328★ | 2026-11-24 | ADaM in R Asset Library. **La pieza más estrellada del plano** |
+| [pharmaverse/teal](https://github.com/pharmaverse/teal) | Apache-2.0 (`LICENSE`) | 268★ | **2026-11-25** | Apps web exploratorias sobre datos de ensayo. GitHub: `NOASSERTION` |
+| [pharmaverse/rtables](https://github.com/pharmaverse/rtables) | **MIT** (`LICENSE`) | 262★ | 2026-10-01 | Tablas de reporte. GitHub: `NOASSERTION` |
+| [pharmaverse/tern](https://github.com/pharmaverse/tern) | Apache-2.0 | 108★ | 2026-11-22 | Librería TLG (tablas, listados, gráficos) de ensayo clínico |
+| [pharmaverse/sdtm.oak](https://github.com/pharmaverse/sdtm.oak) | Apache-2.0 (`LICENSE.md`) | 79★ | 2025-06-24 | Motor de transformación ODM→SDTM agnóstico de EDC |
+| [pharmaverse/cards](https://github.com/pharmaverse/cards) | Apache-2.0 (`LICENSE.md`) | 61★ | **2026-11-25** | CDISC Analysis Results Data |
+| [pharmaverse/cardinal](https://github.com/pharmaverse/cardinal) | Apache-2.0 (`LICENSE.md`) | 61★ | 2026-11-22 | **Tablas y figuras de seguridad de la FDA** |
+| [cdisc-org/analysis-results-standard](https://github.com/cdisc-org/analysis-results-standard) | MIT (`LICENSE`) | 74★ | 2026-11-04 | Analysis Results Standard (ARS) |
+| [cdisc-org/DDF-RA](https://github.com/cdisc-org/DDF-RA) | MIT (`LICENSE`) | 58★ | 2026-11-20 | Digital Data Flow Reference Architecture: **el protocolo como dato estructurado** |
+| [cdisc-org/DataExchange-DatasetJson](https://github.com/cdisc-org/DataExchange-DatasetJson) | MIT (`LICENSE`) | 40★ | 2026-03-11 | Dataset-JSON: el sustituto de SAS XPT |
+| [cdisc-org/COSMoS](https://github.com/cdisc-org/COSMoS) | MIT (`LICENSE`) | 35★ | 2026-11-11 | Metadatos conceptuales y operacionales de los estándares |
+| [cdisc-org/usdm](https://github.com/cdisc-org/usdm) | MIT (`LICENSE`) | 26★ | 2026-07-06 | Unified Study Definitions Model |
+| [atorus-research/xportr](https://github.com/atorus-research/xportr) | **MIT** (`DESCRIPTION`) | 56★ | 2026-11-02 | Escritura de XPT conforme a sumisión. GitHub: `NOASSERTION` |
+| [atorus-research/metacore](https://github.com/atorus-research/metacore) | **MIT** (`DESCRIPTION`) | 53★ | 2026-08-19 | Metadatos de especificación legibles por máquina |
+| [atorus-research/datasetjson](https://github.com/atorus-research/datasetjson) | Apache-2.0 (`LICENSE.md`) | 27★ | 2026-10-22 | Lectura/escritura de Dataset-JSON en R |
+| [cdisc-org/cosa](https://github.com/cdisc-org/cosa) | MIT (`LICENSE`) | 19★ | 2026-11-05 | **Directorio de la CDISC Open Source Alliance**: el índice del propio plano |
+| [cdisc-org/conformance-rules-editor](https://github.com/cdisc-org/conformance-rules-editor) | MIT (`LICENSE`) | 14★ | 2026-05-11 | Editor de las reglas que ejecuta CORE |
+
+Diecisiete filas, todas con licencia abierta por bytes. **Cinco con push en los últimos seis días.**
+
+### ⚠️ La tercera trampa de licencia del sector, y la peor para automatizar: el stub de R
+
+`R` es **el lenguaje del ensayo clínico**, y su convención de empaquetado rompe cualquier puerta
+de licencia que mire el fichero `LICENSE`. En un paquete R con `License: MIT + file LICENSE`, el
+fichero `LICENSE` **no contiene texto de licencia**: contiene dos líneas.
+
+```
+YEAR: 2021
+COPYRIGHT HOLDER: GSK/Atorus JPT
+```
+
+Eso es todo el fichero `LICENSE` de `pharmaverse/logrx`. Un gate que haga
+`grep -q "MIT License" LICENSE` **devuelve falso en todo paquete R del plano** y lo clasifica
+como «sin licencia». El campo autoritativo es `DESCRIPTION:` → `License:`.
+
+Y es exactamente por esto que **la API de GitHub devuelve `NOASSERTION`** en diez repos de este
+pase: `teal`, `rtables`, `cards`, `cardinal`, `logrx`, `metatools`, `xportr`, `metacore`,
+`cdiscdata` y `coreval`. Todos tienen licencia permisiva real. **Diez falsos negativos de
+licencia en un solo pase, todos del mismo lenguaje.**
+
+Esto **extiende P18** (puerta de licencia consciente del lenguaje) con la regla concreta que
+faltaba: para R, leer `DESCRIPTION`, y tratar un `LICENSE` de dos líneas como *stub*, no como
+ausencia. Verificados con esta regla:
+
+| Repo | API GitHub | `DESCRIPTION` (byte real) |
+|---|---|---|
+| [pharmaverse/logrx](https://github.com/pharmaverse/logrx) | `NOASSERTION` | `MIT + file LICENSE` → **MIT**, 49★ |
+| [pharmaverse/metatools](https://github.com/pharmaverse/metatools) | `NOASSERTION` | `MIT + file LICENSE` → **MIT**, 25★ |
+| [humanpred/cdiscdata](https://github.com/humanpred/cdiscdata) | `NOASSERTION` | `MIT + file LICENSE` → **MIT**, terminología CT versionada |
+| [hrach-gevorgyan/coreval](https://github.com/hrach-gevorgyan/coreval) | `NOASSERTION` | `MIT + file LICENSE` → **MIT**, 3★, 1.054 reglas |
+
+### Substrato de captura de datos (EDC) — copyleft, sin licencia medible, o parado
+
+| Repo | Licencia (por bytes) | ★/forks | Último push | Lectura |
+|---|---|---|---|---|
+| [OpenClinica/OpenClinica](https://github.com/OpenClinica/OpenClinica) | **ningún fichero de licencia en el repo** | 519★/317f | 2025-10-28 | El EDC open source de referencia. **No hay LICENSE/COPYING: los seis candidatos dan 404 y el `README.md` da 200, así que la ausencia está MEDIDA.** El README enlaza a una página del *vendor* («GNU LGPL»): eso es una promesa comercial, no un fichero. Y está parado 13 meses |
+| [ddRPB/LibreClinica](https://github.com/ddRPB/LibreClinica) | **GPL** (`LICENSE`) | — | — | Fork comunitario de OpenClinica 3.14. Copyleft. `search` lo devuelve nulo; `ls-remote` confirma que existe |
+| [LabKey/platform](https://github.com/LabKey/platform) | **Apache-2.0** (`LICENSE`) | 13★ | **2026-11-25** | **La única pieza permisiva y activa del plano de captura.** Push el día del pase |
+| [LabKey/labkey-api-python](https://github.com/LabKey/labkey-api-python) | Apache-2.0 (`LICENSE.txt`) | 26★ | 2026-11-02 | Cliente Python de LabKey |
+| [senaite/senaite.core](https://github.com/senaite/senaite.core) | **GPL-2.0** (`LICENSE`) | 412★ | **2026-11-25** | LIMS clínico muy activo, copyleft. *Corrección de este pase: una primera clasificación automática lo marcó «LGPL»; el fichero dice `GNU GENERAL PUBLIC LICENSE Version 2`. La API tenía razón y el regex no* |
+| [krishagni/openspecimen](https://github.com/krishagni/openspecimen) | **BSD-3-Clause** (`LICENSE.md`) | — | — | Biobanco/biorepositorio (ex caTissue Plus). Permisivo. `search` nulo, `ls-remote` OK |
+
+**REDCap no entra en esta tabla y hay que decirlo en voz alta: no es open source.** Se distribuye
+a instituciones consorciadas bajo acuerdo de licencia y se autoaloja; no hay repositorio público.
+Aparece en listados de «EDC open source» de terceros, y es un error que conviene no heredar.
+
+### El dominio público como cuarta categoría de licencia
+
+Dos activos de este plano no son ni permisivos ni copyleft: **no tienen copyright**.
+
+| Repo | Instrumento | ★ | Lectura para Globant |
+|---|---|---|---|
+| [FDA/openfda](https://github.com/FDA/openfda) | **CC0-1.0** (`COPYING.txt`, abierto por bytes) | 720★ | Dedicación al dominio público. *Nota de canal: los cuatro `LICENSE*` dan 404; el fichero se llama `COPYING.txt` y sólo apareció al clonar* |
+| [ncbi-nlp/TrialGPT](https://github.com/ncbi-nlp/TrialGPT) | **NCBI Public Domain Notice** (obra del Gobierno de EE.UU., no copyrightable) | 185★ | Uso sin restricción declarada; parado desde 2025-01-24 |
+
+Uso máximo, **y ninguna cláusula de garantía**: para una entrega de cliente hay que envolverlos
+en el propio aseguramiento. La taxonomía de licencia de esta KB pasa así a **seis categorías**:
+permisiva · copyleft · contenido no libre · ausencia medible · **dominio público** ·
+**CC-NC-ND presentada como open source**.
