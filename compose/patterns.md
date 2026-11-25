@@ -779,3 +779,175 @@ revisión humana que lea el README (*«MatchMiner-AI is open source»*) y el tí
 (*«An Open-Source Solution»*), y falla en la línea 1 de su `LICENSE`
 (`Attribution-NonCommercial-NoDerivatives 4.0 International`). La puerta la habría parado;
 la lectura, no.
+
+---
+
+## Pase 2026-11-25 (c10) — patrones P25 a P28
+
+### P25 · Monitorización remota sobre el algoritmo permisivo, nunca sobre la plataforma copyleft
+
+**El problema que resuelve.** Toda propuesta de monitorización remota tropieza con Nightscout:
+funciona, lleva una década en producción y tiene **73.399 forks**. Y es **AGPL-3.0**, cuyo alcance
+llega al **uso por red**: ofrecerlo modificado como servicio obliga a publicar la fuente de la
+modificación a los usuarios del servicio. Forkear y cerrar no es una opción.
+
+**El cableado.** La frontera de licencia de este plano es arquitectónica, así que se construye en
+el lado permisivo y se deja el copyleft detrás de una frontera de proceso:
+
+1. **Ingesta de señal** — [`MIT-LCP/wfdb-python`](https://github.com/MIT-LCP/wfdb-python) (MIT) para
+   forma de onda y [`neuropsychology/NeuroKit`](https://github.com/neuropsychology/NeuroKit) (MIT)
+   para ECG/PPG/EDA. Normalización al esquema de
+   [`openmhealth/schemas`](https://github.com/openmhealth/schemas) (Apache-2.0).
+2. **Juicio clínico** — [`openaps/oref0`](https://github.com/openaps/oref0) (MIT) o
+   [`LoopKit/LoopKit`](https://github.com/LoopKit/LoopKit) (MIT) **como referencia de algoritmo**:
+   es la única capa de decisión clínica que esta KB ha encontrado disponible en licencia permisiva
+   en diez pases. Las reglas del cliente van en una **biblioteca versionada que el cliente posee**,
+   no en el *prompt* (misma regla que la biblioteca CQL de P10).
+3. **Persistencia clínica** — `medplum` (Apache-2.0, ya en esta KB) o
+   [`tidepool-org/platform`](https://github.com/tidepool-org/platform) (BSD-2-Clause) si el dominio
+   es diabetes: Tidepool ya resuelve ingesta desde bombas y medidores con
+   [`uploader`](https://github.com/tidepool-org/uploader) (BSD-2).
+4. **Integración multi-dispositivo a cabecera** — [`mdpnp/mdpnp`](https://github.com/mdpnp/mdpnp)
+   (BSD-2, OpenICE): la única base permisiva **viva** de interoperabilidad de dispositivo.
+   **No** `signove/antidote` (LGPL, sin push desde 2021-05-14).
+5. **App de paciente** — [`StanfordSpezi/Spezi`](https://github.com/StanfordSpezi/Spezi) +
+   [`SpeziLLM`](https://github.com/StanfordSpezi/SpeziLLM) (MIT ambos, push esta semana).
+6. **Nightscout, si se usa, como fuente de interoperabilidad detrás de un límite de proceso** —
+   se consume su API, no se incorpora su código al artefacto distribuido.
+7. **Persona aprueba toda consecuencia terapéutica.** Es dosificación: el humano firma.
+
+**Lo que nunca hay que hacer:** forkear `nightscout/cgm-remote-monitor` o `AndroidAPS` dentro del
+producto, ni partir de [`LoopKit/LoopWorkspace`](https://github.com/LoopKit/LoopWorkspace) — que
+con 8.859 forks **no tiene fichero de licencia propio** (verificado por clon; la licencia vive un
+nivel más abajo, en cada submódulo). Y cuidado con
+[`LoopKit/Loop`](https://github.com/LoopKit/Loop): es **MIT con excepciones explícitas para
+frameworks y gráficos**, así que los activos visuales no se redistribuyen sin leer la reserva.
+
+**Qué evidencia produce.** Un manifiesto de licencias del artefacto distribuido que demuestra
+**cero componentes AGPL/GPL**, generado por la puerta de P28 en cada build. Es también la respuesta
+a la pregunta que un cliente con asesoría jurídica hará en la primera reunión.
+
+### P26 · La puerta de SBOM de la §524B como entregable de cliente (no como plataforma)
+
+**El problema que resuelve.** La FDA exige, en la sumisión de todo *cyber device* (510(k), PMA,
+De Novo, PDP, HDE), un **SBOM legible por máquina** que cubra componentes comerciales, **open
+source** y *off-the-shelf*; si no se aporta, hay que justificar la omisión. Las herramientas que lo
+producen son maduras, permisivas y **no son sanitarias**: ahí está el vínculo que falta.
+
+**El cableado**, cinco piezas Apache-2.0, ninguna que haya que escribir:
+
+1. [`CycloneDX/cdxgen`](https://github.com/CycloneDX/cdxgen) o
+   [`anchore/syft`](https://github.com/anchore/syft) generan el SBOM en cada build, por lenguaje y
+   por imagen.
+2. [`CycloneDX/cyclonedx-cli`](https://github.com/CycloneDX/cyclonedx-cli) normaliza, mezcla los
+   SBOM de los subsistemas del dispositivo y **valida** el documento.
+3. [`DependencyTrack/dependency-track`](https://github.com/DependencyTrack/dependency-track) los
+   recibe y mantiene el **inventario continuo** — que es lo que convierte un SBOM de sumisión en
+   vigilancia postmercado, la mitad que casi nadie entrega.
+4. [`aquasecurity/trivy`](https://github.com/aquasecurity/trivy) aporta el contraste de
+   vulnerabilidad sobre el mismo inventario.
+5. **VEX** sobre lo anterior: la explotabilidad real en el contexto del dispositivo es lo que
+   evita que una CVE irrelevante bloquee una sumisión.
+
+**El vínculo sanitario, que es el margen:** el mapeo del inventario a los apartados de la sumisión
+y a la documentación de ciclo de vida. Nadie lo ha publicado —`medical device SBOM` = **12 repos**,
+`medical device cybersecurity` = **58**— y no requiere construir herramienta.
+
+**Advertencia de encuadre, regla P9 aplicada:** la obligación de SBOM es **ley** (§524B). El
+borrador de la FDA de enero de 2025 sobre *AI-enabled device software functions* **seguía sin
+finalizar** en 2026. Se vende el artefacto obligatorio, **no** un formato de IA que aún no existe.
+Y no se afirma que la FDA rechace automáticamente por SBOM ausente: eso lo dicen blogs de
+proveedores y no está verificado (ver `intel/market.md`, no citable n.º 1).
+
+### P27 · Cruzar la puerta regulatoria con código abierto: la maniobra Tidepool
+
+**Para qué sirve.** Es el único camino **medido** por el que open source sanitario ha obtenido una
+autorización regulatoria, y responde a la pregunta que hunde propuestas: *«¿se puede certificar algo
+open source?»*. Sí, y el mecanismo tiene cuatro pasos y un dueño.
+
+| Paso | Lo que ocurrió en el caso de referencia |
+|---|---|
+| 1. Congelar una versión | La autorización cubre **una versión**, no «el proyecto». El enfoque open source en general no queda avalado |
+| 2. Una entidad firma y asume el ciclo de vida | **Tidepool**, sin ánimo de lucro, añadió los controles regulatorios sobre código de la comunidad |
+| 3. Esperar el ciclo | Sumisión a finales de **2020** → autorización FDA el **2023-01-23**. ~2 años |
+| 4. Distribuir con socio comercial | Sequel Med Tech, como *twiist Loop* |
+
+**Estado observable ahora mismo:** Loop 2.0 **sometido en julio de 2026 y en revisión**; Loop 3.0
+en desarrollo, no sometido. El ciclo se está repitiendo y se puede seguir.
+
+**Lo que esto prohíbe prometer:** *«lo liberamos y lo certificamos»* como un solo movimiento. Son
+dos movimientos, el segundo dura del orden de dos años y **exige un titular que firme**. En una
+propuesta, el entregable honesto es el **expediente y el rol de titular**, no la autorización.
+
+**Complementa a P12, no lo sustituye.** P12 dice *dónde* aparecerá oferta permisiva (donde el
+regulador convierte un juicio en artefacto computable). P27 dice *cómo se cruza la puerta*: con un
+artefacto congelado y un dueño.
+
+### P28 · Puerta de licencia v6 — tres categorías nuevas y un falso positivo propio corregido
+
+Las versiones anteriores (P8, P16, P24) siguen vigentes. Esto añade lo que este pase midió, y la
+primera regla corrige un defecto de la propia puerta que esta KB venía recomendando.
+
+```bash
+# licence-gate v6 — añade: (8) "noncommercial" aparece UNA VEZ en el texto GPL/AGPL;
+# (9) el artefacto que la gente forkea puede ser un manifiesto de submódulos SIN licencia;
+# (10) NOASSERTION puede ser NO COMERCIAL (PolyForm) — la racha "10 de 10" quedó rota.
+
+# (8) FALSO POSITIVO MEDIDO Y CORREGIDO. El texto de GPL-3.0 y AGPL-3.0 contiene la palabra
+#     "noncommercial" exactamente UNA vez. Un `grep -i noncommercial` para bloquear CC-NC
+#     bloquea TODO repo GPL/AGPL. En este pase: 5 falsos positivos (cgm-remote-monitor,
+#     AndroidAPS, xDrip, get-based, codeforjapan x2) frente a 2 positivos genuinos.
+#     DISCRIMINANTE: anclar en el TITULO (3 primeras lineas) y exigir >=2 apariciones.
+nc_count=$(grep -oic 'noncommercial' "$LIC")
+title=$(head -3 "$LIC")
+if echo "$title" | grep -qiE 'creative commons.*noncommercial|polyform noncommercial' \
+   || { [ "$nc_count" -ge 2 ] && echo "$title" | grep -qi 'noncommercial'; }; then
+  echo "BLOQUEO: licencia NO COMERCIAL genuina"; exit 1
+fi
+# 1 aparicion y sin titulo NC => texto GPL incidental. NO bloquear por ese motivo
+# (bloquear por copyleft, si aplica, es otra regla).
+
+# (9) MANIFIESTO DE SUBMODULOS SIN LICENCIA. LoopKit/LoopWorkspace: 8859 forks, CERO ficheros
+#     de licencia (confirmado por CLON, nunca por 404 de raw: regla 7 de v4). La licencia vive
+#     un nivel mas abajo, en cada submodulo. Si existe .gitmodules y no hay LICENSE en la raiz,
+#     NO concluir "sin licencia": resolver submodulo por submodulo.
+if [ -f .gitmodules ] && [ -z "$LIC" ]; then
+  echo "AVISO: manifiesto de submodulos — auditar cada submodulo, no la raiz"
+  grep -E '^\s*url' .gitmodules   # y pasar cada uno por esta misma puerta
+fi
+
+# (10) NOASSERTION NO IMPLICA PERMISIVA. Contraejemplo medido: thinkwee/HiMe = NOASSERTION en
+#      el metadato, PolyForm Noncommercial 1.0.0 en los bytes (linea 3). De NOASSERTION se
+#      sigue "SIN MEDIR", no "permisiva". Abrir siempre el fichero.
+
+# (11) PERMISIVA CON RESERVA DE ACTIVOS. LoopKit/Loop: LICENSE.md de 15.235 B que empieza
+#      "released under the MIT license (MIT) — With exceptions for frameworks and graphics".
+#      Un gate que pregunte solo "es MIT?" contesta SI y se salta la reserva sobre los
+#      graficos, que es justo lo que redistribuye un derivado comercial.
+#      REGLA: si el LICENSE pesa >3 KB y declara MIT/BSD, buscar "exception|portions|except".
+if [ "$(wc -c <"$LIC")" -gt 3072 ] && grep -qi 'mit license\|bsd' "$LIC"; then
+  grep -niE 'exception|portions|except for|noted below' "$LIC" | head
+fi
+```
+
+**Taxonomía de licencia de esta KB, ahora nueve categorías:** permisiva · copyleft · contenido no
+libre · ausencia medible · dominio público · CC-NC-ND presentada como open source · manifiesto de
+submódulos sin licencia · permisiva con reserva de activos · `NOASSERTION` no comercial.
+
+### Estado de la predicción falsable del ciclo 6 — **a 37 días de la prueba, sin refutar**
+
+CMS-0057-F exige API de autorización previa el **2027-01-01**: faltan **37 días** desde hoy
+(2026-11-25). La predicción del ciclo 6 (P12) sigue **sin refutar**. Se comprueba en el pase de
+healthcare más cercano a esa fecha.
+
+### Predicción falsable de este pase (c10)
+
+Dos, ambas con fecha y canal de comprobación:
+
+1. **La autorización de Loop 2.0 (sometido en julio de 2026) no exigirá cerrar el repositorio.**
+   Si la FDA autoriza Loop 2.0 y `LoopKit/Loop` sigue público y con licencia MIT, P27 queda
+   reforzado. Si se autoriza con el código cerrado, **P27 hay que reescribirlo**. Canal:
+   comunicados de Tidepool y `ls-remote` + puerta de licencia sobre `LoopKit/Loop`.
+2. **La capa agéntica de este plano seguirá por debajo de 50 estrellas en el próximo pase de
+   healthcare.** Hoy el techo real es 44★ (`meddev-agent-skills`). Canal: repetir
+   `vital signs agent`, `ECG agent` y `medical device agent` ordenados por estrellas.

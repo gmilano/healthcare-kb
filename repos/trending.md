@@ -8,6 +8,74 @@ updated: 2026-11-25
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 
+## 2026-11-25 (c10) — 73.399 forks: el repo sanitario más desplegado del mundo, y es AGPL
+
+Cuarto pase del día, plano nuevo: **dispositivo y monitorización remota**. La medición de este pase
+obliga a añadir una **tercera banda** a la razón ★/forks del ciclo 6, y es la que mide demanda real.
+
+### La tercera banda de la razón ★/forks — medida hoy
+
+| Repo | ★ | Forks | Forks por ★ | Licencia (bytes) | Push |
+|---|---|---|---|---|---|
+| [`nightscout/cgm-remote-monitor`](https://github.com/nightscout/cgm-remote-monitor) | 2.867 | **73.399** | **25,6** | AGPL-3.0 (34.521 B) | 2026-11-25 |
+| [`LoopKit/LoopWorkspace`](https://github.com/LoopKit/LoopWorkspace) | 316 | **8.859** | **28,0** | **sin fichero de licencia** (por clon) | 2026-11-24 |
+| [`nightscout/AndroidAPS`](https://github.com/nightscout/AndroidAPS) | 1.264 | 7.639 | 6,0 | AGPL-3.0 (34.520 B) | 2026-11-25 |
+| [`NightscoutFoundation/xDrip`](https://github.com/NightscoutFoundation/xDrip) | 1.828 | 1.331 | 0,7 | GPL-3.0 (35.147 B) | 2026-11-25 |
+
+**Forks ≫ estrellas = usuarios finales autodesplegando**, no desarrolladores contribuyendo: en este
+plano el fork *es* la instalación. 73.399 es la cifra más alta de toda esta KB — más que OHDSI,
+MONAI, synthea y medplum juntos. Los tres primeros tienen **push de hoy o de ayer**.
+
+### Trending real, por push reciente — la capa de señal se movió esta semana
+
+| Repo | Licencia (bytes) | ★ / forks | Push |
+|---|---|---|---|
+| [`mne-tools/mne-python`](https://github.com/mne-tools/mne-python) | BSD-3-Clause (1.467 B) | 3.618 / 1.651 | 2026-11-25 |
+| [`MIT-LCP/mimic-code`](https://github.com/MIT-LCP/mimic-code) | MIT (1.100 B) | 3.442 / 1.742 | 2026-11-23 |
+| [`neuropsychology/NeuroKit`](https://github.com/neuropsychology/NeuroKit) | MIT (1.077 B) | 2.437 / 568 | 2026-11-24 |
+| [`MIT-LCP/wfdb-python`](https://github.com/MIT-LCP/wfdb-python) | MIT (1.110 B) | 863 / 333 | 2026-11-25 |
+| [`DependencyTrack/dependency-track`](https://github.com/DependencyTrack/dependency-track) | Apache-2.0 (11.357 B) | 4.521 / 881 | 2026-11-25 |
+
+### Lo que la medición descarta de este mismo plano
+
+| Repo | Motivo |
+|---|---|
+| [`signove/antidote`](https://github.com/signove/antidote) | Implementación de referencia de **IEEE 11073**: LGPL (26.998 B) y **sin push desde 2021-05-14** |
+| [`codeforjapan/remote-patient-monitoring-api`](https://github.com/codeforjapan/remote-patient-monitoring-api) | AGPL-3.0 y **sin push desde 2022-01-31**. Precedente institucional APAC, muerto |
+| [`innolitics/rdm`](https://github.com/innolitics/rdm) | MIT genuino (1.060 B) pero **sin push desde 2022-10-27** |
+| [`paulvangentcom/heartrate_analysis_python`](https://github.com/paulvangentcom/heartrate_analysis_python) | MIT y útil (1.156★) pero último push **2025-12-30** |
+| [`antonior92/automatic-ecg-diagnosis`](https://github.com/antonior92/automatic-ecg-diagnosis) | MIT, brasileño (UFMG), 458★ — **sin push desde 2023-03-25**: dato de referencia, no dependencia |
+
+### El tamaño de cada capa, medido
+
+| Consulta (canal `search/repositories`) | Resultados |
+|---|---|
+| `glucose` | 8.988 |
+| `SBOM` | 6.638 |
+| `wearable sensor` | 3.253 |
+| `ECG deep learning` | 1.443 |
+| `remote patient monitoring` | 1.049 |
+| `openEHR` | 698 |
+| `continuous glucose monitor` | 332 |
+| `physiological signal processing` | 196 |
+| `medical device cybersecurity` | **58** |
+| `IEEE 11073` | **30** |
+| `medical device interoperability` | **15** |
+| `medical device SBOM` | **12** |
+
+**La interoperabilidad de dispositivo es dos órdenes de magnitud más pequeña que la de dato
+clínico**, y su implementación de referencia está abandonada. En cambio el artefacto que la FDA
+exige (SBOM, §524B) tiene 6.638 repos detrás — **ninguno sanitario**.
+
+### Notas de canal — del noveno al duodécimo falso negativo de `search`
+
+`search/repositories` falla con **dos síntomas distintos**, y conviene distinguirlos porque el
+primero parece un error y el segundo parece un hallazgo: **HTTP 422** para `CycloneDX/cdxgen`,
+`openremote/openremote` y `tidepool-org/chrome-uploader`, y **resultado vacío** (que se lee como
+«no existe») para `scientisst/BioSPPy`. **Los cuatro existen** por `ls-remote`. Acumulado de esta
+KB: **doce falsos negativos**. Donde no hay cifra, se declara ausente en lugar de heredarla. Reconfirmado también que `gh api repos/<slug>` sigue dando **403** para repos no
+adjuntos, y que la existencia sólo se decide con `git ls-remote`.
+
 ## 2026-11-25 (c9) — 176 repos de substrato de sumisión, y la frontera de licencia cae entre capturar y someter
 
 Tercer pase del día, plano nuevo: **investigación clínica**. La medición de este pase separa el

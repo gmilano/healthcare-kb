@@ -954,3 +954,211 @@ Y el hallazgo arquitectónico del pase, que no es una métrica sino una línea:
 | Tooling de sumisión APAC (PMDA/NMPA) | **ABIERTO**: 0 repos |
 | Tooling de investigación clínica LATAM | **CERO medido**, con mecanismo: ANVISA no publica clave de respuestas. No implica retraso |
 | Emparejamiento paciente-ensayo adoptable | **PARCIAL**: TrialMatchAI (MIT) y trialthread (Apache-2.0) sirven; **toda la familia MatchMiner, no** |
+
+---
+
+## Pase 2026-11-25 (c10) — el plano del dispositivo: la demanda ya está probada, la oferta ya está en copyleft, y la puerta regulatoria se cruzó una vez
+
+### El hallazgo central: la razón ★/forks tiene una tercera banda, y es la que mide demanda
+
+El ciclo 6 estableció la prueba barata de autenticidad: razón **estrellas/forks ≈ 1** = gente que
+despliega; **> 50** = atención sin uso. Este plano obliga a añadir el extremo opuesto, y es el más
+informativo de los tres para una propuesta:
+
+| Banda | Qué significa | Medido en este plano |
+|---|---|---|
+| Forks ≫ estrellas (razón ★/f < 0,1) | **Usuarios finales autodesplegando.** El fork es la instalación, no la contribución | `cgm-remote-monitor` 2.867★/**73.399f**; `LoopWorkspace` 316★/**8.859f** |
+| Razón ≈ 1 | Desarrolladores que despliegan e integran | `oref0` 487/406; `LoopKit` 423/429; `mdpnp` 145/79 |
+| Razón > 50 | Atención sin uso | La capa agéntica del plano: tops de 44★/8f y 12★/1f |
+
+**La consecuencia comercial es directa y poco habitual:** en los nueve pases anteriores esta KB
+tenía que *argumentar* que había demanda. Aquí la demanda está **contada**: 73.399 instalaciones
+de pacientes que se automontaron su propia monitorización remota porque el mercado no se la dio.
+Lo que falta no es validación de mercado, es **un producto con licencia utilizable y un responsable
+regulatorio**. Y eso es exactamente lo que el sector ha resuelto **una sola vez**.
+
+### El segundo hallazgo, y el más vendible: cómo se cruzó la puerta regulatoria
+
+**Tidepool Loop es el único caso medido en esta KB de open source sanitario que atraviesa una
+autorización regulatoria.** La FDA lo autorizó el **2023-01-23**, descrito en la literatura como
+*la primera autorización regulatoria de un algoritmo open source de administración automatizada de
+insulina*. Los hechos relevantes, y el mecanismo que se puede repetir:
+
+| Hecho | Dato |
+|---|---|
+| Autorización | FDA, **2023-01-23** (alguna fuente da el 24: desfase de publicación) |
+| Sumisión | finales de **2020** → ~2 años de ciclo |
+| Qué se autorizó | **Una versión congelada**, no «el open source de AID». La autorización no avala el enfoque en general |
+| Quién firmó | **Tidepool, una organización sin ánimo de lucro**, que añadió los controles regulatorios sobre código construido por la comunidad |
+| Distribución comercial | A través de un socio: Sequel Med Tech, como *twiist Loop* |
+| Estado hoy | **Loop 2.0 sometido en julio de 2026, en revisión**; Loop 3.0 en desarrollo, no sometido |
+
+**La ley que sale de aquí, y complementa a P12 sin sustituirla:** P12 dice *dónde* aparecerá oferta
+permisiva (donde el regulador convierte un juicio en artefacto computable). Este caso dice *cómo se
+cruza la puerta*: **no con una licencia ni con una especificación, sino con una entidad dispuesta a
+firmar la sumisión de una versión congelada y a sostener su ciclo de vida.** El código abierto no
+se autoriza; se autoriza un artefacto con dueño. Patrón P27.
+
+Lo que esto prohíbe prometer en una propuesta: *«lo liberamos y lo certificamos»* como un solo
+movimiento. Son dos, el segundo dura unos dos años y exige un titular.
+
+### Regulación de este plano, por región — el estado medido
+
+#### North America
+
+- **FDA §524B (FD&C Act)**: toda sumisión de un *cyber device* (510(k), PMA, De Novo, PDP, HDE)
+  debe incluir un **SBOM legible por máquina** que cubra componentes comerciales, **open source** y
+  *off-the-shelf*. Si no se puede aportar, hay que **justificar la omisión** en la sumisión.
+  Guía final de ciberseguridad premarket de 2023, borrador de *Select Updates* de marzo de 2024.
+- **La guía que decidiría el resto sigue sin finalizar:** el borrador de la FDA de **enero de 2025**
+  sobre gestión del ciclo de vida y sumisiones de *AI-enabled device software functions*
+  —considerado la piedra angular de la regulación de dispositivo con IA— **seguía sin finalizarse**
+  a 2026 (guía Chambers Healthcare AI 2026). *El matiz de la regla P9, aplicado otra vez: la
+  obligación de SBOM es ley; la guía de IA es borrador. No se dicen con la misma voz.*
+- **Hospital a domicilio: plazo resuelto hasta 2030.** El *Acute Hospital Care at Home* expiró
+  durante el cierre de gobierno de 43 días, se puenteó hasta el **2026-01-30**, y la **Consolidated
+  Appropriations Act de 2026 (H.R. 7148)** lo extendió hasta el **2030-09-30**, con informe del
+  Secretario de HHS exigido para el **2029-09-30**. Pasa de riesgo regulatorio a **horizonte de
+  inversión de cuatro años**: es el cambio de contexto más favorable del pase.
+- Adopción: **81 %** de los médicos encuestados declara uso profesional de herramientas de IA
+  (encuesta AMA 2026, más del doble que en la primera medición). Por segmento (Menlo Ventures,
+  2025): sistemas de salud **27 %**, ambulatorio **18 %**, pagadores **14 %**. Norteamérica fue el
+  **44,5 %** del mercado global de IA en salud en 2025.
+
+#### EMEA
+
+- **La fecha del AI Act para dispositivo tiene por fin mecanismo, y corrige la nota del ciclo 6.**
+  El ciclo 6 registró que «las fuentes secundarias se contradicen entre sí» sobre el Digital
+  Omnibus. Hoy hay un **acuerdo político del 2026-05-07**: las tecnologías médicas **siguen dentro**
+  de los requisitos de alto riesgo del AI Act, y la aplicación para sistemas de alto riesgo
+  **integrados en productos** se posterga del **2026-08-02** al **2028-08-02**.
+- **Y el punto que decide la arquitectura:** el Omnibus confirma que **la evaluación de conformidad
+  sectorial (MDR / IVDR) tiene precedencia** para los sistemas de alto riesgo integrados en
+  productos. MedTech Europe pedía que todo se tramitara vía MDR/IVDR y **no lo obtuvo**, así que
+  queda duplicidad. *La pierna firme sigue siendo MDR/IVDR, por tercer pase consecutivo.*
+- El artículo 60 (ensayo en condiciones reales) se extiende a los productos del anexo I sección A,
+  **dispositivos médicos e IVD incluidos**.
+- **No resuelto:** una propuesta separada de DG SANTE excluiría del todo a los dispositivos médicos
+  con IA del marco de alto riesgo, reintroducibles luego por actos delegados. La interacción entre
+  ambas propuestas estaba **sin resolver**, y **ninguna fuente confirma publicación en el Diario
+  Oficial**: es acuerdo político, no norma adoptada. No construir el caso sobre la fecha de 2028.
+- Adopción: estudio de la Comisión de **marzo de 2026**: **94 %** de los proveedores sanitarios usa
+  o planea usar IA, con dependencia declarada de soluciones **desarrolladas fuera de la UE**. La
+  OCDE recomienda consolidar la guía de GDPR + MDR + AI Act, hoy dispersa.
+
+#### APAC
+
+- **Nuevo y no estaba en esta KB: Corea del Sur.** La **AI Basic Act** (Ley Marco de IA) entró en
+  vigor el **2026-01-22**, junto con su Decreto de Aplicación el mismo día, y es el primer régimen
+  integral de Asia. **Los dispositivos médicos son dominio de «alto impacto» nombrado
+  explícitamente** (art. 2(1) de la Ley de Dispositivos Médicos, más los dispositivos médicos
+  digitales). Obligaciones de aseguramiento: identificación, evaluación y mitigación de riesgo a lo
+  largo del ciclo de vida, más deber de transparencia (notificar que hay IA). El MSIT ha publicado
+  guías de determinación de alto impacto.
+- **El hueco de Corea, dicho explícitamente:** no hay **una autoridad supervisora primaria única**
+  bajo ese régimen (DLA Piper), y la prensa local recoge que los términos vagos dejan a las empresas
+  sin criterio operativo. **Para un *engagement*, eso es lo contrario de una barrera: el entregable
+  que se vende es el expediente que demuestre el ciclo de vida**, porque nadie ha fijado el formato.
+- Adopción medida: encuesta HIMSS APAC 2026 (200 clínicos, TI y directivos, **13 mercados**):
+  **46 %** arrancó sus programas de IA **en los últimos 12 meses**; **67 %** señala el coste como
+  obstáculo principal. Roche: sólo **~30 %** de las pruebas de concepto de IA sanitaria en APAC
+  llegan a producción clínica. IDC: **75 %** de los proveedores de Asia-Pacífico dice que la IA
+  agéntica da más productividad que la GenAI.
+- Substrato propio: `vitaldb/vitalutils` (BSD-3, Seoul National University) para señal
+  intraoperatoria. Precedente institucional muerto: los dos repos de Code for Japan (AGPL-3.0,
+  sin push desde 2022-01-31).
+
+#### LATAM
+
+- **ANVISA ya regula el software con IA, y lleva haciéndolo desde antes del debate:** **RDC
+  657/2022** es la norma específica de *software como dispositivo médico* (en vigor desde el
+  **2022-07-01**) y **RDC 751/2022** aplica a todo dispositivo médico, SaMD incluido. Según la
+  propia presentación de ANVISA al Congreso, la agencia **ya regula SaMD con IA** y la **revisión de
+  la RDC 657 traerá mecanismos específicos** para nuevas tecnologías de IA; el software con IA debe
+  aportar **justificación técnica del método** empleado.
+- **El dato negativo del pase, oficial y fechado, y mata un atajo que se vende mucho:** en
+  **agosto de 2026**, Agência Gov citando a ANVISA, **no existe en Brasil ningún software médico
+  regularizado para usar sólo datos de anillos inteligentes**, y los equipos de **medición no
+  invasiva de glucosa u oximetría no están regularizados**. El puente «wearable de consumo →
+  dispositivo clínico» **está explícitamente cerrado en el mercado más grande de la región**.
+- ANVISA abrió en 2026 un **nuevo edital de evaluación regulatoria de dispositivos médicos
+  innovadores**: es la vía de entrada correcta para producto nuevo.
+- Substrato propio: `antonior92/automatic-ecg-diagnosis` (MIT, UFMG, cohorte CODE), sin push desde
+  2023-03-25.
+- Marco profesional: **CFM 2.454/2026**. *Discrepancia de fuentes no resuelta:* esta KB registró
+  vigencia desde **2026-08-10**; un análisis jurídico de 2026 la da como publicada el **27-02-2026**
+  con vigencia prevista en **septiembre de 2026**. Se cita la resolución, **no la fecha**.
+
+### Oportunidades de este plano, por región
+
+#### North America — el encargo es el expediente, y la fecha ya no aprieta
+
+Combinación única: obligación de SBOM **vigente** (§524B), guía de IA **sin finalizar** (nadie
+puede exigir un formato que no existe), y hospital a domicilio **asegurado hasta 2030-09-30**.
+El entregable con margen es la **puerta de cumplimiento del ciclo de vida del dispositivo**
+(P26): SBOM por build con herramienta Apache-2.0, VEX, y la trazabilidad que la sumisión pedirá.
+Se vende hoy y sobrevive a la finalización de la guía porque el artefacto obligatorio no cambia.
+
+#### EMEA — vender la pierna firme, nunca la fecha de 2028
+
+El plazo de alto riesgo integrado en producto se movió a **2028-08-02** por acuerdo político **no
+confirmado en el Diario Oficial**, y hay una propuesta de DG SANTE que podría excluir el caso.
+**Quien construya sobre la fecha se queda sin propuesta si la fecha se mueve otra vez.** Se vende
+**MDR/IVDR**, que tiene precedencia reconocida en el propio Omnibus y no se ha movido en tres
+pases. Oportunidad concreta: el **94 %** de proveedores que usa o planea IA depende de soluciones
+de fuera de la UE — hay espacio para integración con soberanía de dato, y `ehrbase` (Apache-2.0)
+es la base openEHR cuando el cliente es alemán o nórdico.
+
+#### APAC — el vacío de criterio es el producto
+
+Corea obliga desde **2026-01-22** con dispositivos médicos como alto impacto **y sin autoridad
+supervisora única**; Singapur (AIHGle 2.0, registrado en el ciclo 6) asigna deberes por fase;
+y sólo **~30 %** de las pruebas de concepto cruzan a producción. Las tres cosas apuntan al mismo
+entregable: **matriz de responsabilidades por fase del ciclo de vida más expediente de riesgo**,
+que es lo que convierte un piloto en despliegue. Es el mismo producto que Singapur ya pedía, ahora
+con un segundo país que lo exige por ley. Substrato local permisivo disponible (VitalDB, BSD-3).
+
+#### LATAM — vender regularización, no wearable
+
+ANVISA tiene marco SaMD maduro (RDC 657/2022 + 751/2022), exige **justificación técnica del
+método** para IA, y ha declarado en agosto de 2026 que **no hay** software regularizado basado solo
+en anillos ni equipos de glucosa/oximetría no invasiva. La oportunidad **no** es llevar un wearable
+de consumo a la clínica: es **acompañar la regularización** por el edital de dispositivos
+innovadores y construir sobre señal con procedencia (el ECG de UFMG es MIT y brasileño). Y el
+argumento para el sector público sigue siendo el del ciclo 6: comprador privado con presupuesto
+(25 % frente a 11 % público en Brasil), SUS Digital como vía pública.
+
+### ⚠️ Marcado explícitamente como NO CITABLE en este pase
+
+1. Que la FDA ponga en **retención técnica** (*technical hold*) en eSTAR las sumisiones 510(k) con
+   SBOM ausente, y que **rechace la aceptación** por SBOM inadecuado: lo afirman blogs de
+   proveedores de cumplimiento, **no verificado contra fuente FDA**. La obligación legal de §524B
+   sí es citable; el mecanismo operativo de rechazo, no.
+2. El estado **final** de la guía premarket de ciberseguridad «2025» alojada en HHS: no se confirmó
+   desde una página de la FDA. Citar la final de 2023 y el borrador de marzo de 2024.
+3. La fecha del **2028-08-02** del AI Act como norma vigente: es **acuerdo político del
+   2026-05-07**, sin confirmación en el Diario Oficial. Dirección sí, obligación no.
+4. Las cifras de adopción de IDC (**75 %**), Roche (**~30 %**) y HIMSS (**46 % / 67 %**, n=200):
+   son encuestas de proveedor y consultora **sin metodología publicada en la fuente consultada**.
+   Dirección sí, punto ante un CFO no. Igual que la cifra AMA del **81 %** y los cortes de Menlo.
+5. La fecha de entrada en vigor de **CFM 2.454/2026**: dos fuentes secundarias se contradicen
+   (agosto frente a septiembre de 2026). Citar la resolución sin fecha.
+6. Siguen no citables, de pases anteriores: las cuotas de documentación ambiental
+   (Nuance 33 / Abridge 30 / Ambience 13), el retorno «4x» del ciclo de ingresos, y la afirmación
+   de que el PL 2338 brasileño está vigente con multas.
+
+### Huecos — estado al 2026-11-25 (c10)
+
+| Hueco | Estado |
+|---|---|
+| (a) Plataforma agéntica permisiva de ciclo de ingresos | **RECLASIFICADO** (imposibilidad de licencia: CPT). Sin cambio |
+| (b) Tooling FHIR del NHS sin licencia | **ABIERTO**, sin cambio |
+| (c) NLP clínico en español | **ABIERTO**, sin hallazgos nuevos este pase |
+| (d) Granularidad de adopción LATAM | **PARCIAL**: Brasil 18 % (c6) + negativa oficial de ANVISA sobre anillos y glucosa no invasiva (c10) |
+| (e) Cuotas de documentación ambiental | **ABIERTO**, sin fuente |
+| (f) Tooling permisivo para ABDM (India) | **PARCIAL** (c7 lo recuperó de un falso negativo de canal) |
+| (g) Membresía SNOMED de los grandes países LATAM | **ABIERTO**: `snomed.org` sigue sin resolver desde este entorno |
+| (h) **NUEVO** — Documentación regulatoria de dispositivo: permisiva **o** mantenida, no ambas | **ABIERTO y colocable**: `innolitics/rdm` MIT parado desde 2022-10; `openregulatory/templates` activo pero **CC-BY-NC-SA** |
+| (i) **NUEVO** — Plataforma RPM permisiva y viva | **ABIERTO**: 1.049 repos en `remote patient monitoring`; el más estrellado con contenido genuino tiene **40★, es AGPL-3.0 y está parado desde 2022-01-31** |
+| (j) **NUEVO** — Comunicación de dispositivo (IEEE 11073) | **ABIERTO**: 30 repos; la implementación de referencia (`signove/antidote`) es LGPL y **sin push desde 2021-05-14** |
+| (k) **NUEVO** — Vínculo sanitario del SBOM | **ABIERTO, y es el de mejor relación esfuerzo/valor**: las cinco herramientas que producen el artefacto son Apache-2.0 y **ninguna es de salud** (`medical device SBOM` = 12 repos) |

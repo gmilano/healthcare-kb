@@ -396,3 +396,131 @@ Medición del hueco agéntico sobre el plano de sumisión, con el canal de preci
 176 repos de substrato permisivo debajo; **2 repos** de automatización agéntica encima del
 entregable que la FDA exige. Séptima medición consecutiva del mismo patrón en esta KB
 (FHIR, imagen, OMOP, y ahora sumisión regulatoria). Ya no es un hueco: es la forma del sector.
+
+---
+
+## Pase 2026-11-25 (c10) — el plano del dispositivo y la monitorización remota: donde los pacientes construyeron el despliegue y lo licenciaron en copyleft
+
+Cuarto pase del día. **Plano nuevo, y el que más contradice a los nueve anteriores.** Esta KB
+llevaba siete mediciones diciendo lo mismo con distinta ropa: *substrato enorme debajo, capa
+agéntica vacía encima*. El plano del dispositivo —monitorización remota, señal fisiológica,
+administración automatizada de insulina— **invierte el instrumento de medida**, y por eso había
+pasado inadvertido en nueve pases: su tamaño no está en las estrellas, está en los **forks**.
+
+### El hallazgo central: el repo sanitario más desplegado del mundo tiene 25 forks por estrella, y es AGPL
+
+| Repo | Licencia (por bytes) | ★ | Forks | Forks/★ | Push |
+|---|---|---|---|---|---|
+| [`nightscout/cgm-remote-monitor`](https://github.com/nightscout/cgm-remote-monitor) | AGPL-3.0 (`LICENSE`, 34.521 B) | 2.867 | **73.399** | **25,6** | 2026-11-25 |
+| [`LoopKit/LoopWorkspace`](https://github.com/LoopKit/LoopWorkspace) | **SIN FICHERO DE LICENCIA** (verificado por clon) | 316 | **8.859** | **28,0** | 2026-11-24 |
+| [`nightscout/AndroidAPS`](https://github.com/nightscout/AndroidAPS) | AGPL-3.0 (`LICENSE.txt`, 34.520 B) | 1.264 | 7.639 | 6,0 | 2026-11-25 |
+| [`NightscoutFoundation/xDrip`](https://github.com/NightscoutFoundation/xDrip) | GPL-3.0 (`LICENSE`, 35.147 B) | 1.828 | 1.331 | 0,7 | 2026-11-25 |
+
+73.399 forks es, con mucha diferencia, **la cifra más alta de toda esta KB** — OHDSI, MONAI,
+synthea y medplum juntos no se acercan. Y no son contribuyentes: son **pacientes desplegando su
+propia instancia**. El fork *es* la instalación. Lo mismo en `LoopWorkspace`, que se forkea para
+compilar la app propia en GitHub Actions.
+
+**Consecuencia inmediata y no negociable para una propuesta:** el plano sanitario con más
+despliegue real del mundo open source es también **el que menos se puede empaquetar en un
+producto propietario**. AGPL-3.0 alcanza el límite de red: ofrecer Nightscout como servicio
+obliga a publicar la fuente de lo que se ofrece. No es un detalle de cumplimiento, decide la
+arquitectura antes de la primera línea de código (ver `compose/patterns.md` P25).
+
+### Y la parte permisiva existe — pero es el ALGORITMO, no la plataforma
+
+Aquí está la inversión fina, y es lo que hace vendible el plano. En los nueve pases anteriores la
+capa permisiva era el **formato** y la capa vacía era el **juicio**. Aquí el juicio clínico
+—cuánta insulina administrar— **sí es permisivo**, y lo que es copyleft es la **fontanería**:
+
+| Repo | Capa | Licencia (por bytes) | ★ / forks | Push |
+|---|---|---|---|---|
+| [`openaps/oref0`](https://github.com/openaps/oref0) | Algoritmo de referencia (dosificación) | MIT (`LICENSE.txt`, 1.092 B) | 487 / 406 | 2026-11-23 |
+| [`openaps/openaps`](https://github.com/openaps/openaps) | Toolkit original del lazo cerrado | MIT (`LICENSE.txt`, 1.093 B) | 478 / 176 | 2026-11-10 |
+| [`LoopKit/LoopKit`](https://github.com/LoopKit/LoopKit) | Framework de dispositivo y dosificación (iOS) | MIT (`LICENSE`, 1.117 B) | 423 / 429 | 2026-11-24 |
+| [`LoopKit/Loop`](https://github.com/LoopKit/Loop) | App de lazo cerrado | **MIT con excepciones** (`LICENSE.md`, 15.235 B) | 1.761 / 1.458 | 2026-11-25 |
+| [`tidepool-org/platform`](https://github.com/tidepool-org/platform) | Plataforma de datos de diabetes (servidor) | BSD-2-Clause (`LICENSE`, 1.295 B) | 31 / 16 | 2026-11-25 |
+| [`tidepool-org/uploader`](https://github.com/tidepool-org/uploader) | Subida desde dispositivos (bombas, medidores) | BSD-2-Clause (`LICENSE`, 1.299 B) | 128 / 84 | 2026-11-24 |
+| [`tidepool-org/blip`](https://github.com/tidepool-org/blip) | Visualización clínica de datos de diabetes | BSD-2-Clause (`LICENSE`, 1.295 B) | 112 / 52 | 2026-11-25 |
+
+**La frontera de licencia de este plano no es tecnológica, es arquitectónica:** permisiva en el
+algoritmo y en el dato, copyleft en la plataforma de monitorización que el paciente despliega.
+Un *engagement* se construye sobre `oref0`/`LoopKit`/Tidepool y **no forkea Nightscout**.
+
+### ⚠️ `LoopKit/Loop` es MIT **con excepciones**, y la excepción es de activos
+
+`LICENSE.md` pesa 15.235 B para una licencia MIT de 1 KB. La línea 1 lo dice: *«Loop is released
+under the MIT license (MIT) — With exceptions for frameworks and graphics, noted below»*, y el
+fichero enumera 8 frameworks embebidos y los gráficos. GitHub lo reporta como `NOASSERTION`
+precisamente por eso. Una puerta de licencia que pregunte *«¿es MIT?»* contesta «sí» y **se salta
+la reserva sobre los gráficos**, que es justo lo que un derivado comercial redistribuye.
+
+### Agentes y herramientas agénticas del plano — verificados uno por uno
+
+Lo que hay es pequeño, y por primera vez en esta KB **lo mejor del plano agéntico es un framework
+académico mantenido**, no una plantilla de proveedor:
+
+| Repo | Qué hace | Licencia (por bytes) | ★ / forks | Push |
+|---|---|---|---|---|
+| [`StanfordBDHG/HealthGPT`](https://github.com/StanfordBDHG/HealthGPT) | Consulta en lenguaje natural sobre datos de HealthKit (wearable del paciente) | MIT (`LICENSE.md`, 1.122 B) | 1.964 / 181 | 2026-07-14 |
+| [`StanfordSpezi/SpeziLLM`](https://github.com/StanfordSpezi/SpeziLLM) | Módulo LLM (local y remoto) para apps de salud digital | MIT (`LICENSE.md`, 1.121 B) | 290 / 46 | 2026-11-21 |
+| [`StanfordSpezi/Spezi`](https://github.com/StanfordSpezi/Spezi) | Framework de apps de salud digital: consentimiento, cuestionarios, dispositivos | MIT (`LICENSE.md`, 1.121 B) | 261 / 27 | 2026-11-22 |
+| [`AminAlam/meddev-agent-skills`](https://github.com/AminAlam/meddev-agent-skills) | *Skills* agénticas para trabajo regulatorio de dispositivo médico | MIT (`LICENSE`, 1.066 B) | 44 / 8 | — |
+| [`Infinite-Labs-AI/hermes-health-apollo`](https://github.com/Infinite-Labs-AI/hermes-health-apollo) | Agente local-first sobre wearable y calendario | MIT (`LICENSE`, 1.072 B) | 29 / 4 | — |
+| [`gustmd0121/ECG-Agent`](https://github.com/gustmd0121/ECG-Agent) | Agente de interpretación de ECG | MIT (`LICENSE`, 1.072 B) | 12 / 1 | — |
+| [`bryan-basg/samd-starter-kit`](https://github.com/bryan-basg/samd-starter-kit) | Andamiaje de proyecto SaMD (software como dispositivo médico) | MIT (`LICENSE`, 1.085 B) | 8 / 3 | — |
+
+Siete filas reales. **Las cuatro últimas están entre 8 y 44 estrellas**: se citan porque son
+permisivas y existen, no porque estén maduras. `Spezi` + `SpeziLLM` es lo único del bloque con
+mantenimiento continuo medido (push esta semana) y respaldo institucional (Stanford).
+
+### ⛔ Capa de corrección — y rompe una racha que esta KB venía acumulando
+
+| Repo | Lo que dice el metadato | Lo que dicen los bytes | Veredicto |
+|---|---|---|---|
+| [`thinkwee/HiMe`](https://github.com/thinkwee/HiMe) | `NOASSERTION` (74★/11f) | `LICENSE` 4.649 B, línea 3: **`# PolyForm Noncommercial License 1.0.0`**, 5 apariciones de *noncommercial* | **NO ADOPTABLE.** Agente personal de salud, no usable en trabajo de cliente |
+| [`elkimek/get-based`](https://github.com/elkimek/get-based) | AGPL-3.0 (168★/34f) | `LICENSE` 34.523 B, línea 1 `GNU AFFERO GENERAL PUBLIC LICENSE` | Copyleft de red. Real y activo, **no incorporable** |
+| [`openregulatory/templates`](https://github.com/openregulatory/templates) | `NOASSERTION` (201★/60f, push 2026-10-21) | `LICENSE.md` 19.089 B, título: **`Creative Commons Attribution-NonCommercial-ShareAlike 4.0`** | **NO ADOPTABLE EN ENTREGA DE PAGO.** Ver el aviso de abajo: es la trampa comercial del pase |
+
+**`NOASSERTION` → permisiva genuina ya NO es 10 de 10.** Esta KB venía anotando la racha desde el
+ciclo 5 y el pase c8 la cerró en «10 de 10». `thinkwee/HiMe` es el **primer contraejemplo
+medido**: `NOASSERTION` que esconde una licencia **no comercial** (PolyForm NC 1.0.0, que no es
+OSI). La regla operativa no cambia —*abrir el fichero*— pero la **inferencia optimista sí**: de
+`NOASSERTION` no se sigue «permisiva», se sigue «sin medir». Corregido aquí contra la nota de c8.
+
+### ⚠️ La trampa comercial del pase: las plantillas de QMS regulatorio son NonCommercial
+
+Es la trampa más caramente relevante para una consultora, porque es **exactamente el repo al que
+uno alargaría la mano**. `openregulatory/templates` (201★, activo) ofrece plantillas de ISO 13485
+/ MDR / expediente técnico: justo el entregable de un proyecto de dispositivo. Y es
+**CC-BY-NC-SA-4.0**: *NonCommercial*. Usarlas en un proyecto facturado incumple la licencia.
+
+La alternativa permisiva existe pero está parada: [`innolitics/rdm`](https://github.com/innolitics/rdm)
+(*Regulatory Documentation Manager*, MIT verificado `LICENSE.txt` 1.060 B, 145★/36f) **sin push
+desde 2022-10-27**. Es decir: en documentación regulatoria de dispositivo, **lo permisivo está
+abandonado y lo mantenido es no comercial**. Hueco (h), nuevo y colocable.
+
+### El contador de agentes verticales — octava medición consecutiva, y sigue en 1
+
+La consulta de referencia del ciclo 5, repetida sin cambios:
+
+| Consulta (canal `search/repositories`) | c5 | c6 | c10 (hoy) |
+|---|---|---|---|
+| `healthcare agent created:>2026-08-01 stars:>=50` | 1 | 1 | **1** |
+
+Y la medición propia de este plano, con consultas cortas (la lección de c6: acortar antes de
+concluir que no hay nada):
+
+| Consulta | Resultados | Lo más estrellado y su realidad |
+|---|---|---|
+| `vital signs agent` | 32 | El primero es un falso positivo (`jettbrains/-L-`, GPL-3.0); los tres siguientes genuinos tienen **0 estrellas** |
+| `ECG agent` | 80 | 27★ · 12★ · 5★ · 4★ · 4★ — la categoría entera en dígitos simples |
+| `medical device agent` | 130 | Primero falso positivo (volcado de referencias, 79★); el mejor real es `meddev-agent-skills` 44★ |
+| `telemonitoring AI` | 9 | Nada con tracción |
+| `biosignal LLM` | 14 | Nada con tracción |
+| `CGM LLM` | 26 | Nada con tracción |
+
+**Octava medición consecutiva**, ahora en el plano con más despliegue del sector: 1.049 repos bajo
+`remote patient monitoring` y una capa agéntica cuyo techo real son 44 estrellas. El patrón
+atravesó FHIR, imagen, OMOP, sumisión regulatoria y dispositivo. Ya no se reporta como hueco: es
+la forma del sector, y la oportunidad está en construir la capa, no en buscarla.

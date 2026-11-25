@@ -9,6 +9,63 @@ updated: 2026-11-25
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 > Reescribir este archivo destruiría la tendencia que existe para registrar.
 
+## 2026-11-25 (c10) — el plano del dispositivo entra en la KB, y rompe la racha de `NOASSERTION`
+
+Cuarto pase del día. Plano nuevo: **dispositivo, monitorización remota y señal fisiológica**. La
+novedad de la semana no es un agente: es que **la capa de juicio clínico de este plano está en MIT**
+—algo que no había ocurrido en nueve pases— y que el metadato de licencia de GitHub acaba de fallar
+en la dirección contraria a la habitual.
+
+### Nuevo esta semana: lo agéntico del plano, con licencia abierta por bytes
+
+| Repo | Qué hace | Licencia (bytes) | ★ / forks | Push |
+|---|---|---|---|---|
+| [`StanfordBDHG/HealthGPT`](https://github.com/StanfordBDHG/HealthGPT) | Consulta en lenguaje natural de datos de HealthKit | MIT (1.122 B) | 1.964 / 181 | 2026-07-14 |
+| [`StanfordSpezi/SpeziLLM`](https://github.com/StanfordSpezi/SpeziLLM) | Módulo LLM para apps de salud digital | MIT (1.121 B) | 290 / 46 | 2026-11-21 |
+| [`StanfordSpezi/Spezi`](https://github.com/StanfordSpezi/Spezi) | Framework de app de salud digital con conexión a dispositivos | MIT (1.121 B) | 261 / 27 | 2026-11-22 |
+| [`AminAlam/meddev-agent-skills`](https://github.com/AminAlam/meddev-agent-skills) | *Skills* agénticas de trabajo regulatorio de dispositivo | MIT (1.066 B) | 44 / 8 | — |
+| [`Infinite-Labs-AI/hermes-health-apollo`](https://github.com/Infinite-Labs-AI/hermes-health-apollo) | Agente local-first sobre wearable y calendario | MIT (1.072 B) | 29 / 4 | — |
+| [`gustmd0121/ECG-Agent`](https://github.com/gustmd0121/ECG-Agent) | Agente de interpretación de ECG | MIT (1.072 B) | 12 / 1 | — |
+| [`bryan-basg/samd-starter-kit`](https://github.com/bryan-basg/samd-starter-kit) | Andamiaje de proyecto SaMD | MIT (1.085 B) | 8 / 3 | — |
+
+Siete filas reales, y por primera vez **la mejor pieza permisiva de un plano es un framework
+universitario mantenido** (Stanford, push esta semana) en vez de una plantilla de proveedor.
+
+### ⛔ La corrección de la semana: `NOASSERTION` ya no es «10 de 10» permisiva
+
+Esta KB venía anotando la racha desde el ciclo 5, y c8 la cerró en «10 de 10». **Primer
+contraejemplo medido:**
+
+| Repo | Metadato GitHub | Bytes del `LICENSE` | Veredicto |
+|---|---|---|---|
+| [`thinkwee/HiMe`](https://github.com/thinkwee/HiMe) | `NOASSERTION` | 4.649 B, línea 3: **`# PolyForm Noncommercial License 1.0.0`** (5 apariciones de *noncommercial*) | **NO ADOPTABLE** |
+| [`LoopKit/Loop`](https://github.com/LoopKit/Loop) | `NOASSERTION` | 15.235 B: *«MIT license — With exceptions for frameworks and graphics»* | **Usable con reserva de activos** |
+| [`openregulatory/templates`](https://github.com/openregulatory/templates) | `NOASSERTION` | 19.089 B, título **CC-BY-NC-SA-4.0** | **NO ADOPTABLE en entrega de pago** |
+
+La regla operativa no cambia (*abrir el fichero*), pero **la inferencia optimista sí**: de
+`NOASSERTION` no se sigue «permisiva», se sigue **«sin medir»**.
+
+### Tendencia de método: la puerta de licencia de esta KB tenía un falso positivo
+
+**La GPL-3.0 y la AGPL-3.0 contienen la palabra «noncommercial» una vez.** Una puerta que haga
+`grep -i noncommercial` bloquea como no comercial a **todo repo GPL/AGPL**: en este pase, **5
+falsos positivos** (`cgm-remote-monitor`, `AndroidAPS`, `xDrip`, `get-based`, los dos de
+`codeforjapan`) frente a **2 positivos genuinos**. Discriminante: anclar en el título y exigir ≥2
+apariciones. Corregido en P28.
+
+### El contador de agentes verticales — octava medición
+
+`healthcare agent created:>2026-08-01 stars:>=50` = **1** (igual que c5 y c6). En el plano propio:
+`vital signs agent` = 32 repos con los genuinos del top a **0 estrellas**; `ECG agent` = 80 con
+tops de 27★ · 12★ · 5★ · 4★ · 4★; `telemonitoring AI` = 9. Debajo, 1.049 repos de
+`remote patient monitoring`.
+
+### Advertencia de disciplina: un *slug* que venía de la memoria
+
+Se buscó un framework de «agente conversacional de salud» recordado como `openCHA/openCHA`:
+**`ls-remote` dice que no existe**, y `search` sólo devuelve repos sin relación. Venía de la
+memoria, no de una búsqueda — el mismo error que el `ultibi` del pase financiero. **No se escribe.**
+
 ## 2026-11-25 (c9) — la investigación clínica entra en la KB, y su emparejador de referencia no es adoptable
 
 Tercer pase del día. Plano nuevo: **investigación clínica**. Lo que trae esta semana no es un

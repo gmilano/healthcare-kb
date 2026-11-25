@@ -428,3 +428,115 @@ Uso máximo, **y ninguna cláusula de garantía**: para una entrega de cliente h
 en el propio aseguramiento. La taxonomía de licencia de esta KB pasa así a **seis categorías**:
 permisiva · copyleft · contenido no libre · ausencia medible · **dominio público** ·
 **CC-NC-ND presentada como open source**.
+
+---
+
+## Pase 2026-11-25 (c10) — el plano del dispositivo: señal permisiva, comunicación muerta, y un artefacto obligatorio que se construye con herramientas de fuera del sector
+
+Cuarto plano del día. Tres capas, tres licencias distintas, y la del medio está **abandonada**.
+
+### Capa de señal fisiológica — permisiva, madura y con push de hoy
+
+Es la capa de **formato** de este plano, y la ley del ciclo 6 («el open source permisivo sigue al
+formato, no a la decisión») **se confirma por sexta vez**, ahora en la forma de onda:
+
+| Repo | Qué resuelve | Licencia (por bytes) | ★ / forks | Push |
+|---|---|---|---|---|
+| [`mne-tools/mne-python`](https://github.com/mne-tools/mne-python) | EEG/MEG: lectura, filtrado, análisis. El estándar de facto | BSD-3-Clause (`LICENSE.txt`, 1.467 B) | 3.618 / 1.651 | 2026-11-25 |
+| [`MIT-LCP/mimic-code`](https://github.com/MIT-LCP/mimic-code) | Código de referencia sobre MIMIC (UCI, incluida forma de onda) | MIT (`LICENSE`, 1.100 B) | 3.442 / 1.742 | 2026-11-23 |
+| [`neuropsychology/NeuroKit`](https://github.com/neuropsychology/NeuroKit) | ECG, PPG, EDA, respiración: procesado neurofisiológico | MIT (`LICENSE`, 1.077 B) | 2.437 / 568 | 2026-11-24 |
+| [`paulvangentcom/heartrate_analysis_python`](https://github.com/paulvangentcom/heartrate_analysis_python) | HeartPy: análisis de PPG y frecuencia cardiaca | MIT (`LICENSE`, 1.072 B) | 1.156 / 350 | 2025-12-30 |
+| [`MIT-LCP/wfdb-python`](https://github.com/MIT-LCP/wfdb-python) | WFDB: el formato de señal de PhysioNet, leer y escribir | MIT (`LICENSE`, 1.110 B) | 863 / 333 | 2026-11-25 |
+| [`PIA-Group/BioSPPy`](https://github.com/PIA-Group/BioSPPy) | Biosignal Processing in Python (repo original) | BSD-3 (`LICENSE`, 1.580 B) | 645 / 289 | 2022-08-02 |
+| [`raphaelvallat/yasa`](https://github.com/raphaelvallat/yasa) | Estadificación automática del sueño sobre polisomnografía | BSD-3-Clause (`LICENSE`, 1.521 B) | 602 / 130 | 2026-10-25 |
+| [`openmhealth/schemas`](https://github.com/openmhealth/schemas) | Esquemas abiertos de datos de salud móvil (el «FHIR» del wearable) | Apache-2.0 (`LICENSE`, 11.324 B) | 82 / 49 | 2026-08-26 |
+
+Ocho filas, ocho licencias permisivas verificadas por bytes. **Cuatro con push esta semana.** Esta
+capa no es un hueco: está resuelta, y es la base sobre la que se construye (P25).
+
+> **Nota de procedencia sobre `BioSPPy`:** existe un segundo *slug* mantenido,
+> [`scientisst/BioSPPy`](https://github.com/scientisst/BioSPPy), **BSD-3 verificada por bytes**
+> (`LICENSE`, 1.585 B) y existencia confirmada por `ls-remote`. No se citan sus estrellas porque
+> `search/repositories` **es ciego a ese repo** (HTTP 422). Se declara la cifra ausente en vez de
+> heredarla: ver la nota de canal al final.
+
+### ⚠️ Capa de comunicación con el dispositivo — el hueco más limpio del pase
+
+El estándar de comunicación de dispositivo médico es **IEEE 11073**. Su implementación de
+referencia abierta es [`signove/antidote`](https://github.com/signove/antidote):
+
+| Repo | Licencia (por bytes) | ★ / forks | Último push | Veredicto |
+|---|---|---|---|---|
+| [`signove/antidote`](https://github.com/signove/antidote) | **LGPL** (`LICENSE`, 26.998 B) | 51 / 34 | **2021-05-14** | Copyleft débil **y parado hace 4,5 años** |
+| [`mdpnp/mdpnp`](https://github.com/mdpnp/mdpnp) | BSD-2-Clause (`LICENSE`, 1.294 B) | 145 / 79 | 2026-05-07 | **OpenICE**, lo único permisivo y vivo de la capa |
+
+Tamaño medido de la capa: `IEEE 11073` = **30 repos en total**; `medical device interoperability`
+= **15 repos**. Para comparar: la capa FHIR que esta KB documentó en el ciclo 5 se cuenta por
+millares. **La interoperabilidad de dispositivo es, medida, dos órdenes de magnitud más pequeña
+que la interoperabilidad de dato clínico**, y su implementación de referencia está abandonada.
+
+`mdpnp/mdpnp` (OpenICE, del programa MD PnP) es por tanto **la única base permisiva viva** para
+integración multi-dispositivo a pie de cama. 145 estrellas: pequeño, pero es lo que hay, y la
+razón ★/forks de 1,8 dice que quien lo coge lo despliega.
+
+### La capa que la norma obliga a producir — y que se construye con herramientas de fuera del sector
+
+**Este es el segundo hallazgo del pase.** La FDA, por la sección **524B** de la FD&C Act, exige en
+la sumisión de todo *cyber device* (510(k), PMA, De Novo, PDP, HDE) un **SBOM legible por máquina**
+que cubra componentes comerciales, **open source** y *off-the-shelf*. Es un artefacto computable y
+obligatorio: exactamente la condición que el ciclo 6 (P12) identificó como la que hace aparecer
+oferta permisiva. **Y la oferta apareció — pero no es sanitaria:**
+
+| Repo | Qué produce | Licencia (por bytes) | ★ / forks | Push |
+|---|---|---|---|---|
+| [`aquasecurity/trivy`](https://github.com/aquasecurity/trivy) | Escaneo de vulnerabilidades y SBOM | Apache-2.0 (`LICENSE`, 11.357 B) | 39.740 / 939 | 2026-11-24 |
+| [`anchore/syft`](https://github.com/anchore/syft) | Generación de SBOM desde imágenes y árboles de fuentes | Apache-2.0 (`LICENSE`, 11.357 B) | 9.967 / 1.083 | 2026-11-25 |
+| [`DependencyTrack/dependency-track`](https://github.com/DependencyTrack/dependency-track) | Plataforma de inventario y vigilancia continua de componentes | Apache-2.0 (`LICENSE.txt`, 11.357 B) | 4.521 / 881 | 2026-11-25 |
+| [`CycloneDX/cyclonedx-cli`](https://github.com/CycloneDX/cyclonedx-cli) | Conversión, mezcla y validación de SBOM CycloneDX | Apache-2.0 (`LICENSE`, 11.341 B) | 564 / 90 | 2026-10-19 |
+| [`CycloneDX/cdxgen`](https://github.com/CycloneDX/cdxgen) | Generador de SBOM multi-lenguaje | Apache-2.0 (`LICENSE`, 11.357 B) | *no medible* | — |
+
+Cinco herramientas, **todas Apache-2.0, ninguna de salud**. Y la medición que lo cierra:
+`medical device cybersecurity` = **58 repos**; `medical device SBOM` = **12 repos**; `SBOM` a
+secas = **6.638**.
+
+**La regla nueva, y es generalizable a las doce industrias:** cuando el artefacto que el regulador
+exige es **genérico** (un SBOM, no un juicio clínico), la oferta permisiva **ya existe y viene de
+fuera del sector**. El hueco no es de herramienta, es de **vínculo**: nadie ha atado esas cinco a
+la sumisión sanitaria. Ahí está el margen, y es un entregable, no una plataforma (ver P26).
+
+> `CycloneDX/cdxgen` existe (`ls-remote` OK) y su licencia está verificada por bytes, pero
+> `search/repositories` devuelve 422 para ese *slug*: **sin cifra de estrellas, y se dice**.
+
+### Substrato regional de este plano — con las dos regiones que suelen quedar sin colocar
+
+| Repo | Región | Qué es | Licencia (por bytes) | ★ / forks | Push |
+|---|---|---|---|---|---|
+| [`antonior92/automatic-ecg-diagnosis`](https://github.com/antonior92/automatic-ecg-diagnosis) | LATAM | Diagnóstico automático de ECG de 12 derivaciones (UFMG, Brasil; cohorte CODE) | MIT (`LICENSE`, 1.078 B) | 458 / 142 | 2023-03-25 |
+| [`vitaldb/vitalutils`](https://github.com/vitaldb/vitalutils) | APAC | Utilidades para VitalDB: señal intraoperatoria de alta resolución (Seoul National University) | BSD-3-Clause (`LICENSE`, 1.507 B) | 22 / 18 | 2026-07-24 |
+| [`ehrbase/ehrbase`](https://github.com/ehrbase/ehrbase) | EMEA | Repositorio clínico openEHR (Alemania); alternativa de arquitectura al dato FHIR | Apache-2.0 (`LICENSE`, 11.357 B) | 390 / 154 | 2026-11-25 |
+
+Las dos primeras son **substrato de dato, no producto**: 458★ y 22★. Pero son permisivas, existen y
+están colocadas, y en LATAM y APAC esta KB llevaba varios pases registrando ausencias. El brasileño
+**no tiene push desde 2023-03-25**: se cita como dato y modelo de referencia, no como dependencia.
+
+`ehrbase` entra como nota de borde: `openEHR` = **698 repos**, una arquitectura de dato clínico
+que esta KB no había medido en diez pases y que en Alemania y el norte de Europa compite con FHIR.
+No es plano de dispositivo; se anota aquí para que el próximo pase decida si merece plano propio.
+
+### Nota de método — la puerta de licencia necesita una **versión 6**, y por un falso positivo propio
+
+Este pase encontró un defecto en la propia puerta de CI que esta KB venía recomendando (P8/P16/P24),
+y conviene decirlo sin adornos porque habría producido datos erróneos:
+
+**El texto de la GPL-3.0 y de la AGPL-3.0 contiene la palabra «noncommercial» exactamente una vez.**
+Una puerta que haga `grep -i noncommercial` para bloquear CC-NC **bloquea como "no comercial" a
+todo repo AGPL o GPL**. En este pase produjo **cinco falsos positivos** (`cgm-remote-monitor`,
+`AndroidAPS`, `xDrip`, `get-based`, y los dos de `codeforjapan`) frente a **dos positivos
+genuinos** (`openregulatory/templates`, CC-BY-NC-SA con 9 apariciones; `thinkwee/HiMe`, PolyForm NC
+con 5).
+
+El discriminante medido y barato: **anclar en las tres primeras líneas (el título) y exigir ≥2
+apariciones**. 1 aparición sin título = texto GPL incidental. Código en `compose/patterns.md` P28.
+La taxonomía de licencia de esta KB pasa a **nueve categorías**: permisiva · copyleft · contenido
+no libre · ausencia medible · dominio público · CC-NC-ND como open source · **manifiesto de
+submódulos sin licencia** · **permisiva con reserva de activos** · **`NOASSERTION` no comercial**.

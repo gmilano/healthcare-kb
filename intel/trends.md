@@ -388,3 +388,116 @@ no indica retraso**: ANVISA no publica una clave de respuestas ejecutable, y por
 de este pase la ausencia de oferta es *lo que el modelo predice*. Como los sponsors de la región
 someten a FDA y EMA, el producto vendible es el mismo que en Norteamérica. Segunda ausencia
 LATAM consecutiva sin penalización regional.
+
+---
+
+## Pase 2026-11-25 (c10) — el plano donde los pacientes se adelantaron al mercado
+
+### 1. La tendencia estructural de este plano es que la demanda ya está contada, no estimada
+
+Nueve pases de esta KB han tenido que argumentar demanda a partir de regulación y de encuestas de
+consultora. El plano del dispositivo trae la primera cifra de demanda que es un **recuento**:
+**73.399 forks** de [`nightscout/cgm-remote-monitor`](https://github.com/nightscout/cgm-remote-monitor),
+con 2.867 estrellas. En este plano el fork es la instalación —cada paciente despliega su instancia—
+así que la cifra no mide atención, mide **despliegues**. Ninguna otra cosa medida en esta KB se
+acerca: es el repo sanitario más desplegado que hemos visto, y lo construyeron los pacientes.
+
+La lectura correcta no es «hay un mercado enorme sin atender». Es más específica y más útil:
+**el mercado se autoabasteció porque la industria no le dio un producto, y al hacerlo fijó la
+licencia en AGPL-3.0.** La oportunidad no está en validar la demanda, está en ofrecer lo que la
+comunidad no puede darse: licencia utilizable y un titular regulatorio.
+
+### 2. Y por eso la segunda tendencia es una inversión de la ley del ciclo 6
+
+La ley del pase financiero y del ciclo 6 —*el open source permisivo sigue al formato de fichero,
+no a la decisión*— **se cumple en la capa de señal** (ocho repos permisivos verificados, cuatro con
+push esta semana: `mne-python` BSD-3, `NeuroKit` MIT, `wfdb-python` MIT, `mimic-code` MIT…) **y se
+invierte en la capa de producto**:
+
+| Capa | En los nueve pases anteriores | En el plano del dispositivo |
+|---|---|---|
+| Juicio / decisión | Vacía o encumbrada | **Permisiva**: `oref0` MIT, `LoopKit` MIT — el algoritmo de dosificación es abierto |
+| Plataforma / fontanería | Permisiva y madura | **Copyleft**: Nightscout y AndroidAPS AGPL-3.0, xDrip GPL-3.0 |
+
+**La frontera de licencia de este plano es arquitectónica, no funcional**, y eso la hace
+accionable: se construye sobre el algoritmo permisivo y se evita forkear la plataforma copyleft.
+Es la primera vez en diez pases que la capa de juicio clínico está disponible en MIT.
+
+### 3. El acontecimiento del plano tiene tres años, y sigue siendo único
+
+**La autorización de Tidepool Loop por la FDA (2023-01-23) sigue siendo el único caso de open
+source sanitario que cruza una puerta regulatoria** en todo lo que esta KB ha medido en diez pases
+y seis industrias colindantes. Y el mecanismo es reproducible: una entidad (sin ánimo de lucro, en
+este caso) **congela una versión, firma la sumisión y asume el ciclo de vida**; la distribución
+comercial va por un socio (Sequel Med Tech, *twiist Loop*). Ciclo observado: sumisión a finales de
+2020 → autorización en enero de 2023. **Loop 2.0 se sometió en julio de 2026 y sigue en revisión**
+— es decir, el ciclo de ~2 años se está repitiendo ahora mismo y es observable.
+
+Tendencia, no anécdota: lo que escasea en el open source clínico **no es código ni especificación,
+es alguien que firme**.
+
+### 4. Octava medición consecutiva del hueco agéntico, ahora en el plano más desplegado
+
+`healthcare agent created:>2026-08-01 stars:>=50` sigue devolviendo **1** (igual que en c5 y c6, y
+ese único resultado ya se descartó por razón ★/forks: 149★/1f). En el plano propio:
+`vital signs agent` = **32 repos** y los genuinos del top tienen **0 estrellas**; `ECG agent` = 80
+con tops de 27★ · 12★ · 5★ · 4★ · 4★; `telemonitoring AI` = **9**. Enfrente, el substrato:
+`glucose` 8.988, `wearable sensor` 3.253, `ECG deep learning` 1.443, `remote patient monitoring`
+1.049.
+
+Octavo plano consecutivo con la misma forma (FHIR, imagen, OMOP, sumisión regulatoria, dispositivo).
+A estas alturas la conclusión operativa ya no es «hay un hueco»: es que **la capa agéntica vertical
+hay que construirla en todos los planos del sector, y el diferencial competitivo está en el
+substrato que se elija debajo, no en encontrar el agente.**
+
+### 5. Lo único permisivo, mantenido y agéntico del plano es académico
+
+`StanfordBDHG/HealthGPT` (MIT, 1.964★) consulta datos de HealthKit en lenguaje natural;
+`StanfordSpezi/Spezi` + `SpeziLLM` (MIT, 261★ y 290★, **push esta semana**) son el framework de app
+de salud digital con módulo LLM. Es la primera vez en esta KB que **la mejor pieza agéntica
+permisiva de un plano no es una plantilla de proveedor** (como los aceleradores de autorización
+previa del ciclo 6) sino un framework universitario con mantenimiento continuo. Para un
+*engagement* patient-facing, es la base por defecto.
+
+### 6. Novedad de método con efecto inmediato: la puerta de licencia de esta KB tenía un falso positivo
+
+**El texto de la GPL-3.0 y de la AGPL-3.0 contiene la palabra «noncommercial» una vez.** La puerta
+de CI que esta KB recomienda desde P8 bloquearía por tanto **todo repo GPL/AGPL como si fuera
+CC-NC**. En este pase: **5 falsos positivos** frente a **2 positivos genuinos**. El discriminante
+es anclar en el título (tres primeras líneas) y exigir ≥2 apariciones.
+
+Y una corrección de racha, que importa porque era una generalización heredada: **`NOASSERTION` →
+permisiva genuina ya no es «10 de 10»**. `thinkwee/HiMe` es `NOASSERTION` y es **PolyForm
+Noncommercial 1.0.0**. De `NOASSERTION` no se sigue «permisiva»; se sigue «sin medir». Es
+exactamente el error que esta KB comete cuando **hereda** en lugar de **medir** (ley del ciclo 6).
+
+### 7. El artefacto obligatorio del plano es genérico, y eso cambia de dónde viene la oferta
+
+La FDA exige SBOM legible por máquina en la sumisión de todo *cyber device* (§524B). Por P12,
+debería haber aparecido oferta permisiva — y apareció, pero **de fuera del sector**: `trivy`
+(39.740★), `syft` (9.967★), `dependency-track` (4.521★), `cyclonedx-cli`, `cdxgen`, **las cinco
+Apache-2.0 y ninguna sanitaria**. Mientras `medical device SBOM` = **12 repos** y
+`medical device cybersecurity` = **58**.
+
+**Refinamiento de P12, generalizable a las doce industrias:** cuando el artefacto que el regulador
+exige es **genérico**, la oferta permisiva existe ya y viene de fuera; el hueco no es de
+herramienta sino de **vínculo con la sumisión**. Cuando el artefacto es **específico del dominio**
+(una biblioteca CQL, un *fixture* de farmacovigilancia), hay que construirlo. Saber en cuál de los
+dos casos se está decide si el entregable es integración o desarrollo.
+
+### 8. Asimetría regional: por una vez el plazo que se mueve es el americano a favor
+
+Norteamérica acaba de pasar hospital a domicilio de «riesgo de expiración cada pocos meses» a
+**horizonte asegurado hasta 2030-09-30** (Consolidated Appropriations Act 2026), tras expirar en el
+cierre de 43 días. Europa, en cambio, movió su plazo de alto riesgo integrado en producto a
+**2028-08-02** por **acuerdo político sin confirmar en el Diario Oficial**, con una propuesta de DG
+SANTE que podría excluir del todo a los dispositivos con IA: **plazo más largo pero menos firme**.
+APAC añadió un país con ley vigente (**Corea, 2026-01-22**, dispositivos médicos como alto impacto)
+**sin autoridad supervisora única**. Y LATAM aporta la única **negativa oficial fechada** del pase:
+ANVISA, agosto de 2026, no hay software regularizado basado solo en anillos inteligentes ni
+equipos de glucosa/oximetría no invasiva.
+
+Las cuatro regiones apuntan al mismo entregable por caminos distintos: **el expediente del ciclo de
+vida**. En NA porque la ley lo exige y la guía no lo formatea; en EMEA porque MDR/IVDR tiene
+precedencia; en APAC porque nadie ha fijado el criterio; en LATAM porque ANVISA pide justificación
+técnica del método. Es la convergencia regional más clara que esta KB ha registrado.

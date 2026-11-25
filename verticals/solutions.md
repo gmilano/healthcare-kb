@@ -226,3 +226,60 @@ de SDTM/ADaM) se publica a través de CDISC Library y del NCI EVS con sus propia
 distintas del MIT del motor que las consume. [`humanpred/cdiscdata`](https://github.com/humanpred/cdiscdata)
 (MIT vía `DESCRIPTION`) empaqueta terminología versionada, y conviene revisar la procedencia del
 **contenido** antes de redistribuirlo con un entregable, aunque el **código** sea MIT.
+
+---
+
+## Pase 2026-11-25 (c10) — verticales de dispositivo y monitorización remota: cuatro personalizables y una que no se puede tocar
+
+El modelo de este fichero —partir de algo que ya funciona y poner IA encima— **se cumple en este
+plano, pero con una exclusión dura**: la plataforma más desplegada del sector es AGPL-3.0 y no
+admite ese modelo si el resultado se ofrece como servicio.
+
+| Plataforma | Qué es, en producción | Licencia (por bytes) | ★ / forks | Push | ¿IA encima? |
+|---|---|---|---|---|---|
+| [`tidepool-org/platform`](https://github.com/tidepool-org/platform) + [`blip`](https://github.com/tidepool-org/blip) + [`uploader`](https://github.com/tidepool-org/uploader) | Plataforma de datos de diabetes: ingesta desde bombas y medidores, almacenamiento y visualización clínica. Usada por clínicas reales | BSD-2-Clause (1.295 / 1.295 / 1.299 B) | 31 / 112 / 128 | 2026-11-25 | **Sí, sin fricción.** BSD-2 permite producto cerrado encima |
+| [`mdpnp/mdpnp`](https://github.com/mdpnp/mdpnp) | **OpenICE**: entorno clínico integrado, agrega varios dispositivos de cabecera en un bus común | BSD-2-Clause (1.294 B) | 145 / 79 | 2026-05-07 | **Sí.** Es la única base permisiva viva de interoperabilidad de dispositivo |
+| [`StanfordSpezi/Spezi`](https://github.com/StanfordSpezi/Spezi) | Framework de app de salud digital: consentimiento, cuestionarios, conexión a dispositivos, sincronización | MIT (1.121 B) | 261 / 27 | 2026-11-22 | **Sí**, y trae su propio módulo LLM (`SpeziLLM`, MIT) |
+| [`DependencyTrack/dependency-track`](https://github.com/DependencyTrack/dependency-track) | Plataforma de inventario continuo de componentes. Es la vertical de **cumplimiento** del plano, no clínica | Apache-2.0 (11.357 B) | 4.521 / 881 | 2026-11-25 | **Sí**: sostiene el SBOM que la FDA exige (§524B) |
+| [`nightscout/cgm-remote-monitor`](https://github.com/nightscout/cgm-remote-monitor) | Monitorización remota de glucosa. **73.399 forks**: la plataforma sanitaria open source más desplegada que esta KB ha medido | **AGPL-3.0** (34.521 B) | 2.867 / 73.399 | 2026-11-25 | **NO en producto propietario.** Ver el aviso de abajo |
+
+### El aviso que decide la arquitectura: AGPL-3.0 y el límite de red
+
+Nightscout es la tentación obvia de cualquier propuesta de monitorización remota: funciona, está
+desplegado por decenas de miles de pacientes y lleva una década en producción. Y es **AGPL-3.0**,
+que extiende la obligación de publicar fuente **al uso por red**: ofrecerlo modificado como
+servicio obliga a entregar la fuente de la modificación a los usuarios de ese servicio.
+
+**No es un «consultar con legal» de trámite, es una decisión de diseño.** Las dos salidas
+correctas son: (1) construir sobre Tidepool (BSD-2) u OpenICE (BSD-2) y usar Nightscout sólo como
+**fuente de interoperabilidad** detrás de una frontera de proceso, o (2) aceptar el AGPL y vender
+servicio y evidencia en vez de licencia. Lo que no se puede es forkear y cerrar. P25 lo cablea.
+
+### Lo que este plano confirma del recordatorio del ciclo 6
+
+El ciclo 6 descubrió que **el patrón «Odoo» no se traslada a salud** (módulos clínicos con licencia
+propietaria por módulo). Este plano añade la variante de dispositivo: **el patrón «plataforma
+personalizable» sí se traslada, pero hay que comprobar la licencia de la plataforma MÁS el límite
+que impone**. BSD-2 y MIT no imponen límite; AGPL-3.0 impone el límite de red; y
+`LoopKit/LoopWorkspace`, con 8.859 forks, **no tiene fichero de licencia en absoluto** (verificado
+por clon), por lo que no es una vertical de partida: es un manifiesto de submódulos.
+
+### Advertencia nueva de este fichero: la vertical de QMS regulatorio es NonCommercial
+
+Un proyecto de dispositivo médico necesita expediente técnico y sistema de calidad, y existe un
+repo activo y conocido que los plantilla: [`openregulatory/templates`](https://github.com/openregulatory/templates)
+(201★, push 2026-10-21). Su `LICENSE.md` (19.089 B) es **CC-BY-NC-SA-4.0**: *NonCommercial*.
+**No se puede usar en un entregable facturado.** La opción permisiva,
+[`innolitics/rdm`](https://github.com/innolitics/rdm) (MIT, 1.060 B, 145★), **no tiene push desde
+2022-10-27**. En esta vertical, lo permisivo está parado y lo mantenido es no comercial: el
+expediente se construye, no se adopta.
+
+### La vertical regional que existe, es pública y está muerta
+
+[`codeforjapan/remote-patient-monitoring-api`](https://github.com/codeforjapan/remote-patient-monitoring-api)
+(AGPL-3.0, 34.504 B, 40★/16f) y su
+[`dashboard`](https://github.com/codeforjapan/remote-patient-monitoring-dashboard) (AGPL-3.0,
+13★/10f) son el sistema de monitorización domiciliaria que Code for Japan construyó para la
+pandemia. **Último push: 2022-01-31.** Es el repo más estrellado que `search` devuelve para
+`remote patient monitoring` con contenido genuino, y está abandonado hace casi cinco años:
+APAC tiene precedente institucional de monitorización remota abierta, **y no tiene oferta viva**.
