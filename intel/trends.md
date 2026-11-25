@@ -240,3 +240,82 @@ tres órdenes de divergencia según cómo cada casa define «agéntico». **La d
 ante un CFO, citar la dirección y el rango, nunca un punto. La cifra de Towards Healthcare
 reproduce exactamente la que el ciclo 3 anotó (1,14 B → 33,66 B, 45,6 %), lo que confirma la
 fuente pero no la convierte en verdad.
+
+---
+
+## Pase 2026-11-25 (c8) — un mandato sin artefacto no converge
+
+### 1. La tendencia regulatoria del año en Europa produce fragmentación, no ecosistema
+
+El **EHDS** está en vigor desde 2025-03-26 con fechas firmes (**2027-03-26** autoridades de
+acceso, **2029-03-26** uso secundario, **2031-03-26** genómica y ensayos) y **no nombra estándar
+técnico**. Medido hoy: `ehds stars:>=5` devuelve **4 repos**, el mayor con **16★** y sin licencia
+identificada; seis de los nueve resultados de `ehds health data space` no tienen fichero de
+licencia y hay entre ellos una tesis y un hackathon. Compárese con CMS-0057-F, donde el
+regulador declaró **y** HL7 publicó una guía de implementación: `org:HL7-DaVinci`, **43 repos
+Apache-2.0 con más forks que estrellas**.
+
+**La ley del ciclo 6 queda corregida y es el aporte conceptual del pase:** hacen falta **dos**
+condiciones para que aparezca open source permisivo antes del mandato — **(1)** el regulador
+declara **y (2)** un organismo publica un **artefacto computable**. El EHDS cumple sólo la
+primera. **Condición 1 sin condición 2 = fragmentación nacional.** Vale para las doce industrias.
+
+### 2. Y el substrato que ganaría si lo nombraran ya está construido, maduro y desplegado
+
+`org:OHDSI` son **398 repos**, y la razón ★/forks —la prueba de autenticidad que el ciclo 6
+introdujo— da los valores más bajos que esta KB ha medido nunca: `DatabaseConnector` **0,60**,
+`Strategus` **0,81**, `WebAPI` **0,83**, `SqlRender` **0,99**. Cuatro repos **con más forks que
+estrellas**. Para comparar: `medplum` 2,7 y `synthea` 3,6. **No es un proyecto con atención: es
+infraestructura que la gente instala.** De los tres candidatos del EHDS, **OMOP es el único con
+un ecosistema de análisis completo y permisivo**; `org:openEHR` son 52 repos y los más grandes
+están sin tocar desde 2015-2024.
+
+### 3. Tercera medición del mismo patrón: substrato enorme, capa agéntica vacía
+
+`omop agent stars:>=5` → **2**. Sobre 398 repos. Es el **tercer** plano consecutivo con el mismo
+diagnóstico (imagen el pase de esta mañana, ciclo de ingresos en el ciclo 6) y **el más extremo
+de los tres**. La tendencia real del sector no es que salgan agentes verticales —el contador de
+referencia sigue clavado en **1** por **sexta** medición consecutiva— sino que **la distancia
+entre substrato y capa agéntica se ensancha**. Ahí está el trabajo.
+
+### 4. Novedad de método con consecuencia inmediata: la puerta de licencia tiene que conocer el lenguaje
+
+Diez repos nucleares de OHDSI aparecen como **`NONE`** en el metadato de GitHub —incluido
+`CommonDataModel`, con **1 103★**— y **los diez son Apache-2.0**, declarada en el `DESCRIPTION`
+de R. Una puerta de licencia que sólo lea `LICENSE` **rechaza el stack HADES completo**. En
+sentido inverso, `NOASSERTION` volvió a resolver a permisiva en los seis casos abiertos hoy:
+**10 de 10** en la historia de la KB. **El metadato de licencia de GitHub es una pista; el
+fichero es la prueba, y el fichero no siempre se llama `LICENSE`.** Patrón **P18**.
+
+### 5. La trampa contenido-sobre-formato reaparece, y ahora explica un hueco regional
+
+El ciclo 6 estableció que *la licencia del código no es la licencia del contenido* (CPT sobre
+X12). El plano de uso secundario lo repite: `OHDSI/Vocabulary-v5.0` es **Unlicense** —dominio
+público— pero eso cubre **el código que construye** el vocabulario, no el vocabulario cargado,
+que incorpora SNOMED CT y CPT con sus obligaciones. Y aquí la trampa **explica un hecho
+regional medido por dos vías independientes**: OHDSI Brasil nombra la «escasez de vocabularios
+adecuados para el contexto brasileño» como su principal dificultad, y el ciclo 7 había medido
+que **Brasil, México y Colombia no son Miembros de SNOMED CT**. Mismo problema, dos fuentes.
+**El cuello de botella del uso secundario en LATAM es contenido terminológico, no herramienta** —
+y la herramienta es Apache-2.0 y gratis. Ver **P19**.
+
+### 6. El plazo más largo del sector está en genómica, y el substrato ya existe
+
+El EHDS aplaza **dato genético y de ensayos a 2031-03-26**: **1 582 días**. El substrato está
+construido y es permisivo —`nextflow` 3 535★ Apache-2.0, `scanpy` 2 622★ BSD-3, `gatk` 2 013★
+Apache-2.0, `samtools` 1 983★ MIT/Expat, `galaxy` 1 902★ **MIT** (no Academic Free License, como
+suele repetirse), `nf-core/sarek` con razón **1,11**— y **existe oráculo**: `Illumina/hap.py` con
+*truth sets* públicos da precisión y sensibilidad **numéricas**. Es la misma estructura que el
+pase financiero encontró en valoración con QuantLib/ORE: **donde hay oráculo, el entregable
+defendible es el benchmark diferencial, no la demo.** Cinco años de plazo y oráculo disponible
+es el mejor perfil riesgo/plazo del sector. Ver **P20**.
+
+### 7. Asimetría regional que invierte la del pase de la mañana
+
+En imagen y scribes, Norteamérica y EMEA iban delante. En **uso secundario, APAC va delante de
+LATAM con diferencia**: Corea tiene las reclamaciones nacionales de **HIRA** mapeadas al CDM para
+**toda la población**, Australia tiene **AHDEN**, y el simposio APAC 2026 se celebró en Seúl el
+13-15 de noviembre; **LATAM celebró su PRIMER simposio** en julio de 2026 en Salvador. La lectura
+no es que LATAM esté mal posicionada, sino que **el encargo es distinto**: en Corea y Australia se
+vende capa analítica sobre un nodo existente; en LATAM se vende **el primer nodo y su vocabulario**.
+⚠️ Cifras de material de la propia comunidad OHDSI.

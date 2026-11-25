@@ -9,6 +9,60 @@ updated: 2026-11-25
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 > Reescribir este archivo destruiría la tendencia que existe para registrar.
 
+## 2026-11-25 (c8) — el uso secundario del dato entra en la KB, y su capa agéntica tiene dos repos
+
+Segundo pase del día. El de la mañana abrió imagen y scribes; este abre **uso secundario del
+dato sanitario** (investigación, evidencia de mundo real, salud poblacional) y mide que **la capa
+agéntica encima está prácticamente vacía sobre el substrato con más despliegue del sector**.
+
+### Nuevo esta semana: lo poco que hay encima de OMOP, con push reciente
+
+| Repo | Licencia (fichero abierto) | ★/forks | Último push | Señal |
+|---|---|---|---|---|
+| [OHNLP/omop_mcp](https://github.com/OHNLP/omop_mcp) | Apache-2.0 (10566 B) | 44★/10f | 2026-05-11 | MCP sobre OMOP del grupo OHNLP (Mayo Clinic). **El mejor punto de partida del plano.** GitHub lo marcaba `NOASSERTION` |
+| [OMOPHub/omophub-mcp](https://github.com/OMOPHub/omophub-mcp) | MIT (1069 B) | 7★/0f | **2026-11-24** | MCP de vocabulario OMOP, push de ayer |
+| [Bayer-Group/ascent-epi-demo](https://github.com/Bayer-Group/ascent-epi-demo) | BSD-3-Clause (1491 B) | 2★/1f | **2026-11-23** | Epidemiología agéntica publicada por **una farmacéutica**. Las 2★ no miden nada: el dato es el emisor |
+| [OHDSI/Strategus](https://github.com/OHDSI/Strategus) | Apache-2.0 (`DESCRIPTION`) | 13★/**16f** | **2026-11-24** | Razón **0,81** — más forks que estrellas. Orquestador de estudios en red, en uso |
+| [OHDSI/CohortMethod](https://github.com/OHDSI/CohortMethod) | Apache-2.0 (`DESCRIPTION`) | 94★/69f | **2026-11-25** | Push de hoy. Estimación de efectos comparativos |
+
+**El dato que lo convierte en tendencia y no en anécdota:** debajo de esas cinco filas hay
+**398 repos en `org:OHDSI`** con razones ★/forks por debajo de 2 en bloque, y arriba
+`omop agent stars:>=5` devuelve **2**. Es el patrón de imagen del pase de esta mañana, más
+extremo, y con un calendario regulatorio europeo con fechas firmes detrás (`intel/market.md`).
+
+### La trampa de este pase: `NONE` en GitHub ≠ sin licencia
+
+Diez repos nucleares de OHDSI —`CommonDataModel` (1 103★), `PatientLevelPrediction`,
+`DataQualityDashboard`, `Achilles`, `CohortMethod`, `DatabaseConnector`, `FeatureExtraction`,
+`ETL-Synthea`, `Strategus`, `CirceR`— aparecen como **`NONE`** en el metadato y **los diez son
+Apache-2.0 declarada en el `DESCRIPTION` de R**. Una puerta de licencia que sólo lea `LICENSE`
+rechaza el stack HADES entero. **La puerta tiene que conocer el lenguaje**: R → `DESCRIPTION`,
+Python → `pyproject.toml`, Java/Maven → `pom.xml`, Node → `package.json`. Patrón **P18**.
+
+### Advertencias de nomenclatura: **eHDSI no es EHDS**
+
+[Sundhedsdatastyrelsen/ehdsi](https://github.com/Sundhedsdatastyrelsen/ehdsi) (MIT, 1078 B, 7★/2f,
+refs=400, push **2026-11-25**) es el **National Contact Point for eHealth de Dinamarca** para
+**MyHealth@EU**: intercambio transfronterizo de datos de asistencia, es decir **uso primario**.
+No tiene nada que ver con el **European Health Data Space (EHDS)**, el reglamento de **uso
+secundario**. Se diferencian en una letra y son cosas distintas. Es además, medido, **el único
+activo permisivo serio que aparece al buscar «EHDS»** — lo bueno del resultado no es EHDS.
+Noveno caso registrado en esta KB de nombre/slug que no es lo que parece.
+
+### NOASSERTION → permisiva genuina: **10 de 10**
+
+Racha acumulada de la KB, ampliada hoy con `OHNLP/omop_mcp` (Apache-2.0), `broadinstitute/gatk`
+(Apache-2.0, 10966 B), `samtools/samtools` (**MIT/Expat**), `samtools/htslib` (MIT/Expat con
+excepción acotada en `cram/`), `galaxyproject/galaxy` (**MIT**, 1590 B — *no* Academic Free
+License, como se repite a menudo) e `Illumina/hap.py` (BSD + MIT). **`NOASSERTION` es señal de
+parser, no de licencia:** hay que abrir el fichero, y hasta ahora siempre ha sido permisiva.
+
+### El contador de agentes verticales — sexta medición
+
+```
+healthcare agent created:>2026-08-01 stars:>=50   →   total = 1   (149★ / 1 fork)
+```
+
 ## 2026-11-25 — los scribes ambientales son la primera categoría agéntica con oferta permisiva
 
 ### Nuevo esta semana: documentación ambiental abierta, con coste publicado

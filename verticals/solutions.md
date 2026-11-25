@@ -157,3 +157,34 @@ licencia cae en medio del stack** y eso decide la arquitectura (ver P13 en `comp
 > de GitHub daba `NOASSERTION` para `pydicom`, `Slicer`, `dcm4che` y `Bahmni`, y abrir el fichero
 > dio cuatro respuestas distintas — MIT con porciones, acuerdo propio del Brigham, MPL 1.1 y
 > MPL-2.0. Cuatro de cuatro habrían sido mal clasificadas confiando en el metadato.
+
+---
+
+## Pase 2026-11-25 (c8) — plataformas de uso secundario del dato, personalizables con IA encima
+
+El criterio de este fichero es el de Odoo/OpenMRS/Moodle: **sistema real, instalable, con
+comunidad, que se personaliza y encima del cual se pone IA**. Las tres de abajo cumplen y
+ninguna estaba en la KB. Medidas 2026-11-25, licencia abierta por fichero.
+
+| Plataforma | Repo | Licencia | ★/forks | Qué es y por qué entra |
+|---|---|---|---|---|
+| **OHDSI Broadsea** | [OHDSI/Broadsea](https://github.com/OHDSI/Broadsea) | Apache-2.0 (11358 B) | 94★/81f | **El «Odoo» del dato observacional**: un `docker compose up` levanta Atlas + WebAPI + HADES + base de datos con el CDM. Es el punto de entrada de un nodo de uso secundario y lo que convierte OMOP de especificación en sistema desplegable |
+| **Atlas** | [OHDSI/Atlas](https://github.com/OHDSI/Atlas) | Apache-2.0 (11358 B) | 340★/155f | La aplicación con la que un epidemiólogo define cohortes y caracteriza poblaciones sin escribir SQL. Es la superficie donde un copiloto aporta valor inmediato: **Criteria2Query ya hace texto→cohorte y es Apache-2.0** |
+| **Galaxy** | [galaxyproject/galaxy](https://github.com/galaxyproject/galaxy) | **MIT** (1590 B) | 1 902★/**1 196f** | Plataforma de análisis bioinformático con interfaz web, gestión de herramientas y trazabilidad de ejecución. Razón **1,59** = se despliega de verdad. ⚠️ Se le atribuye a menudo Academic Free License: **el fichero dice MIT**, verificado |
+
+### Lo que estas tres cambian en una propuesta
+
+Las plataformas que ya tenía este fichero (OpenMRS, Bahmni, OpenELIS, medplum) son de **uso
+primario**: atienden al paciente. Las tres de arriba son de **uso secundario**: explotan el dato
+ya recogido. La distinción no es académica, porque **el comprador es otro** —dirección médica e
+investigación, o un ministerio, no el CIO de operaciones— y **el calendario regulatorio es otro**
+(EHDS: 2027-03-26 autoridades de acceso, 2029-03-26 uso secundario, 2031-03-26 genómica).
+
+### Advertencia de licencia que afecta a este fichero
+
+En `verticals/` se instalan sistemas, y ahí la licencia del **contenido** pesa tanto como la del
+código. Un nodo Broadsea sin vocabulario cargado no sirve, y **el vocabulario no es Apache-2.0**:
+incorpora SNOMED CT (licencia de Afiliado, obligatoria incluso donde es gratis) y, en EEUU, CPT
+(propiedad de la AMA, con cuotas). `OHDSI/Vocabulary-v5.0` es **Unlicense en el código que lo
+construye**, lo cual no cubre el contenido cargado. **Nunca prometer un nodo OMOP «todo open
+source»** sin aclarar en qué país está el cliente y qué conjuntos de códigos usa.

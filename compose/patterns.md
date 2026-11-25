@@ -497,3 +497,150 @@ refutado. Dos precisiones nuevas que cambian el alcance de cualquier propuesta:
 - La API debe comunicar **aprobación, denegación con motivo específico, o petición de más
   información**: tres salidas, no dos. El «motivo específico» es la que obliga a trazabilidad y
   por tanto la que justifica la biblioteca CQL como entregable.
+
+---
+
+## Pase 2026-11-25 (c8) — patrones P17 a P20
+
+### P17 · Nodo de uso secundario «a prueba de acto de ejecución» (la apuesta de modelo, cubierta)
+
+**Para qué:** un hospital, una red o un ministerio europeo que tiene que estar listo para el
+EHDS sin saber todavía qué modelo de datos exigirá su Estado miembro (**2027-03-26** designación
+de autoridad de acceso, **2029-03-26** uso secundario). También sirve tal cual para un pagador o
+una farmacéutica que quiera evidencia de mundo real.
+
+**La idea que lo hace vendible:** no se promete acertar el modelo. Se promete una arquitectura
+donde **cambiar de modelo cuesta una capa, no el sistema**.
+
+**Receta concreta:**
+
+1. **Levantar el nodo.** [OHDSI/Broadsea](https://github.com/OHDSI/Broadsea) (Apache-2.0) —
+   `docker compose` con Atlas + WebAPI + HADES + base de datos con el CDM. No montar las piezas
+   a mano: Broadsea es el artefacto que la comunidad mantiene y forkea (94★/81f).
+2. **Construir contra la pierna firme, sin datos reales.**
+   [synthea](https://github.com/synthetichealth/synthea) → [OHDSI/ETL-Synthea](https://github.com/OHDSI/ETL-Synthea)
+   (Apache-2.0). Todo el desarrollo y la demo salen de aquí; el dato real entra al final y una vez.
+3. **Diseñar el ETL como entregable, no como script.**
+   [OHDSI/WhiteRabbit](https://github.com/OHDSI/WhiteRabbit) (Apache-2.0, 11346 B) escanea el
+   origen y su módulo **Rabbit-in-a-Hat** produce el **documento de diseño** de ETL. Ese documento
+   es lo que el cliente audita, y es lo que sobrevive a un cambio de modelo.
+4. **El mapeo terminológico, aislado y versionado.**
+   [OHDSI/Usagi](https://github.com/OHDSI/Usagi) para mapear códigos locales a conceptos estándar.
+   **Esta capa va en su propio repositorio del cliente, con revisión en PR** — es el activo (P19).
+5. **La puerta de calidad es el entregable facturable.**
+   [OHDSI/DataQualityDashboard](https://github.com/OHDSI/DataQualityDashboard) (Apache-2.0, en
+   `DESCRIPTION`) + [OHDSI/Achilles](https://github.com/OHDSI/Achilles). **Regla de CI: un nodo no
+   se declara entregado sin informe DQD verde y caracterización Achilles adjunta.** Esto convierte
+   «hemos convertido la base» en un hecho verificable, que es lo que una autoridad de acceso pedirá.
+6. **Cohortes como código, no como clics.** [OHDSI/Capr](https://github.com/OHDSI/Capr)
+   (Apache-2.0) define cohortes en R versionable; [OHDSI/CirceR](https://github.com/OHDSI/CirceR)
+   las traduce. Un agente **genera un borrador de Capr y abre un PR** — nunca ejecuta la cohorte
+   contra producción por su cuenta.
+7. **Estudios en red:** [OHDSI/Strategus](https://github.com/OHDSI/Strategus) (razón 0,81) como
+   orquestador. El agente **invoca** Strategus; no reimplementa la ejecución de estudios.
+8. **La capa agéntica, donde está el hueco.**
+   [OHNLP/omop_mcp](https://github.com/OHNLP/omop_mcp) (Apache-2.0) para dar acceso tipado al CDM
+   por MCP, y [OHDSI/Criteria2Query](https://github.com/OHDSI/Criteria2Query) (Apache-2.0) como
+   precedente oficial de «texto libre → cohorte». `omop agent stars:>=5` devuelve **2**: aquí se
+   construye, no se compra.
+9. **El borde se queda en FHIR.** El dato de origen llega por FHIR (medplum/HAPI, ver P10); OMOP
+   es el modelo de **análisis**. La traducción FHIR→OMOP es la capa que se sustituye si el acto de
+   ejecución nombra otro modelo. **Es el patrón «MT564 en el borde, seev.031 en el dominio» del
+   pase financiero.**
+
+**Qué NO prometer:** que el nodo «cumple el EHDS». A noviembre de 2026 el reglamento no nombra
+modelo de datos y los actos de ejecución vencen el 2027-03-26. Se promete **estar listo para
+cumplir con coste de cambio acotado**, y eso sí se demuestra con la arquitectura.
+
+### P18 · Puerta de licencia consciente del lenguaje (regla de CI, reutilizable en las 12 industrias)
+
+**El problema, medido:** GitHub reporta **`NONE`** para `OHDSI/CommonDataModel` (1 103★),
+`PatientLevelPrediction`, `DataQualityDashboard`, `Achilles`, `CohortMethod`, `DatabaseConnector`,
+`FeatureExtraction`, `ETL-Synthea`, `Strategus` y `CirceR`. **Los diez son Apache License 2.0**,
+declarada en el `DESCRIPTION` de R. Una puerta que sólo mire `LICENSE` **descarta el substrato de
+dato sanitario con más despliegue medido del mundo** por «sin licencia».
+
+**La puerta, en orden:**
+
+| Paso | Dónde mirar | Señal |
+|---|---|---|
+| 1 | `git ls-remote` | **Existe o no existe.** Árbitro único, en ambas direcciones |
+| 2 | `LICENSE`, `LICENSE.md`, `.txt`, `LICENCE`, `COPYING`, `LICENSE-MIT`, `License`, `license.md`, `LICENSE.rst` (rutas **sensibles a mayúsculas**) | Licencia por fichero |
+| 3 | **`DESCRIPTION`** (R) → `pyproject.toml`/`setup.py`/`setup.cfg` (Python) → `pom.xml` (Java/Maven) → `package.json` (Node) → `Cargo.toml` (Rust) | **El paso que faltaba.** Campo `License:` |
+| 4 | `README` | Declaración débil: utilizable con criterio, **no** equivalente a fichero (caso `OHDSI/Usagi`) |
+| 5 | Nada de lo anterior | **No entra.** Caso `OHDSI/Athena`: ni `LICENSE`, ni `DESCRIPTION`, ni bloque `<licenses>` en `pom.xml` |
+
+**Reglas de CI derivadas:**
+- Si una dependencia no supera los pasos 2-3, **el build falla**; el paso 4 requiere aprobación
+  humana registrada.
+- **`NOASSERTION` nunca es motivo de rechazo automático**: obliga a abrir el fichero. Racha
+  histórica de esta KB: **10 de 10** resolvieron a permisiva genuina — **6 abiertos en este pase**
+  (`gatk` Apache-2.0, `samtools` y `htslib` MIT/Expat, `galaxy` MIT, `hap.py` BSD+MIT, `omop_mcp`
+  Apache-2.0) sobre los 4 que acumulaban los ciclos anteriores (`pydicom` entre ellos).
+- **Bandas de bytes útiles** (acumuladas): Apache-2.0 íntegra **11325-11358 B**; Apache-2.0 sin
+  apéndice **9765-10966 B**; MIT **1069-1078 B**; Unlicense **1210 B**; BSD-3 **1491 B**;
+  MIT de Galaxy 1590 B; MPL-2.0 16725-16727 B (18072-18199 con descargo de OpenMRS);
+  AGPL-3.0 **34522 B**. Una banda **orienta**; el texto decide.
+
+### P19 · El mapeo terminológico como producto (LATAM, y es el margen del plano)
+
+**El hecho, medido por dos vías independientes:** OHDSI Brasil (CIDACS) nombra la **«escasez de
+vocabularios adecuados para el contexto brasileño»** como su principal dificultad; y el ciclo 7
+de esta KB midió que **Brasil, México y Colombia no aparecen como Miembros de SNOMED CT**
+(Argentina, Chile y Uruguay sí). Mismo problema, dos fuentes, dos ciclos.
+
+**Por qué es oportunidad y no obstáculo:** la **herramienta es Apache-2.0 y gratis**
+([Usagi](https://github.com/OHDSI/Usagi), [WhiteRabbit](https://github.com/OHDSI/WhiteRabbit),
+[Perseus](https://github.com/OHDSI/Perseus)); **el contenido mapeado no existe**. Y el contenido
+mapeado es, por naturaleza, **específico del país y del sistema de origen** — no lo puede
+publicar un vendedor global, y no caduca cuando cambia el modelo de datos.
+
+**Receta:**
+1. Determinar **primero** la situación de licencia de contenido del país: ¿Miembro de SNOMED CT?
+   ¿usa CID-10 (pt-BR) o ICD-10? ¿tablas propias del sistema público (SUS, SIGSS…)?
+   **Esto es una partida de coste del proyecto y va en la propuesta, no en el descubrimiento.**
+2. Mapear con Usagi contra los vocabularios que el cliente **sí** puede usar; ICD-10-CM y LOINC
+   abaratan el camino (dominio público y gratis con registro, respectivamente).
+3. Entregar el mapeo como **repositorio del cliente**: versionado, con revisión en PR y conjunto
+   de pruebas. **Lo posee, lo audita y lo mantiene él.**
+4. Una regla de CI: si el mapeo emite un concepto de un vocabulario cuya licencia no consta en el
+   manifiesto del proyecto, **el build falla** (extensión de P11 al plano de investigación).
+
+**Estructuralmente idéntico a la biblioteca CQL del ciclo 6:** el software es abierto y
+reemplazable; **el artefacto de conocimiento específico del cliente es el que tiene margen**. Y
+cierra el hueco (c) por el lado útil: el NLP clínico en español y el vocabulario OMOP en español
+son el mismo trabajo con dos nombres.
+
+### P20 · Genómica clínica con oráculo y cinco años de plazo
+
+**Para qué:** laboratorios, hospitales con oncología de precisión y biobancos. **El plazo:** el
+EHDS aplaza dato genético y de ensayos a **2031-03-26** — **1 582 días**. Es el plano con más
+margen del sector y el substrato ya está construido.
+
+**Receta:**
+1. **Motor:** [nextflow-io/nextflow](https://github.com/nextflow-io/nextflow) (Apache-2.0,
+   3 535★). No escribir orquestación propia.
+2. **Pipeline:** [nf-core/sarek](https://github.com/nf-core/sarek) (MIT, razón **1,11**) para
+   variantes germinales y somáticas. Debajo: [gatk](https://github.com/broadinstitute/gatk)
+   (Apache-2.0), [samtools](https://github.com/samtools/samtools) y
+   [htslib](https://github.com/samtools/htslib) (MIT/Expat — ⚠️ excepción acotada en `cram/`).
+3. **EL ORÁCULO, Y ES EL CORAZÓN DEL PATRÓN:** [Illumina/hap.py](https://github.com/Illumina/hap.py)
+   (BSD+MIT) contra *truth sets* públicos de Genome in a Bottle. Da **precisión y sensibilidad
+   numéricas** por clase de variante. **El entregable no es «montamos el pipeline»: es el
+   benchmark diferencial frente al proceso actual del cliente, con números.** Misma estructura
+   que QuantLib/ORE en el pase financiero.
+4. **Interpretación clínica:** [sigven/pcgr](https://github.com/sigven/pcgr) (MIT) genera informe
+   accionable en cáncer. **Aquí termina lo automático**: el informe lo firma una persona.
+5. **Interoperabilidad y federación:** [ga4gh/vrs](https://github.com/ga4gh/vrs) (Apache-2.0) para
+   representar variantes de forma estable y
+   [ga4gh-beacon/beacon-v2](https://github.com/ga4gh-beacon/beacon-v2) (CC0-1.0) para
+   descubrimiento federado **sin mover el dato** — que es exactamente la forma que el EHDS
+   favorece. Construir el borde en Beacon desde el principio es la apuesta de menor riesgo.
+6. **Escala poblacional:** [hail-is/hail](https://github.com/hail-is/hail) (MIT) si hay cohortes
+   grandes. **Interfaz para no programadores:** [galaxy](https://github.com/galaxyproject/galaxy)
+   (MIT, razón 1,59).
+
+**Dónde va el agente:** en la interpretación y el informe —resumir evidencia, redactar borrador,
+señalar discrepancias con la guía— **nunca en la llamada de variantes**, que es determinista,
+está benchmarkeada y no mejora con un LLM. Confundir las dos capas es el error que el oráculo
+sirve para hacer evidente.

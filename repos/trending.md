@@ -8,6 +8,70 @@ updated: 2026-11-25
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 
+## 2026-11-25 (c8) — OMOP/OHDSI: el substrato con más forks por estrella que la KB ha medido
+
+Segundo pase del día, plano nuevo: **uso secundario del dato**. Y trae la medición que mejor
+valida la regla del ciclo 6 (*la infraestructura real se forkea; el repo promocionado se estrella
+y no se forkea*), porque aquí la razón baja de 1 en varios repos a la vez.
+
+### Razón ★/forks del núcleo de OHDSI — medida hoy
+
+| Repo | ★/forks | Razón | Licencia (abierta) | Último push |
+|---|---|---|---|---|
+| [OHDSI/DatabaseConnector](https://github.com/OHDSI/DatabaseConnector) | 58★/96f | **0,60** | Apache-2.0 (`DESCRIPTION`) | 2026-10-19 |
+| [OHDSI/Strategus](https://github.com/OHDSI/Strategus) | 13★/16f | **0,81** | Apache-2.0 (`DESCRIPTION`) | 2026-11-24 |
+| [OHDSI/WebAPI](https://github.com/OHDSI/WebAPI) | 154★/185f | **0,83** | Apache-2.0 (11325 B) | 2026-11-23 |
+| [OHDSI/SqlRender](https://github.com/OHDSI/SqlRender) | 90★/91f | **0,99** | Apache-2.0 | 2026-10-19 |
+| [OHDSI/Achilles](https://github.com/OHDSI/Achilles) | 156★/138f | 1,13 | Apache-2.0 (`DESCRIPTION`) | 2026-10-09 |
+| [OHDSI/Broadsea](https://github.com/OHDSI/Broadsea) | 94★/81f | 1,16 | Apache-2.0 (11358 B) | 2026-11-10 |
+| [OHDSI/DataQualityDashboard](https://github.com/OHDSI/DataQualityDashboard) | 195★/124f | 1,57 | Apache-2.0 (`DESCRIPTION`) | 2026-11-23 |
+| [OHDSI/CommonDataModel](https://github.com/OHDSI/CommonDataModel) | 1 103★/518f | 2,13 | Apache-2.0 (`DESCRIPTION`) | 2026-10-28 |
+| [OHDSI/WhiteRabbit](https://github.com/OHDSI/WhiteRabbit) | 230★/103f | 2,23 | Apache-2.0 (11346 B) | 2026-10-13 |
+
+**Cuatro repos por debajo de 1 y nueve por debajo de 2,3.** Para comparar con lo que esta misma
+KB ya tenía medido: `medplum` 2,7 y `synthea` 3,6. **El stack de OHDSI está más desplegado que
+cualquier otra cosa que la KB de salud haya medido**, y `org:OHDSI` tiene **398 repos**.
+
+### Genómica: el substrato más grande, y con el plazo regulatorio más largo
+
+El EHDS aplaza **dato genético y de ensayos clínicos a 2031-03-26** (el resto, 2029). Es el
+plano con **cinco años de margen** y el substrato ya está construido y permisivo:
+
+| Repo | ★/forks | Licencia (fichero abierto) | Último push |
+|---|---|---|---|
+| [nextflow-io/nextflow](https://github.com/nextflow-io/nextflow) | 3 535★/825f | Apache-2.0 | 2026-11-25 |
+| [scverse/scanpy](https://github.com/scverse/scanpy) | 2 622★/810f | BSD-3-Clause | 2026-11-24 |
+| [broadinstitute/gatk](https://github.com/broadinstitute/gatk) | 2 013★/632f | Apache-2.0 (`LICENSE.TXT`, 10966 B) | 2026-11-25 |
+| [samtools/samtools](https://github.com/samtools/samtools) | 1 983★/629f | **MIT/Expat** (1706 B) | 2026-11-12 |
+| [galaxyproject/galaxy](https://github.com/galaxyproject/galaxy) | 1 902★/**1 196f** (1,59) | **MIT** (1590 B) | 2026-11-25 |
+| [hail-is/hail](https://github.com/hail-is/hail) | 1 082★/268f | MIT | 2026-11-24 |
+| [samtools/htslib](https://github.com/samtools/htslib) | 961★/490f (1,96) | MIT/Expat con excepción acotada en `cram/` (3540 B) | 2026-11-25 |
+| [nf-core/sarek](https://github.com/nf-core/sarek) | 623★/564f (**1,11**) | MIT | 2026-11-23 |
+| [Illumina/hap.py](https://github.com/Illumina/hap.py) | 474★/136f | BSD + MIT (3507 B) | 2023-12-07 |
+| [sigven/pcgr](https://github.com/sigven/pcgr) | 285★/51f | MIT | 2026-11-10 |
+| [ga4gh/vrs](https://github.com/ga4gh/vrs) | 101★/43f | Apache-2.0 | 2026-11-24 |
+| [ga4gh-beacon/beacon-v2](https://github.com/ga4gh-beacon/beacon-v2) | 36★/21f (1,71) | CC0-1.0 | 2026-11-25 |
+
+**Diez de los doce con push en las últimas dos semanas.** Cuatro venían marcados `NOASSERTION` y
+los cuatro son permisivos al abrir el fichero.
+
+### Dos reglas de canal, una nueva y una reconfirmada
+
+- **NUEVA Y LA MÁS ÚTIL DEL PASE: el canal de licencia depende del lenguaje.** `NONE` en el
+  metadato de GitHub se produce cuando la licencia vive en un fichero de empaquetado y no en un
+  `LICENSE`. Medido: **10 repos nucleares de OHDSI con `NONE` y Apache-2.0 en `DESCRIPTION`**.
+  Orden de comprobación: `LICENSE*` → `DESCRIPTION` (R) → `pyproject.toml`/`setup.py` (Python) →
+  `pom.xml` (Java) → `package.json` (Node) → `README`. Patrón **P18**.
+- **Reconfirmada por la vía contraria, y es la más honesta del pase: un 422 TAMBIÉN puede tener
+  razón.** `repo:OHDSI/RabbitInAHat` devolvió **HTTP 422** «the resources do not exist», y esta
+  vez `ls-remote` dio **refs=0**: el repo **no existe**. Rabbit-in-a-Hat es un **módulo dentro de
+  [OHDSI/WhiteRabbit](https://github.com/OHDSI/WhiteRabbit)** (`rabbitinahat/`), no un repo
+  propio. El slug venía **de mi memoria, no de una búsqueda** — exactamente el caso que el pase
+  financiero registró con `ultibi`. Lección operativa, que no contradice la regla sino que la
+  completa: **`ls-remote` es el árbitro en ambas direcciones**, y un slug recordado hay que
+  pasarlo por la puerta igual que uno encontrado. Este pase: **38/38 slugs escritos resuelven**;
+  el único que falló fue el único que no salió de una medición.
+
 ## 2026-11-25 — entra la imagen médica: el substrato más grande del open source sanitario
 
 ### Repos en movimiento — push en las últimas 48 horas, medidos hoy

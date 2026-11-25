@@ -265,3 +265,74 @@ licencia.** No es ausencia de material, es material oficial sin mantener. Eso ca
 propuesta: no hay que construir desde cero, hay que **adoptar y mantener** lo que la NHA ya
 publicó, que es un encargo más pequeño y más defendible. Y el contraste con el hueco (b) del
 NHS se afina: el NHS publica **sin licencia**; India publica **con licencia y sin mantenimiento**.
+
+---
+
+## Pase 2026-11-25 (c8) — uso secundario del dato: el stack OMOP/OHDSI y el substrato genómico
+
+Plano nuevo en la KB. Dos bloques: el **modelo común de datos observacionales** (OMOP) con su
+ecosistema de análisis, y el **substrato genómico**, que el EHDS aplaza a 2031 y por tanto es el
+de plazo más largo del sector. Todas las cifras **medidas 2026-11-25**; toda licencia **abierta**.
+
+### Stack OMOP/OHDSI — `org:OHDSI` = **398 repos**
+
+| Repo | Papel en el stack | Licencia (canal) | ★/forks | Último push |
+|---|---|---|---|---|
+| [OHDSI/CommonDataModel](https://github.com/OHDSI/CommonDataModel) | La especificación del modelo: DDL por dialecto de base de datos | Apache-2.0 (`DESCRIPTION`) | 1 103★/518f | 2026-10-28 |
+| [OHDSI/Broadsea](https://github.com/OHDSI/Broadsea) | **Por aquí se empieza**: todo el stack en Docker Compose | Apache-2.0 (11358 B) | 94★/81f | 2026-11-10 |
+| [OHDSI/Atlas](https://github.com/OHDSI/Atlas) | Interfaz de cohortes, caracterización y estudios | Apache-2.0 (11358 B) | 340★/155f | 2026-09-16 |
+| [OHDSI/WebAPI](https://github.com/OHDSI/WebAPI) | Backend REST de Atlas. **Razón 0,83: más forks que estrellas** | Apache-2.0 (11325 B) | 154★/185f | 2026-11-23 |
+| [OHDSI/WhiteRabbit](https://github.com/OHDSI/WhiteRabbit) | Escaneo del origen + **Rabbit-in-a-Hat** (módulo interno) para diseñar el ETL | Apache-2.0 (11346 B) | 230★/103f | 2026-10-13 |
+| [OHDSI/Usagi](https://github.com/OHDSI/Usagi) | Mapeo de códigos locales a conceptos estándar. **La herramienta del cuello de botella LATAM** | Apache sólo en README ⚠️ | 122★/35f | 2026-05-26 |
+| [OHDSI/Vocabulary-v5.0](https://github.com/OHDSI/Vocabulary-v5.0) | Código que **construye** el vocabulario | **Unlicense** (1210 B, dominio público) ⚠️ ver nota | 276★/76f | 2026-11-23 |
+| [OHDSI/Athena](https://github.com/OHDSI/Athena) | Descarga de vocabularios | ⚠️ **sin licencia localizable** | 80★/25f | 2026-09-02 |
+| [OHDSI/DataQualityDashboard](https://github.com/OHDSI/DataQualityDashboard) | **El entregable que se factura**: batería sistemática de comprobaciones de calidad sobre el CDM, con informe | Apache-2.0 (`DESCRIPTION`) | 195★/124f | 2026-11-23 |
+| [OHDSI/Achilles](https://github.com/OHDSI/Achilles) | Caracterización y perfilado de la base convertida | Apache-2.0 (`DESCRIPTION`) | 156★/138f | 2026-10-09 |
+| [OHDSI/ETL-Synthea](https://github.com/OHDSI/ETL-Synthea) | Synthea → OMOP. **La pierna firme para construir sin datos reales** | Apache-2.0 (`DESCRIPTION`) | 131★/80f | 2026-03-23 |
+| [OHDSI/PatientLevelPrediction](https://github.com/OHDSI/PatientLevelPrediction) | Modelos predictivos con protocolo estandarizado | Apache-2.0 (`DESCRIPTION`) | 227★/97f | 2026-11-24 |
+| [OHDSI/CohortMethod](https://github.com/OHDSI/CohortMethod) | Estimación de efectos comparativos | Apache-2.0 (`DESCRIPTION`) | 94★/69f | 2026-11-25 |
+| [OHDSI/Strategus](https://github.com/OHDSI/Strategus) | Ejecución de estudios en red. **Razón 0,81** | Apache-2.0 (`DESCRIPTION`) | 13★/16f | 2026-11-24 |
+| [OHDSI/Hades](https://github.com/OHDSI/Hades) | Índice del conjunto de paquetes R del ecosistema | Apache-2.0 | 32★/19f | 2026-10-05 |
+| [OHDSI/SqlRender](https://github.com/OHDSI/SqlRender) | Traduce un SQL a 10+ dialectos. **Razón 0,99** | Apache-2.0 | 90★/91f | 2026-10-19 |
+| [OHDSI/DatabaseConnector](https://github.com/OHDSI/DatabaseConnector) | Conexión homogénea. **Razón 0,60, la más baja del pase** | Apache-2.0 (`DESCRIPTION`) | 58★/96f | 2026-10-19 |
+| [OHDSI/Capr](https://github.com/OHDSI/Capr) | Definición de cohortes **como código** (versionable, revisable en PR) | Apache-2.0 | 24★/20f | 2026-09-23 |
+| [OHDSI/OncologyWG](https://github.com/OHDSI/OncologyWG) | Extensión oncológica del CDM | Apache-2.0 | 68★/24f | 2026-10-30 |
+| [OHDSI/MIMIC](https://github.com/OHDSI/MIMIC) | ETL de MIMIC a OMOP: dataset de UCI de referencia | Apache-2.0 | 101★/42f | 2026-08-21 |
+| [OHDSI/Criteria2Query](https://github.com/OHDSI/Criteria2Query) | Lenguaje natural → cohorte. **Precursor agéntico oficial** | Apache-2.0 (11357 B) | 81★/22f | 2026-03-01 |
+| [OHDSI/Perseus](https://github.com/OHDSI/Perseus) | ETL a OMOP por interfaz web | Apache-2.0 | 44★/12f | 2023-11-10 ⚠️ parado |
+
+> ⚠️ **`Vocabulary-v5.0` es Unlicense, y eso es sobre el CÓDIGO, no sobre el CONTENIDO.** El
+> vocabulario cargado incorpora SNOMED CT, CPT y otros conjuntos **con sus propias
+> obligaciones**. Que los scripts de construcción sean dominio público **no dice nada** sobre
+> redistribuir el vocabulario resultante. Es la misma trampa que el ciclo 6 documentó con CPT,
+> ahora en el plano de investigación. Ver `compose/patterns.md` P11 y P19.
+
+### Substrato genómico — plazo EHDS: **2031-03-26**
+
+| Repo | Papel | Licencia (fichero abierto) | ★/forks | Último push |
+|---|---|---|---|---|
+| [nextflow-io/nextflow](https://github.com/nextflow-io/nextflow) | Motor de workflows de facto en bioinformática | Apache-2.0 | 3 535★/825f | 2026-11-25 |
+| [nf-core/sarek](https://github.com/nf-core/sarek) | Pipeline de variantes germinales y somáticas listo para producción. **Razón 1,11** | MIT | 623★/564f | 2026-11-23 |
+| [broadinstitute/gatk](https://github.com/broadinstitute/gatk) | El estándar de llamada de variantes | Apache-2.0 (`LICENSE.TXT`, 10966 B) | 2 013★/632f | 2026-11-25 |
+| [samtools/samtools](https://github.com/samtools/samtools) | Manipulación de alineamientos SAM/BAM/CRAM | **MIT/Expat** (1706 B) | 1 983★/629f | 2026-11-12 |
+| [samtools/htslib](https://github.com/samtools/htslib) | La librería C que sostiene todo lo anterior | MIT/Expat, excepción acotada en `cram/` (3540 B) | 961★/490f | 2026-11-25 |
+| [galaxyproject/galaxy](https://github.com/galaxyproject/galaxy) | Plataforma de análisis con interfaz para no programadores. **Razón 1,59** | **MIT** (1590 B) | 1 902★/1 196f | 2026-11-25 |
+| [hail-is/hail](https://github.com/hail-is/hail) | Genómica a escala poblacional sobre Spark | MIT | 1 082★/268f | 2026-11-24 |
+| [scverse/scanpy](https://github.com/scverse/scanpy) | Análisis de célula única | BSD-3-Clause | 2 622★/810f | 2026-11-24 |
+| [sigven/pcgr](https://github.com/sigven/pcgr) | **Interpretación clínica** de variantes en cáncer con informe | MIT | 285★/51f | 2026-11-10 |
+| [Illumina/hap.py](https://github.com/Illumina/hap.py) | Benchmarking de variantes: **el oráculo** del plano | BSD + MIT (3507 B) | 474★/136f | 2023-12-07 |
+| [ga4gh/vrs](https://github.com/ga4gh/vrs) | Especificación GA4GH de representación de variantes | Apache-2.0 | 101★/43f | 2026-11-24 |
+| [ga4gh-beacon/beacon-v2](https://github.com/ga4gh-beacon/beacon-v2) | Protocolo de descubrimiento federado de datos genómicos | CC0-1.0 | 36★/21f | 2026-11-25 |
+
+**Por qué importa el oráculo:** `hap.py` con los *truth sets* de GA (Genome in a Bottle) permite
+dar precisión/sensibilidad **numéricas** de un pipeline. Es, estructuralmente, lo mismo que el
+ciclo financiero encontró con QuantLib/ORE en valoración: **cuando existe oráculo, el entregable
+defendible es el benchmark diferencial**, no la demo. Ver `compose/patterns.md` P20.
+
+### Nota de método: el canal de licencia depende del lenguaje
+
+Diez repos de la primera tabla aparecen como **`NONE`** en el metadato de GitHub y **los diez son
+Apache-2.0** declarada en el `DESCRIPTION` de R. Una puerta que sólo lea `LICENSE` descarta el
+stack HADES completo. Orden correcto: `LICENSE*` → `DESCRIPTION` → `pyproject.toml`/`setup.py` →
+`pom.xml` → `package.json` → `README`. Patrón **P18**. Y en sentido inverso, `NOASSERTION` siguió
+resolviendo a permisiva genuina: **10 de 10** en la historia de la KB.

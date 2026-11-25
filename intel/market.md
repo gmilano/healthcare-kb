@@ -211,6 +211,21 @@ y ahí es donde conviene construir.
   (Apache-2.0), se desarrolló y evaluó en el contexto de Alberta Health Services, con artículo en
   JMIR Med Inform y **coste operativo publicado por debajo de 30 USD por médico y mes**. Es una
   referencia canadiense citable y una base técnica a la vez.
+- **(2026-11-25 · c8) El nodo de uso secundario es el encargo que el calendario de EEUU no bloquea.**
+  La regulación federal de IA sanitaria sigue sin cerrarse —la guía de la FDA sobre software de
+  dispositivo con IA **no está finalizada**, y la regla de sistema de gestión de calidad entró en
+  vigor el **2026-02-02**— mientras **CMS modela la adopción por la vía del pago**, no de la norma.
+  Un nodo OMOP no es dispositivo: no entra en esa cola. Y hay dos anclas de contexto citables:
+  Norteamérica fue el **44,5 % del mercado global de IA sanitaria en 2025**, y la brecha de
+  adopción entre clínico e institución sigue abierta (**81 %** de médicos usando IA frente a
+  **27 %** de sistemas de salud, **18 %** ambulatorio y **14 %** pagadores). ⚠️ Encuesta AMA 2026 y
+  cifras Menlo Ventures citadas en prensa sectorial: dirección sí, punto ante un CFO no.
+- **(2026-11-25 · c8) El entorno normativo estatal se ha vuelto un riesgo de proyecto, no sólo de
+  cumplimiento.** 14 estados legislaron sobre IA sanitaria en 2025 y la orden ejecutiva de
+  diciembre de 2025 creó una vía de litigio federal contra leyes estatales de IA. Para un
+  entregable multiestado eso significa **que el conjunto de obligaciones puede cambiar durante el
+  proyecto**: el diseño defendible es el que **parametriza** la regla por jurisdicción en lugar de
+  codificarla. Es el mismo argumento que la biblioteca CQL del ciclo 6, aplicado a jurisdicción.
 ### EMEA
 - **Anclar el agente en la especificación oficial alemana.** [gematik/api-erp](https://github.com/gematik/api-erp)
   y [gematik/api-ePA](https://github.com/gematik/api-ePA) son Apache-2.0 y oficiales. Generar el cliente
@@ -246,6 +261,38 @@ y ahí es donde conviene construir.
   principal. Combinado con el 30 % de paso a producción medido en APAC, el entregable que
   desbloquea es el **criterio explícito de promoción de piloto a producción**, acordado antes de
   empezar el piloto.
+- **(2026-11-25 · c8) EL ARGUMENTO DE VENTA MÁS FUERTE QUE LA KB HA MEDIDO EN EMEA, Y ES UNA
+  FRASE DE LA PROPIA COMISIÓN.** El estudio de la Comisión Europea de marzo de 2026 reporta que
+  **el 94 % de los proveedores sanitarios ya usan IA o planean adoptarla** y, en la misma
+  página, que los sistemas sanitarios europeos **dependen de soluciones desarrolladas fuera de
+  la UE**. Demanda casi universal + dependencia externa reconocida por el regulador = **el
+  encargo es la alternativa soberana**, y el comprador ya tiene el argumento escrito por su
+  propia Comisión. Es la mejor apertura disponible para el plano de uso secundario.
+- **(2026-11-25 · c8) El EHDS da fechas firmes y NO da estándar técnico — ahí está el encargo.**
+  Reglamento (UE) 2025/327, en vigor desde **2025-03-26**. Hitos: **2027-03-26** cada Estado
+  miembro debe designar su **Health Data Access Body**; **2029-03-26** aplica el grueso del uso
+  secundario; **2031-03-26** para **dato genético y de ensayos clínicos**. Pero el EHDS **no
+  impone modelo de datos**: FHIR, OMOP CDM y openEHR siguen los tres en discusión y **no se
+  espera un mandato formal**. Consecuencia directa y medida (ver sección de este pase más abajo):
+  **un mandato sin artefacto no produce convergencia, produce fragmentación nacional**. Lo que se
+  vende aquí no es «cumplir el EHDS»: es **el nodo que funciona con el modelo que acabe eligiendo
+  tu Estado miembro**, con la capa de mapeo aislada. Vender certeza sobre el modelo sería vender
+  una apuesta. ⚠️ Fechas de síntesis de despachos jurídicos; confirmar contra el texto del
+  Reglamento antes de ponerlas en contrato.
+- **(2026-11-25 · c8) Tres autoridades sanitarias nacionales, tres posturas de licencia — y eso
+  decide qué se puede reutilizar.** Argumento de una frase para un cliente europeo, enteramente
+  medido por esta KB: **gematik** (Alemania) publica sus especificaciones en **Apache-2.0**
+  (ciclo 5); **Sundhedsdatastyrelsen** (Dinamarca) publica su National Contact Point en **MIT**
+  ([Sundhedsdatastyrelsen/ehdsi](https://github.com/Sundhedsdatastyrelsen/ehdsi), 1078 B,
+  refs=400, push 2026-11-25); el **NHS** publica tooling FHIR **sin fichero de licencia alguno**
+  (hueco (b), sigue abierto). La consecuencia es operativa, no retórica: en Alemania y Dinamarca
+  se parte del código oficial; en Reino Unido **hay que reimplementar**, y eso es presupuesto.
+- **(2026-11-25 · c8) ⚠️ Trampa de nomenclatura que cuesta medio día: eHDSI ≠ EHDS.** El repo
+  danés de arriba es **eHDSI** (*eHealth Digital Service Infrastructure*, MyHealth@EU):
+  intercambio transfronterizo para **asistencia**, uso **primario**. El **EHDS** es el reglamento
+  de uso **secundario**. Una letra de diferencia, dos cosas distintas, y buscar «EHDS» devuelve
+  sobre todo el primero. La OCDE, por su parte, pide **guía consolidada** entre GDPR, MDR y AI
+  Act — señal de que la carga de interpretación, hoy, la paga el integrador.
 ### APAC
 - **Terminología como columna vertebral.** [Taiwan-Health-MCP](https://github.com/healthymind-tech/Taiwan-Health-MCP)
   (MIT, 73 herramientas) ya resuelve ICD-10-CM/PCS, SNOMED CT, LOINC y fármacos TFDA. Es la base
@@ -285,6 +332,30 @@ y ahí es donde conviene construir.
   **parado desde 2024** y parte no tiene licencia. Con la puerta regulatoria más ligera de APAC,
   **sigue siendo el mejor par riesgo/recompensa de la región**, y ahora con un alcance más
   pequeño y más defendible que el que el ciclo 6 suponía.
+- **(2026-11-25 · c8) APAC está POR DELANTE de LATAM en uso secundario, al contrario que en los
+  planos de imagen y scribes — y hay nombres y escalas concretas.** El ecosistema OMOP tiene aquí
+  su implantación más profunda: en **Corea** las reclamaciones nacionales de **HIRA** están
+  mapeadas al CDM **para toda la población** (serie 2010-2019), **KIDSNet** declara una red de
+  **7 hospitales y 1,69 M de pacientes pediátricos** (julio de 2026), y **Australia** tiene
+  **AHDEN** para adopción nacional. El **Simposio OHDSI APAC 2026** se celebró el **13-15 de
+  noviembre en la Universidad Yonsei, Seúl**. **Japón es el menos maduro de los grandes**: el
+  mapeo del vocabulario de fármacos sigue en curso. Lectura comercial: en Corea y Australia se
+  vende **capa analítica y agéntica sobre un nodo que ya existe**; en Japón e Indonesia se vende
+  todavía **el ETL y el vocabulario**. Preguntar primero si hay nodo, nunca presuponerlo.
+  ⚠️ Cifras de material de la propia comunidad OHDSI (slides de community call).
+- **(2026-11-25 · c8) Corea añade obligación dura en enero de 2026 — segundo régimen APAC con
+  nombre.** La **AI Basic Act** coreana, **en vigor desde enero de 2026**, impone obligaciones de
+  gestión de riesgo a sistemas de **alto impacto**, sanidad incluida. Junto a AIHGle 2.0 de
+  Singapur (ciclo 7), son los dos marcos de la región que ya exigen **artefactos**, no intenciones.
+  Y encaja con el dato que esta KB viene usando para APAC: **sólo ~30 % de las pruebas de concepto
+  llegan a producción clínica**. El entregable que desbloquea sigue siendo el **expediente de
+  gestión de riesgo y el criterio de promoción**, acordados antes del piloto.
+- **(2026-11-25 · c8) El dato que ordena la conversación agéntica en APAC:** IDC reporta que
+  **el 75 % de los proveedores sanitarios de Asia-Pacífico espera más ganancia de productividad
+  de la IA agéntica que de la GenAI sin agentes**. Es la región donde el discurso agéntico tiene
+  mejor recepción declarada, con la barrera de **coste al 67 %** (HIMSS, 13 mercados). Es decir:
+  **la objeción no es de concepto, es de precio** — argumentar con coste autoalojado publicado
+  (ver el patrón de scribe del pase de la mañana) y con substrato Apache-2.0 que no añade licencia.
 ### LATAM
 - **Convertir CFM 2.454/2026 en producto.** Es la única norma de la región que ya está **en vigor** y
   que exige artefactos concretos: clasificación de riesgo por sistema, auditoría continua y registro
@@ -362,6 +433,41 @@ y ahí es donde conviene construir.
   y de 8★/1f. Lo permisivo está abandonado y lo vivo es copyleft: **para un grupo hospitalario
   hispanohablante sigue siendo trabajo a medida con pocos competidores**, y ahora se puede
   justificar con dos mediciones en lugar de con una ausencia.
+- **(2026-11-25 · c8) EL HALLAZGO LATAM DEL PASE, Y ESTÁ MEDIDO DOS VECES POR VÍAS
+  INDEPENDIENTES: EL CUELLO DE BOTELLA ES EL VOCABULARIO, NO LA HERRAMIENTA.** El equipo de
+  OHDSI Brasil (CIDACS, simposio OHDSI 2025) nombra como su principal dificultad la **«escasez de
+  vocabularios adecuados para el contexto brasileño»** y la necesidad de formación técnica. De
+  forma **independiente**, el ciclo 7 de esta KB midió que **Brasil, México y Colombia no
+  aparecen como Miembros de SNOMED CT** (Argentina, Chile y Uruguay sí). Dos fuentes distintas,
+  dos ciclos distintos, **la misma causa raíz**: el contenido terminológico. Y la conclusión es
+  accionable porque **la herramienta es gratis y la que falta no**:
+  [Usagi](https://github.com/OHDSI/Usagi), [WhiteRabbit](https://github.com/OHDSI/WhiteRabbit) y
+  [Perseus](https://github.com/OHDSI/Perseus) son Apache-2.0; **el mapeo pt-BR/es no existe**.
+  => **El entregable con margen es el conjunto de mapeos terminológicos**, que el cliente posee,
+  versiona y audita — estructuralmente idéntico a la biblioteca CQL del ciclo 6. Ver **P19**.
+- **(2026-11-25 · c8) Y esto unifica el hueco (c): el NLP clínico en español y el vocabulario OMOP
+  en español son el mismo hueco con dos nombres.** Re-medido hoy sin cambios:
+  `biomedical spanish stars:>=10` → **2 resultados**, ambos de
+  [PlanTL-GOB-ES](https://github.com/PlanTL-GOB-ES/lm-biomedical-clinical-es) (Apache-2.0, 28★/2f)
+  y **sin push desde 2022-11-16**. Tercera medición consecutiva del mismo vacío. Lo que cambia
+  este pase no es la cifra: es que ahora **hay un comprador identificado** para cerrarlo (el nodo
+  OMOP de un hospital o ministerio hispanohablante) en lugar de un hueco abstracto.
+- **(2026-11-25 · c8) La región está arrancando en este plano — lo cual es la ventana, no la
+  objeción.** El **primer** Simposio OHDSI Latin America se celebró el **30-31 de julio de 2026 en
+  Salvador, Brasil**, con el objetivo declarado de ≥100 asistentes; Brasil lidera (CIDACS y el
+  **Hospital Israelita Albert Einstein**, que empezó en 2018 y es partner de la comunidad desde
+  2022). **Chile y Argentina**: sin presencia formal localizable más allá de trabajo de tesis
+  —**hueco informado, no silencio**. Comparado con APAC, que celebra simposios desde hace años y
+  tiene una población nacional mapeada, **LATAM está varios años detrás en uso secundario**: el
+  encargo aquí es **construir el primer nodo**, no optimizar uno existente.
+- **(2026-11-25 · c8) Contexto de mercado y marco regulatorio, con la cautela debida.** IMARC
+  sitúa el mercado LATAM de IA sanitaria en **0,59 B USD en 2025** con un **CAGR del 25,06 %
+  (2026-2034)** ⚠️ proyección de informe comercial: dirección, no punto. En **Brasil** sigue **sin
+  marco legal unificado de IA**: el uso médico corresponde al **CFM**, los sistemas como
+  tecnología a **ANVISA** y **ANPD** (vía IBA). Para un nodo de uso secundario eso convierte a la
+  **ANPD y la LGPD en el interlocutor principal**, no a ANVISA — un nodo de investigación no es
+  dispositivo médico. Los ministerios de Argentina, Brasil, Chile y Colombia tienen iniciativas
+  de fomento de IA en salud: puerta de entrada al sector público.
 ## Gaps verificados — por función, no por silencio
 
 - **(a) No hay capa agéntica permisiva para ciclo de ingresos / denegación de claims.** Lo más cercano
@@ -596,3 +702,110 @@ Se añade a la lista de los ciclos 5 y 6:
 | (g) Membresía SNOMED de los grandes países LATAM | **Cerrado en lo que decide el presupuesto**: Argentina, Chile y Uruguay son Miembros; **Brasil, México y Colombia no aparecen** en la lista. ⚠️ Fuentes secundarias; `snomed.org` no resuelve desde la sesión |
 | (h) **NUEVO** — capa agéntica sobre imagen médica | **Abierto y es el mejor colocado del sector**: 7/9/2 resultados sobre un substrato de 9 000★ con 1 212 precedentes 510(k) |
 | (i) **NUEVO** — tracker público de preparación de pagadores para CMS-0057-F | **Abierto, y es un hueco informado**: a 37 días del 1-ene-2027 **no existe ningún recuento público** de qué pagadores llegan. Quien lo tenga, tiene la conversación |
+
+## Pase 2026-11-25 (c8) — un mandato sin artefacto no converge: la ley del ciclo 6, corregida
+
+### El hallazgo central: la frontera de la especificación necesita DOS condiciones, no una
+
+El ciclo 6 dejó formulada una ley (**P12**): *cuando un regulador convierte un juicio en
+artefacto computable, aparece open source permisivo para ese juicio, y aparece **antes** del
+mandato*. El caso que la sostenía era **CMS-0057-F**: la regla exige API de autorización previa
+el 2027-01-01 y `org:HL7-DaVinci` ya tenía **43 repos Apache-2.0** con **más forks que
+estrellas**. Este pase trae el **contraejemplo que la corrige**, y es un contraejemplo limpio
+porque la variable que cambia es exactamente una.
+
+El **EHDS** (Reglamento (UE) 2025/327) tiene **todo** lo que tenía CMS-0057-F —rango de
+reglamento, fechas firmes (**2027-03-26** autoridades de acceso, **2029-03-26** uso secundario,
+**2031-03-26** genómica y ensayos), obligaciones sobre los tenedores del dato y sanciones— y le
+falta **una sola cosa**: **no nombra estándar técnico**. FHIR, OMOP CDM y openEHR siguen los tres
+en discusión y **no se espera mandato formal**. Resultado, medido hoy:
+
+| Consulta | Resultado | Lectura |
+|---|---|---|
+| `ehds stars:>=5` | **4 repos** | El mayor tiene **16★** y licencia `NOASSERTION` |
+| `ehds health data space` | 9 repos | **Seis sin fichero de licencia**; hay una tesis, un hackathon y un trabajo de curso |
+| `org:HL7-DaVinci` (CMS-0057-F, ciclo 6) | **43 repos Apache-2.0**, forks > estrellas | Implementaciones que se despliegan |
+
+**A 4 meses de la designación de autoridades de acceso y a 28 del grueso del uso secundario, el
+EHDS no ha producido un solo repo permisivo con tracción.** Y no es que el substrato no exista:
+`org:OHDSI` tiene **398 repos** con razones ★/forks por debajo de 2 en bloque. Existe y está
+maduro — **lo que no existe es la convergencia hacia él**, porque nadie ha dicho que sea él.
+
+> **P12 corregido.** Para que aparezca open source permisivo antes del mandato hacen falta
+> **dos** condiciones: **(1)** que el regulador declare la obligación **y (2)** que un organismo
+> publique un **artefacto computable** al que implementar. CMS-0057-F cumple ambas (regla + IG de
+> Da Vinci + CQL). El EHDS cumple **sólo la primera**. **Condición 1 sin condición 2 no produce
+> convergencia: produce fragmentación nacional.** Esto es reutilizable en las doce industrias y
+> explica por qué algunos mandatos generan ecosistema y otros generan 27 proyectos distintos.
+
+**Predicción falsable registrada:** los actos de ejecución de la Comisión vencen el
+**2027-03-26**. Si nombran un modelo de datos, debe aparecer tooling permisivo específico de
+EHDS en **1-2 ciclos de estandarización** tras la publicación, con **forks subiendo antes que
+estrellas**. Si no lo nombran, lo que debe crecer son los **mapeadores** entre modelos, no las
+implementaciones de EHDS. Las dos ramas son observables con una consulta.
+
+### Qué hacer con una apuesta no resuelta: la arquitectura es la cobertura
+
+No se puede vender certeza sobre qué modelo elegirá cada Estado miembro. Lo que sí se puede
+vender —y es más defendible— es **el nodo cuya capa de mapeo está aislada**: OMOP como modelo de
+análisis (porque es donde está el tooling), FHIR en el borde (porque es donde está el dato de
+origen) y la **traducción como artefacto versionado y propio del cliente**. Si el acto de
+ejecución nombra OMOP, el cliente ya está. Si nombra openEHR, se sustituye una capa y no el
+sistema. **Es exactamente el patrón «MT564 en el borde, seev.031 en el dominio» del pase
+financiero**, con otros nombres. Ver `compose/patterns.md` **P17**.
+
+### Estructura de la oferta: tercera medición del mismo patrón, y el más extremo
+
+| Plano | Substrato permisivo | Capa agéntica | Ratio |
+|---|---|---|---|
+| Imagen médica (ciclo 7) | MONAI 8 865★, nnU-Net 9 069★, OHIF 4 424★ | `dicom mcp`→7, `radiology agent`→9, `monai agent`→2 | vacía |
+| **Uso secundario (este pase)** | **`org:OHDSI` 398 repos**, razones ★/f **por debajo de 1** en cuatro | **`omop agent stars:>=5` → 2** | **la más vacía** |
+| Ciclo de ingresos (ciclo 6) | Capa de formato madura (X12, hl7apy…) | `medical necessity`: 6 primeros = 3★ en total | vacía **y bloqueada** |
+
+Tres planos, tres veces el mismo diagnóstico, **y la distinción del ciclo 7 sigue siendo la que
+decide dónde invertir**: imagen y uso secundario son **huecos abiertos** (substrato permisivo,
+dato estándar, nada que lo impida); ciclo de ingresos es **hueco bloqueado** (el resultado se
+expresa obligatoriamente en CPT, que es propiedad de la AMA). **Uso secundario tiene además algo
+que imagen no tiene: fechas de obligación legal en el calendario europeo.**
+
+### ⚠️ Marcado explícitamente como NO CITABLE en este pase
+
+1. **Las fechas del EHDS, como dato contractual.** Las de arriba son síntesis de notas de
+   despachos jurídicos, muy consistentes entre sí pero **no el Diario Oficial**. Las fuentes
+   además **discrepan** sobre qué categorías exactas se aplazan a 2031 (una dice dato genómico,
+   otra «factores que afectan a la salud»). Dirección y orden de magnitud sí; **antes de un
+   contrato, contra el texto del Reglamento (UE) 2025/327**.
+2. **Que «OMOP es el estándar del EHDS».** Es una **propuesta** de la comunidad OHDSI Europa
+   (Rijnbeek), no política establecida; el propio resumen de su community call de marzo de 2026
+   dice que el EHDS **no impone** modelo. El paper IDERHA de JMIR Formative 2026 recomienda una
+   colección de estándares centrada en OMOP **y a la vez** le señala límites en descubribilidad de
+   metadatos, identificadores globales, control de acceso y **licenciamiento**. Citar como
+   candidata con mejor tooling, nunca como norma.
+3. **Las cifras de red de OHDSI (HIRA toda la población, KIDSNet 1,69 M, AHDEN).** Provienen de
+   slides de la propia comunidad y **algunas páginas están sin fechar**; las listas de capítulos
+   APAC **no coinciden entre sí** (una incluye China, India, Indonesia; otra incluye Vietnam y no
+   esas tres). Sirven para dimensionar, no para un anexo.
+4. **El 0,59 B USD / CAGR 25,06 % de IMARC para LATAM** y el **44,5 %** de cuota norteamericana:
+   informes comerciales sin metodología publicada.
+5. **El 94 % de proveedores europeos y la dependencia de soluciones extra-UE**: es de un estudio
+   de la Comisión Europea —la fuente institucional más fuerte del pase— pero **no he abierto el
+   estudio**, sólo su resumen en la página de la Comisión. Citable con atribución; verificar el
+   número en el PDF antes de ponerlo en una portada.
+6. **Sigue sin fuente citable** (hueco (e)): las cuotas de mercado de documentación ambiental.
+
+### Huecos — estado al 2026-11-25 (c8)
+
+| Hueco | Estado |
+|---|---|
+| (a) Capa agéntica de ciclo de ingresos | **Bloqueado, sin cambios** (imposibilidad de licenciamiento CPT) |
+| (b) Tooling FHIR del NHS sin licencia | **Abierto, sin cambios.** Ahora con dos contraejemplos nacionales medidos: gematik (Apache-2.0) y Dinamarca (MIT) |
+| (c) NLP clínico en español | **Abierto y RE-MEDIDO sin cambios** (2 resultados, sin push desde 2022). **Reclasificado**: es el mismo hueco que el vocabulario OMOP en español/portugués, y ahora tiene comprador identificado |
+| (d) Adopción con granularidad de país | **APAC cerrado y ampliado** (Corea, Australia, Japón con nombres y escalas). **LATAM ampliado** (Brasil lidera; Chile y Argentina sin presencia formal) |
+| (e) Cuotas de documentación ambiental | **Sigue sin fuente citable** |
+| (f) Tooling permisivo de ABDM (India) | **Sin cambios** respecto del ciclo 7 |
+| (g) Membresía SNOMED de grandes países LATAM | **Cerrado y ahora CORROBORADO por una segunda vía**: OHDSI Brasil nombra la escasez de vocabulario adecuado como su principal dificultad |
+| (h) Capa agéntica sobre imagen médica | **Abierto, sin cambios** (ciclo 7) |
+| (i) Tracker público de preparación de pagadores CMS-0057-F | **Abierto**; a **37 días** del 2027-01-01 |
+| (j) **NUEVO** — capa agéntica sobre uso secundario / OMOP | **Abierto y es ahora el más extremo de la KB**: `omop agent stars:>=5` → **2** sobre 398 repos de substrato desplegado |
+| (k) **NUEVO** — mapeo terminológico OMOP para pt-BR y es | **Abierto, con comprador y con causa raíz identificada.** Herramienta gratis (Usagi/WhiteRabbit, Apache-2.0), contenido ausente. **El entregable con margen del plano en LATAM** |
+| (l) **NUEVO** — tooling permisivo específico de EHDS | **Abierto, y es un hueco INFORMADO de los valiosos**: el mayor repo «EHDS» tiene 16★ y `NOASSERTION`. No es descuido: **es consecuencia de que el reglamento no nombre artefacto** (ver arriba) |

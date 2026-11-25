@@ -244,3 +244,64 @@ Siete, nueve y dos. Sobre una base de MONAI (8 865★), nnU-Net (9 069★) y OHI
 hueco mejor colocado del sector**: substrato maduro y permisivo, aprobación regulatoria
 concentrada justo ahí (el 76 % de las autorizaciones de dispositivos con IA de la FDA son de
 radiología) y capa agéntica prácticamente vacía. Ver patrón P13 en `compose/patterns.md`.
+
+---
+
+## Pase 2026-11-25 (c8) — la capa agéntica sobre el dato secundario: 398 repos debajo, 2 arriba
+
+Este pase abre el **plano del uso secundario del dato sanitario** (investigación, evidencia de
+mundo real, salud poblacional), que la KB no había tocado en siete pases. Todo lo de abajo está
+**medido hoy** con `search/repositories` y **toda licencia confirmada abriendo el fichero**.
+
+### El hueco, medido antes de la tabla
+
+| Consulta (corta, regla del ciclo 6) | Resultados |
+|---|---|
+| `omop agent stars:>=5` | **2** |
+| `cohort llm stars:>=10` | 5 |
+| `omop mcp` | 17 (sólo uno por encima de 7★) |
+| `real world evidence stars:>=20` | 10 |
+
+Dos. Debajo hay **398 repos en `org:OHDSI`**, con razones ★/forks por debajo de 2 casi en bloque
+(ver `repos/foundations.md`). Es el **mismo patrón que el ciclo 7 midió en imagen —substrato
+enorme, capa agéntica vacía— pero más extremo**: en imagen eran 7/9/2 sobre 9 000★; aquí son 2
+sobre un ecosistema con despliegue demostrado y vocabulario regulatorio con fechas en el BOE
+europeo (ver `intel/market.md`).
+
+### Agentes y herramientas agénticas sobre OMOP — verificados uno por uno
+
+| Agente | Repo | Licencia (fichero abierto) | ★/forks | Último push | Qué hace realmente |
+|---|---|---|---|---|---|
+| Criteria2Query | [OHDSI/Criteria2Query](https://github.com/OHDSI/Criteria2Query) | Apache-2.0 (11357 B) | 81★/22f | 2026-03-01 | Criterios de elegibilidad en lenguaje natural → cohorte OMOP ejecutable. **Es el precursor agéntico del plano y es del propio OHDSI**: el problema «texto libre → consulta tipada» ya está planteado y licenciado permisivamente |
+| omop_mcp | [OHNLP/omop_mcp](https://github.com/OHNLP/omop_mcp) | Apache-2.0 (10566 B) — GitHub decía `NOASSERTION` | 44★/10f | 2026-05-11 | Servidor MCP sobre OMOP del grupo OHNLP (Mayo Clinic). **El activo mejor colocado de la tabla** para construir encima |
+| omophub-mcp | [OMOPHub/omophub-mcp](https://github.com/OMOPHub/omophub-mcp) | MIT (1069 B) | 7★/0f | 2026-11-24 | MCP de vocabulario OMOP: resuelve conceptos y jerarquías. Pequeño y vivo (push de ayer) |
+| ascent-epi-demo | [Bayer-Group/ascent-epi-demo](https://github.com/Bayer-Group/ascent-epi-demo) | BSD-3-Clause (1491 B) | 2★/1f | 2026-11-23 | Demo de epidemiología agéntica **publicada por una farmacéutica**. 2★ no mide nada; lo que señala es **quién** está construyendo aquí |
+| Strategus | [OHDSI/Strategus](https://github.com/OHDSI/Strategus) | Apache-2.0 (en `DESCRIPTION`) | 13★/**16f** | 2026-11-24 | Ejecución de estudios en red como módulos declarativos. Razón **0,81**: más forks que estrellas = se despliega. Es el orquestador que un agente debe invocar, no reimplementar |
+
+**Cinco filas reales, cinco verificadas.** No hay más con licencia permisiva y señal medible en
+este plano: los otros 12 resultados de `omop mcp` son de 0-3★ y mayoritariamente sin licencia.
+
+### ⚠️ La trampa de licencia de este pase: `NONE` en GitHub no significa sin licencia
+
+GitHub reporta **`NONE`** para `OHDSI/CommonDataModel` (1 103★), `PatientLevelPrediction`,
+`DataQualityDashboard`, `Achilles`, `CohortMethod`, `DatabaseConnector`, `FeatureExtraction`,
+`ETL-Synthea`, `Strategus` y `CirceR`. **Los diez son Apache License 2.0**, declarada en el
+fichero `DESCRIPTION` de R y no en un `LICENSE`. Una puerta de licencia que sólo mire `LICENSE`
+**rechaza el stack HADES completo** —el substrato de dato sanitario con más despliegue medido del
+mundo— como «sin licencia». Regla nueva y generalizable a las doce industrias en el patrón **P18**.
+
+Los dos únicos desconocidos genuinos del ecosistema, tras abrir ficheros:
+
+| Repo | Estado real |
+|---|---|
+| [OHDSI/Athena](https://github.com/OHDSI/Athena) | **Sin licencia localizable**: ni `LICENSE` (5 variantes), ni `DESCRIPTION`, ni bloque `<licenses>` en `pom.xml`. Es el descargador de vocabulario: se usa como servicio, no se redistribuye |
+| [OHDSI/Usagi](https://github.com/OHDSI/Usagi) | Apache declarada **sólo en el README**, sin fichero de licencia. Utilizable con criterio; no es lo mismo que un SPDX en el repo |
+
+### El contador de agentes verticales no se mueve — sexta medición consecutiva
+
+```
+healthcare agent created:>2026-08-01 stars:>=50   →   total = 1
+```
+
+Mismo `fabric-mlv-agent-healthcare-starter`, **149★ y 1 fork**, idéntico a la medición de esta
+mañana. Sexta medición consecutiva sin *boom* de agentes verticales permisivos.
