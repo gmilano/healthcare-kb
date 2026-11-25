@@ -9,6 +9,59 @@ updated: 2026-11-25
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 > Reescribir este archivo destruiría la tendencia que existe para registrar.
 
+## 2026-11-25 (c11) — la obligación legal no produce software libre; la licencia del contenido sí
+
+Quinto pase del día, plano nuevo: **el medicamento**. Es el primer plano que permite una
+**comparación de tres vías controlada** —misma industria, mismo año, misma categoría de tarea— y el
+resultado invierte lo que se esperaría.
+
+### Lo nuevo de la semana, por push reciente
+
+| Repo | Licencia (bytes) | ★/forks | Push | Qué es |
+|---|---|---|---|---|
+| [`ChazY11/medradar`](https://github.com/ChazY11/medradar) | **MIT** (1.328 B) | 428★/27f | **2026-11-25** | 375.378 eventos de seis fuentes públicas, 1966–2026, 1.157 pruebas *offline*. `search` lo daba `NOASSERTION`; los bytes dicen MIT |
+| [`FDA/open.fda.gov`](https://github.com/FDA/open.fda.gov) | MIT (1.076 B) | 178★/76f | **2026-11-25** | El portal de openFDA. **Razón ★/forks 2,3** → se forkea para usarlo |
+| [`forever-healthy/evidence-mcp`](https://github.com/forever-healthy/evidence-mcp) | MIT (1.090 B) | 7★/0f | **2026-11-25** | MCP de evidencia clínica |
+| [`sbslee/pypgx`](https://github.com/sbslee/pypgx) | MIT (1.080 B) | 99★/22f | **2026-11-24** | Genotipado farmacogenético en Python |
+| [`WeDoCareGlobal/Pharma-Intelligence-Os-Production`](https://github.com/WeDoCareGlobal/Pharma-Intelligence-Os-Production) | Apache-2.0 (11.359 B) | **0★/1f** | 2026-11-24 | ICSR con verificación humana + E2B(R3) + PRR/ROR + PSUR. **Cuatro días de vida y cero estrellas**: se registra con su cifra real |
+| [`snap-stanford/Biomni`](https://github.com/snap-stanford/Biomni) | Apache-2.0 (11.357 B) | 4.111★/751f | 2026-11-23 | Re-medido: sigue activo |
+| [`cyanheads/openfda-mcp-server`](https://github.com/cyanheads/openfda-mcp-server) | Apache-2.0 (10.772 B) | 6★/3f | 2026-11-23 | MCP sobre openFDA, refs=112 |
+| [`cpicpgx/cpic-data`](https://github.com/cpicpgx/cpic-data) | **CC0 1.0** (`LICENSE.md`, 3.234 B) | 34★/2f | 2026-11-19 | El contenido farmacogenómico del CPIC, **en dominio público** |
+| [`pipeworx-io/mcp-jp-pmda-approvals`](https://github.com/pipeworx-io/mcp-jp-pmda-approvals) | MIT (1.070 B) | 0★/0f | 2026-11-18 | **APAC**: MCP sobre aprobaciones de la PMDA japonesa. Siete días de vida |
+| [`WangLabCSU/faers`](https://github.com/WangLabCSU/faers) | **MIT** vía `DESCRIPTION` | 55★/10f | 2026-11-12 | Paquete R de FAERS. **Undécima instancia del *stub* de R** |
+| [`Diorgerb/dbulario`](https://github.com/Diorgerb/dbulario) | Apache-2.0 (11.357 B) | 4★/1f | 2026-11-20 | **LATAM**: bulário de ANVISA, activo y diminuto |
+
+### El hallazgo del pase, en una tabla
+
+| Sub-plano | Obligación legal | Licencia del contenido | Software permisivo |
+|---|---|---|---|
+| Farmacovigilancia | **máxima** | MedDRA de pago + WHODrug | **12 repos ≥10★ en el mundo** |
+| Interacción clínica fármaco-fármaco | media | propietaria (FDB/Multum); DrugBank **CC BY-NC** | **vacío** (top-10 ≈ 42★) |
+| Farmacogenómica | **ninguna** | **CPIC = CC0** | **sano**: PharmCAT 203★ activo |
+
+La correlación con la presión regulatoria es **inversa**. La correlación con la licencia del
+contenido es perfecta. **P12 se corrige**: el regulador crea la obligación; la licencia del contenido
+decide si el código abierto puede cumplirla.
+
+### Lo que la medición descarta de este mismo plano
+
+| Repo | Motivo |
+|---|---|
+| [`jihyechoi77/malade`](https://github.com/jihyechoi77/malade) | El multiagente académico de PV más citado: **sin fichero de licencia** (15 nombres × 2 ramas), parado desde 2025-02 |
+| [`DavidOsherdiagnostica/israel-drugs-mcp-server`](https://github.com/DavidOsherdiagnostica/israel-drugs-mcp-server) | **CC BY-NC-SA 4.0 sobre software** (3.690 B). 19★/10f y bloqueo total en cliente |
+| [`openpharma-org/drugbank-mcp-server`](https://github.com/openpharma-org/drugbank-mcp-server) | Sin licencia **y** envuelve contenido CC BY-NC 4.0: doble bloqueo |
+| [`PacificBiosciences/pb-StarPhase`](https://github.com/PacificBiosciences/pb-StarPhase) | `NOASSERTION` que es un **EULA propietario** (8.568 B). Segunda confirmación de la regla (10) de P28 |
+| [`KarelDO/BioDEX`](https://github.com/KarelDO/BioDEX) | MIT genuino y **es el oráculo del plano**, pero sin push desde 2024-01-29: se usa como banco de pruebas, no como dependencia |
+| [`HHS/pillbox-engine`](https://github.com/HHS/pillbox-engine) | **El HHS de EE.UU. publica sin licencia** (refs=64). Instancia norteamericana del patrón del NHS |
+
+### El contador de agentes verticales — novena medición consecutiva
+
+`medication agent stars:>=10` → **total = 1**, y ese uno
+([`yixinzhang98/otc_med_chat_agent`](https://github.com/yixinzhang98/otc_med_chat_agent), 199★/32f)
+**no tiene licencia** y no se toca desde julio de 2025.
+
+---
+
 ## 2026-11-25 (c10) — el plano del dispositivo entra en la KB, y rompe la racha de `NOASSERTION`
 
 Cuarto pase del día. Plano nuevo: **dispositivo, monitorización remota y señal fisiológica**. La

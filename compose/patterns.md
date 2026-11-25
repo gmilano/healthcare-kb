@@ -951,3 +951,157 @@ Dos, ambas con fecha y canal de comprobación:
 2. **La capa agéntica de este plano seguirá por debajo de 50 estrellas en el próximo pase de
    healthcare.** Hoy el techo real es 44★ (`meddev-agent-skills`). Canal: repetir
    `vital signs agent`, `ECG agent` y `medical device agent` ordenados por estrellas.
+
+---
+
+## Pase 2026-11-25 (c11) — patrones P29 a P32
+
+### P29 · Triaje de ICSR sobre contenido que el cliente ya licencia
+
+**Cuándo.** Un titular de autorización de comercialización, un CRO o un hospital con obligación de
+notificar. **La condición de entrada no es técnica: es que el cliente ya tenga suscripción MedDRA**
+(si notifica, la tiene; si no la tiene, no es el cliente de este patrón).
+
+**La línea que no se cruza.** No se promete una pila «toda open source». MedDRA es de pago
+(139–37.035 USD/año por tramo de ingresos, +3 % en 2027) y WHODrug es por suscripción de la UMC.
+El código es abierto; **el vocabulario con el que codifica, no.**
+
+**Montaje concreto.**
+
+1. **Fixture y oráculo, antes de escribir el agente.**
+   [`KarelDO/BioDEX`](https://github.com/KarelDO/BioDEX) (MIT, 1.075 B) da extracción de ICSR contra
+   informes **reales** de la FDA — es decir, **hay clave de respuestas**. Parado desde 2024-01, lo
+   que para un banco de pruebas importa poco (P22). Dato de volumen por
+   [`FDA/openfda`](https://github.com/FDA/openfda) (**CC0-1.0**, `COPYING.txt`, 7.047 B) y
+   [`neksa/openfda-faers`](https://github.com/neksa/openfda-faers) (MIT).
+2. **Normalización de medicamento.** [`coderxio/sagerx`](https://github.com/coderxio/sagerx)
+   (Apache-2.0) resuelve RxNorm + NDC + DailyMed en una base consultable. **Sin esta capa el agente
+   confunde principio activo con marca**, que es el error que invalida un caso.
+3. **Acceso tipado para el agente.** [`JamesANZ/medical-mcp`](https://github.com/JamesANZ/medical-mcp)
+   (MIT, 122★/39f) y [`cyanheads/openfda-mcp-server`](https://github.com/cyanheads/openfda-mcp-server)
+   (Apache-2.0). Para etiquetado,
+   [`alvinhenrick/medirag`](https://github.com/alvinhenrick/medirag) (MIT).
+4. **Cribado bibliográfico**, que es obligación legal y no opcional:
+   [`pryndor/Lixplore_cli`](https://github.com/pryndor/Lixplore_cli) (MIT, 36★/7f).
+5. **Señal.** [`Shakesbeery/vigipy`](https://github.com/Shakesbeery/vigipy) (MIT) para PRR, ROR,
+   BCPNN y GPS. Es **el único motor de desproporcionalidad permisivo y mantenido** del plano; los
+   alternativos (`pvm` GPL-3.0, `vigicaen` CeCILL 2.1) son copyleft y van **al lado**, no dentro.
+6. **El sobre.** La generación de E2B(R3) se lee en
+   [`WeDoCareGlobal/Pharma-Intelligence-Os-Production`](https://github.com/WeDoCareGlobal/Pharma-Intelligence-Os-Production)
+   (Apache-2.0, **0★, cuatro días de vida — lectura de diseño, no dependencia**) y en
+   [`FreeVigilance/E2B`](https://github.com/FreeVigilance/E2B) (**GPL-3.0: desplegar al lado**).
+7. **Persona aprueba todo caso antes de la sumisión.** Sin excepción: una notificación es un acto
+   regulatorio con consecuencia legal para el titular.
+
+**El entregable con margen es la biblioteca de reglas de triaje y deduplicación más el banco de
+pruebas derivado de BioDEX**, que el cliente posee, versiona y audita. La plataforma no.
+
+**Lo que este patrón NO cubre, y hay que decirlo en la propuesta:** la pasarela a EudraVigilance.
+Exige registro y **no existe implementación abierta** (hueco (i)); el propio README de
+`Pharma-Intelligence-Os` la declara fuera de alcance.
+
+---
+
+### P30 · Farmacogenómica: el único juicio clínico entregable 100 % abierto
+
+**Por qué es distinto de todo lo demás en esta KB.** El cuerpo de conocimiento —las guías del CPIC—
+está en **CC0 1.0**, verificado en los bytes de `cpicpgx/cpic-data` (`LICENSE.md`, 3.234 B). No hay
+contenido gravado en ninguna capa.
+
+```
+VCF del paciente
+  └─ sbslee/pypgx (MIT) ────────────► llamada de genotipos / diplotipos
+  └─ PharmGKB/vcf-parser (MPL-2.0) ─► entrada normalizada
+        └─ PharmGKB/PharmCAT (MPL-2.0, 203★/68f) ──► recomendación CPIC
+              └─ cpicpgx/cpic-data (CC0 1.0) ──────► EL CONTENIDO, dominio público
+                    └─ hpi-dhc/PharMe (MIT, HPI) ──► entrega a clínico y paciente
+```
+
+**Nota de licencia que evita un «no» innecesario.** MPL-2.0 es **copyleft débil por fichero**:
+PharmCAT se invoca y se distribuye junto a código propietario sin contaminarlo; lo único prohibido es
+modificar sus ficheros y cerrarlos. «Copyleft» en una lista de materiales suele leerse como bloqueo y
+aquí **no lo es**.
+
+**Qué vender.** Dosificación asistida en oncología, psiquiatría o cardiología con **trazabilidad por
+decisión y cita a la guía CPIC versionada**. Encaja con la hoja de ruta de CMS (evidencia +
+monitorización continua) y con los diez principios EMA/FDA del 2026-01-14 sin tocar contenido pagado.
+Capa de interacción fármaco-gen: [`dgidb/dgidb`](https://github.com/dgidb/dgidb) (MIT, 97★/32f).
+
+**La trampa del plano, medida.** [`PacificBiosciences/pb-StarPhase`](https://github.com/PacificBiosciences/pb-StarPhase)
+aparece como `NOASSERTION` con 27★ y es un **EULA propietario** (8.568 B). Si entra en la pila, el
+«100 % abierto» de este patrón deja de ser cierto.
+
+---
+
+### P31 · La regla de decisión del plano: antes de prometer «abierto», mirar la licencia del CONTENIDO
+
+**Esto sustituye al reflejo de mirar sólo el calendario regulatorio** y es reutilizable en las doce
+industrias. Tres preguntas, en este orden:
+
+1. **¿La tarea es de formato o de juicio?** Formato → **hay** tooling permisivo, casi siempre
+   (X12, HL7v2, E2B, CDISC: medido en tres pases). Juicio → seguir a la 2.
+2. **¿El cuerpo de conocimiento con el que se juzga es de licencia libre?**
+   - **Sí** (CPIC CC0, ICD-10-CM dominio público, CDS Hooks) → **se puede prometer una pila abierta.**
+   - **No** (MedDRA, WHODrug, CPT, FDB/Multum, DrugBank CC-NC) → **no se puede**, y el proyecto lleva
+     una partida de licencia de contenido. Reubicar: el cliente licencia, Globant construye el juicio.
+3. **¿Existe cifra de daño evitado en fuente primaria?** Si no (el caso del DDI clínico, hueco (h)),
+   **no hay caso de negocio todavía**, aunque el hueco técnico sea enorme. Un hueco sin daño
+   cuantificado no es una oportunidad: es un hueco.
+
+**Predicción falsable registrada.** Si el contenido de MedDRA pasara a una licencia libre, aparecería
+tooling permisivo de ICSR **en menos de dos ciclos de estandarización** y el conteo de
+`pharmacovigilance stars:>=10` superaría los 12 actuales. Si el contenido no se mueve, el conteo
+seguirá plano **aunque aumenten los mandatos de notificación**. Línea base de hoy, para contrastar en
+un pase futuro: `pharmacovigilance stars:>=10` = **12**; `medication agent stars:>=10` = **1**;
+`clinical decision support drug` top-10 ≈ **42★**.
+
+---
+
+### P32 · Puerta de licencia v7 — y corrige un defecto que esta KB recomendaba
+
+Las versiones anteriores (P8, P16, P24, P28) siguen vigentes. Esto añade lo medido en este pase, y
+**la primera regla arregla un falso negativo de la propia puerta.**
+
+```bash
+# licence-gate v7 — anade: (12) la lista de nombres estaba CORTA; (13) CC-BY-NC-SA sobre SOFTWARE;
+# (14) contenido envuelto: la licencia del wrapper no es la del dato que sirve.
+
+# (12) FALSO NEGATIVO PROPIO, MEDIDO Y CORREGIDO. El ciclo 9 concluyo que el CC0 de FDA/openfda
+#      "solo aparecio al clonar". NO: el fichero se llama COPYING.txt y raw lo sirve
+#      (HTTP 200, 7.047 B). El canal estaba bien; faltaban nombres en la lista.
+NAMES="LICENSE LICENSE.md LICENSE.txt LICENCE LICENCE.md COPYING COPYING.txt COPYING.md \
+       LICENSE-MIT LICENSE-APACHE License license license.md LICENSE.rst UNLICENSE"
+# Probar main Y master. Rutas CASE-SENSITIVE. Solo tras agotar los 15 x 2 cabe hablar de ausencia,
+# y aun entonces aplica la regla 7 de v4 (confirmar por clon) y la regla 9 de v6 (.gitmodules).
+
+# (13) NO COMERCIAL SOBRE SOFTWARE, no sobre datos. Caso medido:
+#      DavidOsherdiagnostica/israel-drugs-mcp-server = NOASSERTION en el metadato y
+#      "Creative Commons Attribution-NonCommercial-ShareAlike 4.0" en la LINEA 1 de los bytes.
+#      Un servidor MCP con licencia de CONTENIDO es raro y es bloqueo total en trabajo de cliente.
+#      La regla (8) de v6 ya lo captura (titulo CC + NonCommercial); se registra el caso porque el
+#      sesgo humano es asumir que un repo de codigo lleva licencia de codigo.
+
+# (14) CONTENIDO ENVUELTO. La licencia del wrapper NO ES la licencia del dato que sirve.
+#      Caso medido: openpharma-org/drugbank-mcp-server = sin licencia propia Y sirve DrugBank,
+#      que es CC BY-NC 4.0 con comercial de pago. Doble bloqueo.
+#      REGLA: si el repo es un cliente/MCP/wrapper de una fuente externa, auditar DOS licencias:
+#      la del codigo y la de la FUENTE. Lista de fuentes gravadas de esta KB:
+#      CPT (AMA) · MedDRA (MSSO) · WHODrug y VigiBase (UMC) · SNOMED CT (afiliado) ·
+#      DrugBank (CC BY-NC) · First Databank / Multum (propietario).
+#      Y la lista de fuentes LIBRES, que es la que permite prometer una pila abierta:
+#      CPIC (CC0) · openFDA (CC0) · ICD-10-CM (dominio publico) · LOINC (gratis con registro) ·
+#      RxNorm / NDC / DailyMed (gratis, UMLS por registro) · CDS Hooks (Apache-2.0).
+
+# (15) RECORDATORIO de P18, undecima instancia medida este pase (WangLabCSU/faers):
+#      en R, un LICENSE de ~43 B es un STUB. El campo autoritativo es DESCRIPTION: -> License:.
+```
+
+**Taxonomía de licencia de esta KB, ahora once categorías:** permisiva · copyleft débil (MPL) ·
+copyleft fuerte (GPL/AGPL/CeCILL) · contenido no libre · ausencia medible · dominio público ·
+CC-NC-ND presentada como open source · manifiesto de submódulos sin licencia · permisiva con reserva
+de activos · `NOASSERTION` no comercial o propietaria · **contenido envuelto por un wrapper permisivo**.
+
+**Nota de canal para el próximo pase:** `E2B` es un término de búsqueda **inservible** (2.460 repos;
+`e2b.dev` es una empresa de *sandboxes* de IA). Usar `ICSR` (468) o `adverse event reporting` (415).
+Simétrico del hallazgo del ciclo 6: si una consulta plausible da **0**, acortarla; si da un número
+**implausiblemente alto**, el término está capturado por otro sector.

@@ -501,3 +501,147 @@ Las cuatro regiones apuntan al mismo entregable por caminos distintos: **el expe
 vida**. En NA porque la ley lo exige y la guía no lo formatea; en EMEA porque MDR/IVDR tiene
 precedencia; en APAC porque nadie ha fijado el criterio; en LATAM porque ANVISA pide justificación
 técnica del método. Es la convergencia regional más clara que esta KB ha registrado.
+
+---
+
+## Pase 2026-11-25 (c11) — tendencias del plano del medicamento
+
+### T1 · La obligación legal no genera software libre; la licencia del contenido lo decide
+
+Es la tendencia estructural del pase y es **reutilizable en las doce industrias**. Tres sub-planos
+del medicamento, misma industria, mismo año, misma categoría de tarea (*juicio clínico*):
+
+| Sub-plano | Obligación | Contenido | Resultado |
+|---|---|---|---|
+| Farmacovigilancia | notificación **legalmente obligatoria** en todas las jurisdicciones | **MedDRA de pago**, WHODrug por suscripción | 12 repos con ≥10★ **en todo el mundo** |
+| Interacción clínica fármaco-fármaco | ninguna (es CDS) | **propietario** (FDB/Multum); DrugBank CC BY-NC 4.0 | **vacío**: 191 repos y los diez primeros suman ~42★ |
+| Farmacogenómica | **ninguna** | **CPIC = CC0 1.0** | **sano**: PharmCAT MPL-2.0 203★ activo, pypgx MIT con push de ayer |
+
+La correlación con la presión regulatoria es **inversa**; con la licencia del contenido, perfecta.
+**Qué vigilar, por tanto:** no el calendario del regulador, sino **la política de licencia del
+organismo que publica el cuerpo de conocimiento**. Un cambio de licencia de MedDRA movería más
+software abierto en seis meses que diez años de mandatos de notificación.
+
+### T2 · El sobre está resuelto, la carta no — tercera confirmación de la ley del pase financiero
+
+«El open source permisivo sigue al formato de fichero, no a la decisión». En este plano el formato
+ICSR **sí** tiene implementación abierta: `FreeVigilance/E2B` (GPL-3.0, refs=82) y
+`Pharma-Intelligence-Os` (Apache-2.0). El juicio que viaja dentro de ese sobre no tiene ninguna.
+**Tercera industria-plano consecutiva en que la frontera cae exactamente en el mismo sitio.**
+
+### T3 · La capa de dato federal estadounidense es la mejor del mundo en este plano, y es dominio público
+
+`FDA/openfda` (CC0-1.0, 721★/173f) y `FDA/open.fda.gov` (MIT, 178★/76f, **push de hoy**) exponen
+FAERS, etiquetado y retiradas sin fricción de licencia. Es el equivalente del hallazgo de gematik en
+EMEA del ciclo 5, con una diferencia: **gematik publica especificaciones, la FDA publica el dato
+operativo completo.** Para una propuesta eso significa que el *fixture* del plano no hay que
+fabricarlo —a diferencia del clínico, donde `synthea` resolvía ese problema—: **el dato real de
+seguridad ya es público.**
+
+Y el contraste interno de la propia administración estadounidense: `HHS/pillbox-engine` (refs=64)
+**no tiene fichero de licencia**. Mismo gobierno, dos posturas. **El patrón «agencia nacional que
+publica sin licenciar» ya tiene tres instancias en esta KB: NHS (Reino Unido), NHA (India, parcial),
+HHS (EE.UU.).** Frente a una sola que lo hace bien y lo mantiene: gematik.
+
+### T4 · Regulación — lo nuevo o más preciso que en los pases c5–c10
+
+**North America.** La **hoja de ruta de «Clinical Super Intelligence» de CMS se publicó el
+2026-11-13**: ocho páginas, iniciativas conjuntas de CMS, HHS y FDA, con énfasis en despliegue por
+fases, generación de evidencia y monitorización continua. **Doce días de antigüedad, nuevo respecto
+de todos los pases anteriores.** Además: la **QMSR de la FDA sustituyó a la QSR el 2026-02-02**;
+guía de CDS de enero de 2026 que aligera el control previo de parte de las herramientas de apoyo;
+**1.430 dispositivos con IA autorizados** a marzo de 2026; **177 proyectos de ley en 31 estados**;
+**TRAIGA (Texas) y AB 489 (California) en vigor desde 2026-01-01**. Sobre WISeR, registrado en los
+ciclos 5 y 6: hay un **intento del Congreso de bloquearlo tras un hallazgo de la GAO** — se registra
+como *movimiento legislativo*, no como derogación.
+
+**EMEA.** Nueva fuente **institucional y de primera mano**: la EMA y la FDA publicaron
+**diez principios comunes de buenas prácticas de IA en el ciclo de vida del medicamento el
+2026-01-14** (ema.europa.eu). Es exactamente la clase de fuente que esta KB prefiere frente a los
+blogs jurídicos, y es **directamente aplicable a este plano**. El *Digital Omnibus* ahora se puede
+citar con **las dos fechas separadas**: alto riesgo **diciembre de 2027** para sistemas autónomos y
+**agosto de 2028** para IA integrada en productos regulados (dispositivos). La **pierna firme sigue
+siendo MDR/IVDR** más el art. 50 vigente desde agosto de 2026 — cuarta vez que esta KB lo repite y
+sigue siendo el consejo correcto. **NHS England espera que las ICB y los proveedores adopten
+tecnología de voz ambiental desde abril de 2026** (refuerza lo que c7 registró sobre scribes).
+
+**APAC.** Japón **añadió análisis de riesgo para agentes de IA a sus directrices empresariales en
+marzo de 2026**, bajo la Ley de Promoción de la IA de 2025 — primera mención específica de *agentes*
+en una directriz APAC que esta KB registra. China hace de la *healthtech* prioridad estratégica en
+su **15.º plan quinquenal**, con el efecto ya medido en el ciclo 6: la adopción la decide el precio
+provincial y la compra hospitalaria, no la aprobación.
+
+**LATAM.** El dato del pase, y es un hueco con nombre: **la farmacovigilancia en LATAM no tiene
+todavía reglas específicas de IA.** ARCSA, ANVISA y COFEPRIS tienen **expectativas**, no normas. Eso
+significa que la venta aquí **no puede apoyarse en cumplimiento** —no hay qué cumplir— sino en coste
+por caso y trazabilidad. **Perú** aparece como el país de la región con **marco general de IA y
+reglamento aprobado en 2025**. Brasil sigue con **CFM 2.454/2026** como norma profesional en vigor.
+
+### T5 · Estructura de la oferta — quinta medición del mismo patrón
+
+El embudo del plano: **1.807** repos dicen `pharmacovigilance`, **12** tienen ≥10 estrellas, **1** es
+un agente (y sin licencia). La caída no es gradual: **ocurre justo donde empieza la obligación legal.**
+Novena medición consecutiva de que no hay un boom de agentes verticales permisivos.
+
+La razón ★/forks vuelve a separar poblaciones: `FDA/open.fda.gov` **2,3** y `coderxio/sagerx` **3,6**
+son infraestructura que se despliega; `LalanaChami/Pharmacy-Mangment-System` con **675★/290f** parece
+adopción pero es un proyecto académico de 2024 y sus forks son entregas de clase — **primer caso
+medido en que una razón «buena» (2,3) *no* indica despliegue**, lo que añade un matiz a la regla:
+hay que leer la razón **junto a** `push` y la naturaleza del repo, nunca sola.
+
+### T6 · Tamaño de mercado: la dispersión sigue siendo el dato
+
+| Segmento | 2026 | Horizonte |
+|---|---|---|
+| Externalización de farmacovigilancia | **5,79–9,15 mil M USD** según cuatro firmas distintas | 16,09 mil M (2030) a 22,99 mil M (2035) |
+| Farmacovigilancia global | **9,3–13,71 mil M USD** | 15,7 mil M (2033) a 34,17 mil M (2032) |
+| Procesamiento de casos | **4,25 mil M USD** | CAGR 13,1 % a 2035; los **servicios** fueron el **46 %** en 2025 |
+
+**La horquilla de la externalización es del 58 % entre la estimación más baja y la más alta para el
+mismo año.** Esa dispersión *es* la información: ante un CFO se cita **dirección y rango con la
+fuente**, nunca un punto. Lo que sí es sólido y relevante para una propuesta: el **46 % en servicios**
+de procesamiento de casos describe un mercado que **hoy se resuelve con personas**, que es
+precisamente la condición de un encargo de automatización.
+
+### T7 · ⚠️ Marcado explícitamente como NO CITABLE en este pase
+
+1. **Cualquier cifra única de mercado de farmacovigilancia.** Cuatro firmas dan 5,79 / 8,51 / 8,7 /
+   9,15 mil M para **el mismo año**. Citar el rango y la casa, no el punto.
+2. **El precio de WHODrug.** No hay cifra pública localizada. Se afirma que **existe cuota por
+   ingresos**, nada más.
+3. **«61 % de los líderes sanitarios ya construye IA agéntica» y «85 % aumentará inversión».** Encuesta
+   citada en prensa sectorial sin metodología publicada. El contraste útil —y también sin metodología—
+   es que otra recopilación sitúa el despliegue **en producción** en el **18 %**: la dirección
+   (intención ≫ producción) sí es defendible; los números no.
+4. **«1.430 dispositivos con IA autorizados por la FDA».** Procede de un blog de cumplimiento, no del
+   recuento oficial de la FDA. Verificar en fda.gov antes de usarlo en una propuesta.
+5. **La fecha exacta de entrada en vigor de CFM 2.454/2026.** Discrepancia ya registrada en c10 y no
+   resuelta (10-ago frente a septiembre de 2026). Se cita la resolución, no la fecha.
+6. **«Las interacciones medicamentosas evitables cuestan X».** Buscado para dimensionar el caso de
+   negocio del sub-plano vacío y **no localizado en fuente primaria**. Se deja como hueco, no como cifra.
+
+### T8 · Huecos — estado al 2026-11-25 (c11)
+
+- **(a) CPT / ciclo de ingresos:** sigue reclasificado como imposibilidad de licenciamiento. **Y ahora
+  tiene un segundo caso del mismo tipo: MedDRA.** Deja de ser excepción y pasa a ser patrón.
+- **(b) NHS publica sin licencia:** abierto. **Tercera instancia del patrón este pase: `HHS/pillbox-engine`.**
+- **(c) NLP clínico en español:** **confirmado y ahora cuantificado**. `spanish biomedical model stars:>=10`
+  → **total = 1** en todo el mundo, y es `PlanTL-GOB-ES/lm-biomedical-clinical-es` (Apache-2.0, parado
+  desde 2022-11). `clinical NLP spanish` → 16 resultados, el resto de 0–1★ y sin licencia. Sigue siendo
+  trabajo a medida con pocos competidores.
+- **(d) APAC:** **reabierto para este plano**. Japón 3 repos (el mejor con 1★), China 2 repos con 0★,
+  India 1 resultado y es un trabajo de curso. **APAC no tiene substrato permisivo de medicamento.**
+- **(e) Cuotas de documentación ambiental:** sin fuente. Sin cambios.
+- **(f) ABDM (India):** cerrado en c7, **re-verificado hoy**: `org:NHA-ABDM` = 7 repos, `UHI` CC0-1.0
+  (164★/43f) confirmado por bytes, y **nada en la organización con push posterior a 2024-09** salvo un
+  repo de *hackathon*. Material oficial permisivo sin mantener, igual que se registró.
+- **(g) Membresía SNOMED de los grandes países LATAM:** sigue abierto; `snomed.org` no resuelve desde
+  este entorno.
+- **(h) NUEVO — el coste evitable de la interacción medicamentosa.** El sub-plano clínico de DDI está
+  vacío y **no se ha podido dimensionar el daño que evita** con fuente primaria. Importa porque es el
+  único argumento que justificaría construir sobre contenido licenciado en un hospital. **Es lo primero
+  que debería cerrar un pase futuro de este plano.**
+- **(i) NUEVO — tooling permisivo para EudraVigilance.** La notificación a EudraVigilance exige registro
+  y **está explícitamente fuera del alcance** del único proyecto permisivo que cubre el flujo
+  (`Pharma-Intelligence-Os` lo dice en su propio README). No se localizó ninguna implementación abierta
+  de la pasarela. **Hueco informado, no silencio.**

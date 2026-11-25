@@ -283,3 +283,62 @@ expediente se construye, no se adopta.
 pandemia. **Último push: 2022-01-31.** Es el repo más estrellado que `search` devuelve para
 `remote patient monitoring` con contenido genuino, y está abandonado hace casi cinco años:
 APAC tiene precedente institucional de monitorización remota abierta, **y no tiene oferta viva**.
+
+---
+
+## Pase 2026-11-25 (c11) — la vertical de farmacia: dónde se puede poner IA encima, y por qué el juicio no se puede comprar abierto
+
+Este plano rompe el supuesto de los pases anteriores. En salud pública (DHIS2) o en PACS había una
+plataforma abierta personalizable. **En medicamento hay dos piezas separadas: un pipeline de datos
+que sí se personaliza, y una base de conocimiento que no se puede comprar abierta en absoluto.**
+
+### Lo que sí es una vertical personalizable
+
+| Plataforma | Licencia (bytes) | ★/forks | Push | Qué es, y dónde encaja la IA |
+|---|---|---|---|---|
+| [`coderxio/sagerx`](https://github.com/coderxio/sagerx) | **Apache-2.0** (552 B, *puntero* a la licencia) | 82★/23f | 2026-04-21 | **La vertical real de este plano**: pipeline dbt/Airflow que normaliza RxNorm + NDC + DailyMed en una base consultable. Es el «Odoo» del dato de medicamento: se extiende con modelos propios. refs=208 |
+| [`PharmGKB/PharmCAT`](https://github.com/PharmGKB/PharmCAT) | **MPL-2.0** (16.725 B) | 203★/68f | 2026-10-17 | Anotador farmacogenómico desplegable como servicio. Copyleft **débil por fichero**: se invoca y se distribuye junto a código propietario sin contaminarlo |
+| [`WeDoCareGlobal/Pharma-Intelligence-Os-Production`](https://github.com/WeDoCareGlobal/Pharma-Intelligence-Os-Production) | Apache-2.0 (11.359 B) | **0★/1f** | 2026-11-24 | Flujo completo de PV: revisión de ICSR con verificación humana, E2B(R3), PRR/ROR, PSUR. **Cuatro días de vida.** Se registra como **lectura de diseño, no como dependencia** |
+| [`hmislk/hmis`](https://github.com/hmislk/hmis) | ⚠️ GPL-3.0 | 245★/141f | **2026-11-25** | Ya estaba en la KB por APAC. **Tiene módulo de farmacia y almacén**, y es el HIS con más actividad real de la región. Copyleft: integrar por API, no incorporar |
+| [`heshanera/HealthPlus`](https://github.com/heshanera/HealthPlus) | Apache-2.0 | 267★/136f | 2026-08-28 | HIS con módulo de farmacia. **Razón ★/forks 2,0** → se despliega |
+
+### Lo que NO es una vertical, por mucho que lo parezca
+
+| Candidato | Por qué no |
+|---|---|
+| [`FreeVigilance/E2B`](https://github.com/FreeVigilance/E2B) | **GPL-3.0** (35.129 B). Es el único sistema abierto que cubre E2B de verdad, y su licencia impide incorporarlo en un entregable cerrado. Se despliega **al lado**, nunca dentro |
+| [`LalanaChami/Pharmacy-Mangment-System`](https://github.com/LalanaChami/Pharmacy-Mangment-System) · [`syedibrahim/Pharmacy-Management-System`](https://github.com/syedibrahim/Pharmacy-Management-System) | 675★/290f y 355★/152f: **las cifras más altas de `pharmacy management`** y ambos son **proyectos académicos sin mantenimiento** (2024-06 y 2020-12). Las estrellas vienen de estudiantes buscando un TFG, no de despliegues |
+| «ERP de farmacia abierto» en general | Buscado y **no encontrado como categoría**: lo que aparece son módulos de farmacia dentro de un HIS (GNU Health, hmislk, HealthPlus, OpenMRS) o POS genéricos sobre iDempiere. **No hay un Odoo de la farmacia hospitalaria** |
+
+### ⚠️ La advertencia que decide la propuesta en este plano: la base de conocimiento no se compra abierta
+
+Las plataformas de arriba mueven **datos de medicamento**. Ninguna incluye **el juicio**: la
+comprobación de interacciones, la gravedad, la codificación del evento adverso. Ese contenido es
+licenciado, y el coste es una partida del proyecto:
+
+- **MedDRA** (obligatorio para codificar en PV): reguladores y no lucrativos **0 USD**; comercial de
+  **139 USD** (ingresos < 1 M) a **37.035 USD** (ingresos 1–5 mil M), **+3 % en 2027**. Fuente oficial.
+- **WHODrug** y **VigiBase** (Uppsala Monitoring Centre): suscripción, **sin precio público**.
+- **DrugBank**: los *datasets* son **CC BY-NC 4.0**; comercial exige licencia pagada.
+- **First Databank / Multum** (el contenido de interacciones que usa un hospital): **propietario**.
+
+**Lo que nunca hay que prometer:** una vertical de farmacovigilancia o de comprobación de
+interacciones «enteramente open source». Es la misma imposibilidad que el ciclo 6 estableció para el
+CPT en ciclo de ingresos, ahora en un segundo conjunto de códigos.
+
+### La excepción, y es la única de este tipo en toda la KB
+
+**La farmacogenómica sí se puede entregar abierta de punta a punta**, porque su base de conocimiento
+—las guías del CPIC— está en **CC0 1.0**, dominio público, verificado en los bytes de
+[`cpicpgx/cpic-data`](https://github.com/cpicpgx/cpic-data). Motor MPL-2.0, contenido CC0, cliente
+MIT ([`hpi-dhc/PharMe`](https://github.com/hpi-dhc/PharMe)). Es el único sub-plano de una **tarea de
+juicio clínico** del que esta KB puede afirmar eso.
+
+### La vertical regional que existe, está licenciada y está parada
+
+[`iuryLandin/bulario-api`](https://github.com/iuryLandin/bulario-api) (MIT, 1.067 B, 100★/28f) expone
+el **bulário de ANVISA**, el registro oficial brasileño de prospectos. **Sin push desde 2025-02-07.**
+Es el mismo encargo que el ciclo 7 identificó para India: no construir desde cero, **adoptar y
+mantener** lo que ya existe y está licenciado — un alcance más pequeño y más defendible.
+Activo y diminuto a su lado: [`Diorgerb/dbulario`](https://github.com/Diorgerb/dbulario)
+(Apache-2.0, 4★/1f, push 2026-11-20).

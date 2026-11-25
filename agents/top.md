@@ -524,3 +524,107 @@ concluir que no hay nada):
 `remote patient monitoring` y una capa agéntica cuyo techo real son 44 estrellas. El patrón
 atravesó FHIR, imagen, OMOP, sumisión regulatoria y dispositivo. Ya no se reporta como hueco: es
 la forma del sector, y la oportunidad está en construir la capa, no en buscarla.
+
+---
+
+## Pase 2026-11-25 (c11) — el plano del medicamento: tres sub-planos, tres resultados, y el discriminante **no** es el regulador
+
+Quinto pase del día, plano nuevo: **medicación — farmacovigilancia, interacción fármaco-fármaco y
+farmacogenómica**. Este plano permite algo que los diez pases anteriores no permitían: una
+**comparación controlada de tres vías** dentro de la misma industria, el mismo año y la misma
+categoría de tarea («juicio clínico»). Los tres resultados son distintos, y el resultado refuta la
+lectura ingenua de **P12**.
+
+### El hallazgo central: la presión regulatoria NO predice la oferta permisiva; la licencia del CONTENIDO sí
+
+| Sub-plano | Presión regulatoria | Licencia del contenido de conocimiento | Oferta permisiva medida |
+|---|---|---|---|
+| **Farmacovigilancia** (ICSR, señal) | **MÁXIMA** — notificación legalmente obligatoria en todas las jurisdicciones | **MedDRA de pago** (escala por ingresos) + **WHODrug** por suscripción de la UMC | `pharmacovigilance stars:>=10` → **12 repos en todo el mundo**; el multiagente académico de referencia **sin fichero de licencia**; el único sistema E2B completo es **GPL-3.0** |
+| **Interacción fármaco-fármaco clínica** | MEDIA — es CDS, no hay mandato | **Propietaria** (First Databank, Multum); DrugBank es **CC BY-NC 4.0** | `clinical decision support drug` → 191 repos, y **los diez primeros por estrellas suman ~42★** (máximo 8★), casi ninguno con licencia. El único institucional es `HL7/PDDI-CDS` con **5★** |
+| **Farmacogenómica** (dosificación) | **NINGUNA** — el CPIC no es un regulador | **CPIC = CC0 1.0**, dedicación al dominio público (verificado en bytes) | **SANO Y VIVO**: `PharmCAT` MPL-2.0 203★/68f, `pypgx` MIT 99★ con push del 24-nov, `PharMe` MIT del Hasso-Plattner |
+
+Leído en vertical: **el sub-plano con más obligación legal es el que tiene menos software abierto, y
+el que no tiene ninguna obligación es el único con herramientas permisivas mantenidas.** La
+correlación con la presión regulatoria es *inversa*. La correlación con la licencia del contenido es
+perfecta.
+
+**P12 no se cae, se corrige.** La secuencia que el ciclo 6 observó («el regulador declara → el
+organismo publica una IG → aparecen implementaciones permisivas») describía la **capa de formato**.
+Para la **capa de juicio** hace falta una segunda condición que el ciclo 6 no aisló: *que el cuerpo
+de conocimiento con el que se juzga sea libre*. El regulador crea la **obligación**; la licencia del
+contenido decide si el código abierto puede **cumplirla**.
+
+Y la ley del pase financiero («el open source permisivo sigue al formato de fichero, no a la
+decisión») **se confirma aquí por tercera vez y en el caso más difícil**: el formato ICSR *sí* tiene
+implementación abierta —`FreeVigilance/E2B` (GPL-3.0, refs=82) y `Pharma-Intelligence-Os`
+(Apache-2.0)— mientras el juicio que viaja dentro de ese formato no tiene ninguna. El sobre está
+resuelto; la carta no.
+
+### Consecuencia comercial, dicha sin adornos
+
+Donde la obligación es máxima y el contenido está gravado hay **a la vez** el hueco más grande y la
+mayor disposición a pagar — es decir, es donde está el margen. Pero **el entregable no puede
+prometerse «todo open source»**, por la misma razón que el ciclo 6 estableció para el CPT. Lo que se
+vende es la **capa de juicio sobre contenido que el cliente ya licencia**: un laboratorio que notifica
+ya paga MedDRA. Lo que Globant aporta es el triaje, la deduplicación, la narrativa y la trazabilidad,
+y el entregable con margen es **la biblioteca de reglas y el banco de pruebas**, que el cliente posee.
+
+En farmacogenómica la postura es la opuesta y hay que decirlo igual de claro: **ahí sí se puede
+prometer una pila abierta de punta a punta**, porque el contenido es CC0 y el motor es MPL-2.0.
+Es el único sub-plano de toda esta KB del que puede decirse eso sobre una tarea de juicio clínico.
+
+### Agentes y herramientas agénticas del plano — verificados uno por uno
+
+Existencia por `git ls-remote`; licencia por bytes del fichero real (puerta v7, ver P32); ★/forks y
+`push` por `search/repositories` en la misma llamada.
+
+| Repo | Licencia (bytes) | ★/forks | Push | Qué es, y por qué está aquí |
+|---|---|---|---|---|
+| [`snap-stanford/Biomni`](https://github.com/snap-stanford/Biomni) | Apache-2.0 (11.357 B) | 4.111★/751f | 2026-11-23 | Agente biomédico general de Stanford. Ya estaba en la KB; **re-medido este pase** y sigue activo. Razón 5,5 |
+| [`ChazY11/medradar`](https://github.com/ChazY11/medradar) | **MIT** (1.328 B) | 428★/27f | **2026-11-25** | 375.378 eventos de **seis fuentes públicas gratuitas**, cobertura 1966–2026, 1.157 pruebas *offline*. Investigación de evidencia sobre cambio tecnológico médico. `search` lo daba como `NOASSERTION`; los bytes dicen MIT |
+| [`Shakesbeery/vigipy`](https://github.com/Shakesbeery/vigipy) | MIT (1.068 B) | 20★/6f | 2026-10-21 | **El motor de desproporcionalidad permisivo del plano** (PRR, ROR, BCPNN, GPS) en Python. Pequeño, pero es el único mantenido con licencia usable |
+| [`KarelDO/BioDEX`](https://github.com/KarelDO/BioDEX) | MIT (1.075 B) | 69★/8f | 2024-01-29 | **El oráculo**: extracción de ICSR contra informes **reales** de la FDA. Parado desde 2024, pero un banco de pruebas envejece mucho mejor que una plataforma (ver P22) |
+| [`pryndor/Lixplore_cli`](https://github.com/pryndor/Lixplore_cli) | MIT (1.078 B) | 36★/7f | 2026-10-25 | Exploración de literatura por CLI: la pata de cribado bibliográfico, que es obligación legal en PV |
+| [`JamesANZ/medical-mcp`](https://github.com/JamesANZ/medical-mcp) | MIT (1.071 B) | 122★/39f | 2026-10-15 | MCP sobre RxNorm y fuentes de medicamento. **Razón 3,1** → se despliega, no sólo se estrella |
+| [`cyanheads/openfda-mcp-server`](https://github.com/cyanheads/openfda-mcp-server) | Apache-2.0 (10.772 B) | 6★/3f | 2026-11-23 | MCP sobre openFDA. Diminuto en estrellas y **activo**; refs=112 |
+| [`alvinhenrick/medirag`](https://github.com/alvinhenrick/medirag) | MIT (1.070 B) | 9★/6f | 2026-05-28 | RAG sobre etiquetado de medicamento (DailyMed). Razón 1,5 |
+| [`forever-healthy/evidence-mcp`](https://github.com/forever-healthy/evidence-mcp) | MIT (1.090 B) | 7★/0f | **2026-11-25** | MCP de evidencia de la Forever Healthy Foundation. Push de hoy |
+| [`WeDoCareGlobal/Pharma-Intelligence-Os-Production`](https://github.com/WeDoCareGlobal/Pharma-Intelligence-Os-Production) | Apache-2.0 (11.359 B) | **0★/1f** | 2026-11-24 | Revisión de ICSR con verificación humana, E2B(R3), gestión de señal PRR/ROR y borradores de PSUR. **Se tabula con su cifra real: cero estrellas, cuatro días de vida.** Es el único proyecto permisivo que cubre el flujo completo; no es todavía una dependencia, es una lectura de diseño |
+
+### La única pila agéntica de juicio clínico que puede entregarse 100 % abierta
+
+| Repo | Licencia (bytes) | ★/forks | Push | Papel |
+|---|---|---|---|---|
+| [`PharmGKB/PharmCAT`](https://github.com/PharmGKB/PharmCAT) | **MPL-2.0** (16.725 B, banda canónica) | 203★/68f | 2026-10-17 | Anotador clínico farmacogenómico: VCF → diplotipos → recomendación CPIC. **El motor** |
+| [`cpicpgx/cpic-data`](https://github.com/cpicpgx/cpic-data) | **CC0 1.0** declarado en `LICENSE.md` (3.234 B) | 34★/2f | **2026-11-19** | **El contenido**, y es dominio público. Pide atribución, no la exige como condición |
+| [`sbslee/pypgx`](https://github.com/sbslee/pypgx) | MIT (1.080 B) | 99★/22f | **2026-11-24** | Llamada de genotipos farmacogenéticos en Python. Activo |
+| [`PharmGKB/vcf-parser`](https://github.com/PharmGKB/vcf-parser) | MPL-2.0 | 9★/1f | 2026-08-28 | Pieza de entrada de PharmCAT |
+| [`hpi-dhc/PharMe`](https://github.com/hpi-dhc/PharMe) | MIT (1.082 B) | 23★/9f | 2025-08-20 | **EMEA**: app paciente-clínico del Hasso-Plattner-Institut sobre recomendaciones CPIC. refs=298 |
+| [`dgidb/dgidb`](https://github.com/dgidb/dgidb) | MIT (1.101 B) | 97★/32f | 2025-08-12 | Interacciones fármaco-gen (Griffith Lab). Razón 3,0 |
+
+**MPL-2.0 es copyleft débil por fichero**: PharmCAT se puede invocar y distribuir junto a código
+propietario; lo que no se puede es modificar sus ficheros y cerrarlos. Para una integración es una
+restricción sin consecuencia práctica, y hay que decirlo porque «copyleft» suele leerse como bloqueo.
+
+### ⛔ Capa de corrección — seis filas que NO son adoptables, y dos son las que un buscador pondría primero
+
+| Repo | Lo que parece | Lo que miden los bytes |
+|---|---|---|
+| [`jihyechoi77/malade`](https://github.com/jihyechoi77/malade) | El sistema **multiagente académico de farmacovigilancia** más citado (LLM + openFDA) | **SIN fichero de licencia.** refs=4, 15 variantes de nombre × 2 ramas, todas 404. Sin push desde 2025-02-19. El trabajo de referencia del plano **no se puede usar** |
+| [`DavidOsherdiagnostica/israel-drugs-mcp-server`](https://github.com/DavidOsherdiagnostica/israel-drugs-mcp-server) | `NOASSERTION` en la API; 19★/10f, el único activo israelí del plano | **CC BY-NC-SA 4.0** (3.690 B, título en la línea 1): **No Comercial + ShareAlike sobre SOFTWARE**, no sobre datos. Caso raro y bloqueo total en trabajo de cliente |
+| [`openpharma-org/drugbank-mcp-server`](https://github.com/openpharma-org/drugbank-mcp-server) | MCP listo sobre DrugBank, 11★/4f | **Doble bloqueo**: sin fichero de licencia **y** el contenido que envuelve es **CC BY-NC 4.0** (comercial requiere licencia pagada de DrugBank) |
+| [`PacificBiosciences/pb-StarPhase`](https://github.com/PacificBiosciences/pb-StarPhase) | `NOASSERTION`, 27★/6f, llamador PGx de PacBio | **EULA propietario**: «Pacific Biosciences Software License Agreement» (8.568 B). **Segunda** confirmación de la regla (10) de P28: de `NOASSERTION` se sigue «sin medir», nunca «permisiva» |
+| [`HHS/pillbox-engine`](https://github.com/HHS/pillbox-engine) | Repo del **Departamento de Salud de EE.UU.**, refs=64 | **SIN licencia** tras 15 nombres × 2 ramas. Instancia norteamericana del patrón del NHS: agencia nacional que publica sin licenciar |
+| [`fabkury/ndc_map`](https://github.com/fabkury/ndc_map) · [`open-pgx/openpgx`](https://github.com/open-pgx/openpgx) | Mapeos NDC y PGx con 104★ y 13★ | Ambos **sin fichero de licencia**; refs=2 cada uno |
+
+### El contador de agentes verticales — novena medición consecutiva, y sigue clavado en 1
+
+| Consulta | Resultado |
+|---|---|
+| `medication agent stars:>=10` | **total = 1** en todo el mundo, y es `yixinzhang98/otc_med_chat_agent` (199★/32f, **sin licencia**, sin push desde 2025-07-29) |
+| `pharmacovigilance stars:>=10` | **total = 12**, el primero parado desde enero de 2024 |
+| `WHODrug` | **total = 5** repos en todo GitHub |
+| `deprescribing` | **total = 30** |
+
+Novena medición consecutiva (legal, financial, healthcare c5–c11) de que **no hay un boom de agentes
+verticales permisivos**. Lo que añade un pase es **deuda de descubrimiento**, no crecimiento del sector.

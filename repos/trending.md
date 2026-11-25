@@ -8,6 +8,83 @@ updated: 2026-11-25
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 
+## 2026-11-25 (c11) — 191 repos de CDS de medicamento y los diez primeros suman 42 estrellas
+
+Quinto pase del día, plano del **medicamento**. La medición de este pase separa dos cosas que los
+listicles mezclan y, al separarlas, explica por qué una de ellas está vacía.
+
+### Los dos «drug interaction» — y sólo uno existe
+
+| Consulta | Resultados | Lo que hay arriba de verdad |
+|---|---|---|
+| `drug interaction stars:>=50` | 15 | **Descubrimiento molecular**: MolTrans 254★ (BSD-3, parado 2022), DTINet 193★ (GPL-3.0, 2022), ConPLex 158★ (MIT, 2025), tigerlily 100★ (Apache-2.0, 2022), `microsoft/Drug-Interaction-Research` 98★ (MIT, 2023). **Poblado, académico y casi todo parado** |
+| `clinical decision support drug` | **191** | **Los diez primeros por estrellas suman ~42★**; el máximo es **8★**; casi ninguno tiene licencia. El único institucional es [`HL7/PDDI-CDS`](https://github.com/HL7/PDDI-CDS) con **5★/2f** y CC0 |
+
+El primer plano responde «¿se unen esta molécula y esta diana?». El segundo responde «¿puedo dar
+estos dos fármacos a este paciente?». **El segundo es el que un hospital compra, y es el que no
+existe** — porque su contenido (First Databank, Multum) es propietario y DrugBank es CC BY-NC 4.0.
+
+### El tamaño de cada capa, medido
+
+| Consulta (canal `search/repositories`) | Resultados |
+|---|---|
+| `drug interaction` | 4.119 |
+| `E2B` | **2.460 — término capturado**: `e2b.dev` es una empresa de *sandboxes* de IA. Inservible aquí |
+| `pharmacovigilance` | 1.807 |
+| `openFDA` | 1.242 |
+| `FAERS` | 891 |
+| `ICSR` | 468 |
+| `RxNorm` | 421 |
+| `adverse event reporting` | 415 |
+| `DailyMed` | 184 |
+| `MedDRA` | 177 |
+| `signal detection pharmacovigilance` | 159 |
+| `medication reconciliation` | 130 |
+| `disproportionality` | 122 |
+| `e-prescribing` | 120 |
+| `antimicrobial stewardship` | 95 |
+| `farmacovigilancia` (es/pt) | **69 — y los seis primeros suman 7★** |
+| `deprescribing` | **30** |
+| `WHODrug` | **5** |
+| `PMDA drug japan` | **3** |
+| `NMPA drug china` | **2** |
+| `medication agent stars:>=10` | **1** |
+
+**El embudo del plano, en una línea:** 1.807 repos dicen «pharmacovigilance», **12** tienen ≥10
+estrellas, y **1** es un agente. El dato no es que haya poco: es que **la caída ocurre justo donde
+empieza la obligación legal**.
+
+### Trending real, por push reciente
+
+| Repo | Licencia (bytes) | ★/forks | Push |
+|---|---|---|---|
+| [`ChazY11/medradar`](https://github.com/ChazY11/medradar) | MIT (1.328 B) | 428★/27f | **2026-11-25** |
+| [`FDA/open.fda.gov`](https://github.com/FDA/open.fda.gov) | MIT (1.076 B) | 178★/76f | **2026-11-25** |
+| [`sbslee/pypgx`](https://github.com/sbslee/pypgx) | MIT (1.080 B) | 99★/22f | 2026-11-24 |
+| [`cpicpgx/cpic-data`](https://github.com/cpicpgx/cpic-data) | **CC0 1.0** (3.234 B) | 34★/2f | 2026-11-19 |
+| [`PharmGKB/PharmCAT`](https://github.com/PharmGKB/PharmCAT) | MPL-2.0 (16.725 B) | 203★/68f | 2026-10-17 |
+| [`Shakesbeery/vigipy`](https://github.com/Shakesbeery/vigipy) | MIT (1.068 B) | 20★/6f | 2026-10-21 |
+| [`pryndor/Lixplore_cli`](https://github.com/pryndor/Lixplore_cli) | MIT (1.078 B) | 36★/7f | 2026-10-25 |
+| [`ReyemTech/mcp-canada`](https://github.com/ReyemTech/mcp-canada) | MIT (1.067 B) | 63★/9f | 2026-10-22 |
+| [`coderxio/sagerx`](https://github.com/coderxio/sagerx) | Apache-2.0 (552 B, *puntero*) | 82★/23f | 2026-04-21 |
+| [`dgidb/dgidb`](https://github.com/dgidb/dgidb) | MIT (1.101 B) | 97★/32f | 2025-08-12 |
+
+### Notas de canal — una corrección a la propia KB y un término contaminado
+
+**1. `FDA/openfda` sí es alcanzable por `raw`.** El ciclo 9 registró que su CC0 «sólo apareció al
+clonar». Medido hoy: `COPYING.txt` → **HTTP 200, 7.047 B**, CC0 1.0 canónico. El problema no era el
+canal, era la **lista de nombres** de la puerta de licencia. Corregido en la **v7** (P32) añadiendo
+`COPYING.txt`, `COPYING.md`, `LICENCE.md` y `UNLICENSE`.
+
+**2. Simétrico del hallazgo del ciclo 6.** El ciclo 6 registró «si una consulta plausible da 0,
+acortarla antes de concluir que no hay nada». Este pase añade el caso inverso: **si una consulta da
+un número implausiblemente alto, el término está capturado por otro sector** (`E2B` → 2.460).
+
+**3. Sin falsos negativos nuevos de `search/repositories`** medidos este pase — el contador de la KB
+se queda en los siete anteriores. Todas las URLs nuevas resuelven por `ls-remote`.
+
+---
+
 ## 2026-11-25 (c10) — 73.399 forks: el repo sanitario más desplegado del mundo, y es AGPL
 
 Cuarto pase del día, plano nuevo: **dispositivo y monitorización remota**. La medición de este pase

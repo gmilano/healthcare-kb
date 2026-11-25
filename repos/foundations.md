@@ -540,3 +540,137 @@ apariciones**. 1 aparición sin título = texto GPL incidental. Código en `comp
 La taxonomía de licencia de esta KB pasa a **nueve categorías**: permisiva · copyleft · contenido
 no libre · ausencia medible · dominio público · CC-NC-ND como open source · **manifiesto de
 submódulos sin licencia** · **permisiva con reserva de activos** · **`NOASSERTION` no comercial**.
+
+---
+
+## Pase 2026-11-25 (c11) — el substrato del medicamento: datos federales en dominio público, terminología gravada, y una capa de juicio vacía
+
+Este plano tiene la **separación más limpia** que esta KB ha medido entre *dato*, *terminología* y
+*juicio*. Las tres capas tienen licencias de naturaleza distinta y hay que tratarlas por separado en
+una propuesta.
+
+### Capa de dato de seguridad — federal, dominio público y mantenida
+
+| Repo | Licencia (bytes) | ★/forks | Push | Qué aporta |
+|---|---|---|---|---|
+| [`FDA/openfda`](https://github.com/FDA/openfda) | **CC0-1.0** — `COPYING.txt`, **7.047 B** | 721★/173f | 2026-06-08 | La plataforma de la FDA sobre FAERS, etiquetado, retiradas y dispositivo. refs=48 |
+| [`FDA/open.fda.gov`](https://github.com/FDA/open.fda.gov) | MIT (1.076 B) | 178★/76f | **2026-11-25** | El portal y su documentación. **Push de hoy** y razón ★/forks de **2,3** → se forkea para usarlo |
+| [`coderxio/sagerx`](https://github.com/coderxio/sagerx) | Apache-2.0 (552 B, *puntero*) | 82★/23f | 2026-04-21 | Pipeline de datos de medicamento: RxNorm + NDC + DailyMed en una base consultable. refs=208 |
+| [`neksa/openfda-faers`](https://github.com/neksa/openfda-faers) | MIT (1.883 B) | 20★/2f | 2026-10-22 | Extracción y normalización de FAERS |
+| [`WangLabCSU/faers`](https://github.com/WangLabCSU/faers) | **MIT** vía `DESCRIPTION` | 55★/10f | 2026-11-12 | Paquete R de FAERS. **Undécima instancia del *stub* de R** (ver más abajo) |
+
+**Corrección a la nota de canal del ciclo 9.** La KB registró que la licencia CC0 de `FDA/openfda`
+«sólo apareció al clonar». **Es alcanzable por `raw`**: el fichero se llama `COPYING.txt`, y basta
+añadirlo a la lista de nombres de la puerta. Medido este pase: `COPYING.txt` → **HTTP 200, 7.047 B**,
+texto canónico de CC0 1.0. El clon no era necesario; la lista de nombres estaba corta. Eso es lo que
+arregla la **puerta v7** (P32), y es un defecto de la propia puerta que esta KB recomendaba.
+
+### Capa de terminología — y aquí el contenido **no** es libre
+
+| Conjunto | Quién lo publica | Coste real, medido en la fuente oficial |
+|---|---|---|
+| **MedDRA** | ICH / MSSO | Escala por ingresos del grupo: **reguladores y entidades sin ánimo de lucro, 0 USD**; Nivel 0 (ingresos < 1 M USD) **139 USD**; Nivel 5 (1–5 mil M USD) **37.035 USD**. **Las tarifas de 2027 suben un 3 %** en las renovaciones. Por encima de 5 mil M no hay tramo publicado |
+| **WHODrug** | Uppsala Monitoring Centre | Suscripción, **sin precio público localizado**. Existe una *Limited Study License* para promotores con ingresos < 10 M USD en fases I–II. Se cita la existencia de cuota, **no una cifra** |
+| **VigiBase** | Uppsala Monitoring Centre | Extracto bajo licencia. `vigicaen` trabaja sobre extractos que **el cliente debe licenciar** |
+| **DrugBank** | DrugBank (Canadá) | Los *datasets* se publican bajo **CC BY-NC 4.0**; el uso comercial **exige licencia pagada**. Las descargas académicas estaban **pausadas** al consultar |
+| **RxNorm, NDC, DailyMed, ICD-10-CM** | NLM / FDA / CMS | **Gratis**; RxNorm requiere la licencia UMLS, que es registro sin coste |
+| **CPIC** | CPIC (marca de servicio registrada del HHS) | **CC0 1.0**, dedicación al dominio público, verificado en los bytes de `cpicpgx/cpic-data` |
+
+**Esto es la misma trampa del CPT del ciclo 6, en un segundo conjunto de códigos — y por eso deja
+de ser una anécdota y pasa a ser un patrón del sector.** Con una diferencia metodológica a favor:
+donde las cifras del CPT venían de fuentes secundarias **en conflicto** (18,50 frente a 14 USD), la
+escala de MedDRA está publicada por la fuente oficial con tramo y cifra exacta. **Es citable ante un
+CFO.** La regla de CI de P11 se extiende: si una ruta puede **emitir un término MedDRA** y no hay
+identificador de suscripción MSSO en el manifiesto, el *build* falla.
+
+### Capa de juicio — medida, y el resultado es un campo vacío
+
+| Consulta (canal `search/repositories`) | Resultados | Lo que hay realmente arriba |
+|---|---|---|
+| `drug interaction stars:>=50` | 15 | **Todo es predicción molecular de DTI** (MolTrans, DTINet, ConPLex…), investigación de descubrimiento de fármacos, y **casi todo parado entre 2019 y 2022**. Ninguno es un comprobador clínico |
+| `clinical decision support drug` | 191 | Los **diez primeros por estrellas suman ~42★**; el máximo es **8★**; la mayoría sin licencia. El único institucional es `HL7/PDDI-CDS` |
+| `medication reconciliation` | 130 | Nada propio por encima del ruido |
+| `signal detection pharmacovigilance` | 159 | `vigipy` (MIT, 20★) y `pvm` (GPL-3.0, 33★) son el techo |
+| `disproportionality` | 122 | Mismo techo |
+
+**No confundir los dos «drug interaction».** El plano de *descubrimiento* (interacción
+fármaco-diana, grafos moleculares) está poblado y es académico; el plano *clínico* (¿puedo dar estos
+dos fármacos a este paciente?) está vacío. Un listicle que mezcle los dos hace creer que el segundo
+está resuelto. **No lo está, y la razón es que el contenido clínico de interacciones es propietario.**
+
+| Repo del juicio clínico que **sí** existe | Licencia (bytes) | ★/forks | Push |
+|---|---|---|---|
+| [`HL7/PDDI-CDS`](https://github.com/HL7/PDDI-CDS) | **CC0-1.0** (7.048 B) | 5★/2f | 2026-06-17 | Guía de implementación de CDS de interacciones potenciales fármaco-fármaco, de **HL7**. refs=9. Dominio público, diminuto, y es **el único ancla normativa del sub-plano** |
+
+### Substrato del plano por región — con las cuatro colocadas, incluidas las que salen vacías
+
+#### North America
+Es la región **con el mejor substrato de todo el plano** y la única con fuentes oficiales en dominio
+público: `FDA/openfda` (CC0), `FDA/open.fda.gov` (MIT, push de hoy), `coderxio/sagerx` (Apache-2.0),
+`HL7/PDDI-CDS` (CC0), `PharmGKB/PharmCAT` (MPL-2.0) y `cpicpgx/cpic-data` (CC0). **Canadá** aparece
+con pieza propia: [`ReyemTech/mcp-canada`](https://github.com/ReyemTech/mcp-canada) (MIT, 1.067 B,
+63★/9f, push 2026-10-22), MCP sobre datos públicos canadienses incluido el registro de medicamentos.
+Hueco de la región: `HHS/pillbox-engine` **sin licencia**.
+
+#### EMEA
+Substrato **real pero copyleft o abandonado**, y con una licencia que conviene no confundir:
+
+| Repo | Licencia (bytes) | ★/forks | Push | Nota |
+|---|---|---|---|---|
+| [`pharmacologie-caen/vigicaen`](https://github.com/pharmacologie-caen/vigicaen) | ⚠️ **CeCILL 2.1** (21.780 B) | — | activo | Desproporcionalidad sobre VigiBase, del servicio de farmacología del **CHU de Caen**. **CeCILL es la licencia libre francesa (CEA/CNRS/Inria) y es copyleft compatible con GPL** — un nombre desconocido que *no* es permisivo. **Banda de licencia nueva en esta KB** |
+| [`bips-hb/pvm`](https://github.com/bips-hb/pvm) | ⚠️ GPL-3.0 (34.904 B) | 33★/6f | 2025-02-10 | Métodos de farmacovigilancia del **BIPS de Bremen**. Copyleft |
+| [`bmascat/pharmacovigilance-literature-mining`](https://github.com/bmascat/pharmacovigilance-literature-mining) | ⚠️ AGPL-3.0 (34.522 B) | 18★/0f | 2025-03-08 | Minería de literatura. **AGPL: límite de red** (ver P25) |
+| [`FreeVigilance/E2B`](https://github.com/FreeVigilance/E2B) | ⚠️ GPL-3.0 (35.129 B) | refs=82 | — | **El único sistema abierto que cubre E2B de verdad, y es copyleft fuerte** |
+| [`hpi-dhc/PharMe`](https://github.com/hpi-dhc/PharMe) | **MIT** (1.082 B) | 23★/9f | 2025-08-20 | Hasso-Plattner-Institut. **La única pieza permisiva EMEA del plano** |
+
+#### APAC — hueco medido, no silencio
+
+| Consulta | Resultado |
+|---|---|
+| `PMDA drug japan` | **3 repos**; el primero tiene **1★**. Lo único usable: [`pipeworx-io/mcp-jp-pmda-approvals`](https://github.com/pipeworx-io/mcp-jp-pmda-approvals) (MIT, 1.070 B, **0★**, push 2026-11-18) — MCP sobre aprobaciones de la PMDA, **siete días de vida** |
+| `NMPA drug china` | **2 repos**, ambos con **0★** |
+| `medicine database india stars:>=20` | **1 resultado**, y es un proyecto de curso en Django de 2021 |
+
+Único asset APAC con masa: [`martinuslee/oh-my-kegg-mcp`](https://github.com/martinuslee/oh-my-kegg-mcp)
+(MIT, 8★/1f). **APAC no tiene substrato de medicamento propio en código abierto permisivo**, y el que
+empieza a aparecer (Japón) tiene días de vida. Dicho explícitamente para que no se lea como cobertura.
+
+#### LATAM — hueco medido, con un ancla real y parada
+
+| Repo | Licencia (bytes) | ★/forks | Push | Nota |
+|---|---|---|---|---|
+| [`iuryLandin/bulario-api`](https://github.com/iuryLandin/bulario-api) | **MIT** (1.067 B) | 100★/28f | **2025-02-07** | API sobre el **bulário de ANVISA** (registro oficial brasileño de prospectos). **El único asset LATAM del plano con masa — y está parado** |
+| [`Diorgerb/dbulario`](https://github.com/Diorgerb/dbulario) | Apache-2.0 (11.357 B) | 4★/1f | 2026-11-20 | Activo y diminuto. refs=12 |
+
+Y la medición que importa decir entera: `farmacovigilancia` (en español y portugués) devuelve
+**69 repos**, y **los seis primeros suman 7 estrellas** (2, 1, 1, 1, 1, 0) con **una sola licencia**
+entre todos ellos. Es un campo de repos vacíos, igual que el `medical necessity` del ciclo 6.
+
+**Pero no hay penalización regional, y es importante no venderlo como retraso**: la población
+mundial del sub-plano son **12 repos con ≥10★**. LATAM no va por detrás de un sector poblado; el
+sector no está poblado en ninguna región. Misma estructura que midió el pase financiero.
+
+### Confirmación del *stub* de R — undécima instancia de P18
+
+`WangLabCSU/faers` devuelve `NOASSERTION` en la API y su `LICENSE` pesa **43 bytes**:
+
+```
+YEAR: 2023
+COPYRIGHT HOLDER: faers authors
+```
+
+`DESCRIPTION` dice `License: MIT + file LICENSE` → **es MIT**. Exactamente el patrón que el ciclo 9
+documentó con los diez paquetes de `pharmaverse`. **La farmacovigilancia y la bioestadística clínica
+son dominios de R**, así que esta regla no es un detalle: sin ella, una puerta de licencia descarta
+por error la mitad del substrato del plano.
+
+### Nota de canal — el término de búsqueda contaminado
+
+`E2B` como consulta devuelve **2.460 repos** y es **inservible**: `e2b.dev` es una empresa de
+*sandboxes* para IA y domina el término. Para este plano hay que consultar `ICSR` (468) o
+`adverse event reporting` (415). Se registra junto al hallazgo del ciclo 6 («si una consulta
+plausible da 0, acortarla») su simétrico: **si una consulta da un número implausiblemente alto,
+el término está capturado por otro sector.**
+
+Sin falsos negativos nuevos de `search/repositories` medidos este pase. Todas las URLs nuevas
+resuelven por `ls-remote`.

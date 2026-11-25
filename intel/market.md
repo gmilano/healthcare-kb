@@ -1162,3 +1162,111 @@ argumento para el sector público sigue siendo el del ciclo 6: comprador privado
 | (i) **NUEVO** — Plataforma RPM permisiva y viva | **ABIERTO**: 1.049 repos en `remote patient monitoring`; el más estrellado con contenido genuino tiene **40★, es AGPL-3.0 y está parado desde 2022-01-31** |
 | (j) **NUEVO** — Comunicación de dispositivo (IEEE 11073) | **ABIERTO**: 30 repos; la implementación de referencia (`signove/antidote`) es LGPL y **sin push desde 2021-05-14** |
 | (k) **NUEVO** — Vínculo sanitario del SBOM | **ABIERTO, y es el de mejor relación esfuerzo/valor**: las cinco herramientas que producen el artefacto son Apache-2.0 y **ninguna es de salud** (`medical device SBOM` = 12 repos) |
+
+---
+
+## Pase 2026-11-25 (c11) — el plano del medicamento: dónde está el margen y por qué no puede ser «todo abierto»
+
+### El hallazgo central: el hueco más grande del sector coincide con la mayor disposición a pagar, y con la imposibilidad de entregarlo abierto
+
+| Sub-plano | Obligación legal | Licencia del contenido | Oferta permisiva | Lectura comercial |
+|---|---|---|---|---|
+| **Farmacovigilancia** | **máxima** (notificación obligatoria en todas las jurisdicciones) | MedDRA de pago + WHODrug por suscripción | **12 repos ≥10★ en el mundo** | **Aquí está el margen.** Hueco máximo + pago obligado. Pero el entregable **no puede prometerse abierto** |
+| **Interacción clínica fármaco-fármaco** | ninguna (CDS) | propietaria (FDB/Multum); DrugBank CC BY-NC | **vacío** (191 repos, top-10 ≈ 42★) | **No vender todavía**: no hay substrato *ni* cifra de daño evitado (hueco (h)) |
+| **Farmacogenómica** | **ninguna** | **CPIC = CC0 1.0** | **sana y activa** | **El único sub-plano entregable 100 % abierto** de una tarea de juicio clínico en toda esta KB |
+
+La conclusión que hay que llevar a una propuesta: **el regulador crea la obligación; la licencia del
+contenido decide si el código abierto puede cumplirla.** Donde el contenido está gravado, el
+entregable con margen es **la capa de juicio sobre contenido que el cliente ya licencia** —un
+laboratorio que notifica ya paga MedDRA— y el activo que se queda el cliente es **la biblioteca de
+reglas más el banco de pruebas**, no la plataforma.
+
+### El coste del contenido, con cifra oficial (a diferencia del CPT del ciclo 6)
+
+| Conjunto | Coste |
+|---|---|
+| **MedDRA** | Reguladores y no lucrativos **0 USD**. Comercial por tramo de ingresos del grupo: **139 USD** (< 1 M) … **37.035 USD** (1–5 mil M). **+3 % en 2027.** Sin tramo publicado por encima de 5 mil M |
+| **WHODrug / VigiBase** (UMC) | Suscripción por facturación. **Sin precio público** — se cita la existencia de cuota |
+| **DrugBank** | *Datasets* **CC BY-NC 4.0**; comercial exige licencia pagada |
+| **CPIC** | **CC0 1.0** — dominio público |
+| **RxNorm / NDC / DailyMed / openFDA** | Gratis; RxNorm con licencia UMLS de registro sin coste |
+
+**Mejora metodológica respecto del ciclo 6:** donde las cifras del CPT venían de secundarias en
+conflicto, **la escala de MedDRA está publicada por la fuente oficial con tramo y cifra exacta**.
+Es la primera partida de coste de contenido de esta KB que se puede poner en un presupuesto.
+
+### Tamaño de mercado: la dispersión es el dato
+
+| Segmento | 2026 | Horizonte | Nota |
+|---|---|---|---|
+| Externalización de PV | **5,79 / 8,51 / 8,7 / 9,15 mil M USD** (cuatro firmas) | 16,09 mil M (2030) – 22,99 mil M (2035) | **Horquilla del 58 % para el mismo año** |
+| PV global | **9,3–13,71 mil M USD** | 15,7 mil M (2033) – 34,17 mil M (2032) | CAGR entre 7,8 % y 16,34 % según definición |
+| Procesamiento de casos | **4,25 mil M USD** | CAGR 13,1 % a 2035 | **Los servicios fueron el 46 % en 2025** |
+
+El dato sólido y vendible no es el tamaño: es que **el 46 % del procesamiento de casos se resuelve
+hoy con personas**. Eso describe exactamente la condición de un encargo de automatización, y se
+puede afirmar sin apoyarse en una previsión.
+
+### Oportunidades por región
+
+#### North America — el substrato ya es público; el encargo es el juicio y la trazabilidad
+
+La mejor dotación de todo el plano y la única con fuentes oficiales en dominio público:
+`FDA/openfda` (CC0), `FDA/open.fda.gov` (MIT, push de hoy), `coderxio/sagerx` (Apache-2.0),
+`HL7/PDDI-CDS` (CC0), `PharmCAT` (MPL-2.0), `cpic-data` (CC0). **Consecuencia práctica: el *fixture*
+no hay que fabricarlo**, a diferencia del plano clínico donde `synthea` resolvía ese problema — el
+dato real de seguridad ya es público. Marco de venta: la **hoja de ruta de CMS del 2026-11-13**
+(fases, evidencia, monitorización continua) describe literalmente los artefactos que un agente con
+registro por decisión produce por construcción. **Canadá** tiene pieza propia y mantenida:
+`ReyemTech/mcp-canada` (MIT, 63★/9f). Entregable con margen: **triaje y deduplicación de ICSR con
+aprobación humana en todo paso con consecuencia regulatoria**, más la biblioteca de reglas como
+activo del cliente.
+
+#### EMEA — vender sobre los diez principios EMA/FDA, no sobre el AI Act
+
+La fuente institucional de primera mano de este plano son los **diez principios comunes de buenas
+prácticas de IA en el ciclo de vida del medicamento de EMA y FDA, del 2026-01-14**. Es mejor terreno
+de venta que el AI Act, cuyas fechas se han movido dos veces (alto riesgo: **dic-2027** autónomos,
+**ago-2028** integrados en producto regulado) — **quien construya sobre la fecha se queda sin
+propuesta si la fecha se mueve otra vez**, como esta KB viene repitiendo. Substrato local real pero
+**copyleft**: `vigicaen` (CeCILL 2.1, CHU de Caen), `pvm` (GPL-3.0, BIPS Bremen), `FreeVigilance/E2B`
+(GPL-3.0). **Única pieza permisiva EMEA: `hpi-dhc/PharMe` (MIT, Hasso-Plattner).** Arquitectura
+obligada: desplegar el copyleft **al lado** e integrar por API. Hueco vendible: **no existe
+implementación abierta de la pasarela de EudraVigilance** (hueco (i)).
+
+#### APAC — no hay substrato; el encargo es construirlo, y Japón es la puerta
+
+Medido y dicho sin adornos: Japón **3 repos** (el mejor con 1★), China **2 repos con 0★**, India
+**1 resultado y es un trabajo de curso**. La única señal viva es `pipeworx-io/mcp-jp-pmda-approvals`
+(MIT, **0★**, siete días de vida). Lo que sí cambió en el marco: **Japón añadió análisis de riesgo
+para agentes de IA a sus directrices empresariales en marzo de 2026** — primera directriz APAC que
+esta KB registra mencionando *agentes* explícitamente. Combinado con la regla del ciclo 6 (India
+tiene la puerta regulatoria más ligera y llega antes a volumen clínico), la oportunidad es
+**greenfield con marco de responsabilidades ya escrito**: se construye el substrato y se entrega la
+matriz de responsabilidades por fase que Singapur (AIHGle 2.0) y ahora Japón piden.
+
+#### LATAM — no vender cumplimiento, vender coste por caso y adopción de lo que ya existe
+
+**Dato decisivo del pase: la farmacovigilancia en LATAM aún no tiene reglas específicas de IA.**
+ARCSA, ANVISA y COFEPRIS tienen expectativas, no normas. **Por tanto el argumento regulatorio no
+existe aquí** —al contrario que en el ciclo 5, donde CFM 2.454/2026 era la palanca más fuerte de las
+cuatro regiones— y la venta tiene que apoyarse en **coste por caso y trazabilidad**. Substrato: el
+único asset con masa es `iuryLandin/bulario-api` (MIT, 100★/28f) sobre el **bulário de ANVISA**, y
+**está parado desde 2025-02**; activo y diminuto a su lado `Diorgerb/dbulario` (Apache-2.0, 4★).
+El encargo correcto es el mismo que c7 definió para India: **adoptar y mantener lo publicado**, no
+construir de cero. **Perú** es el país de la región con marco general de IA y reglamento aprobado en
+2025 — vía de entrada para un piloto con cobertura normativa. Comprador: sigue siendo **privado**
+(25 % frente a 11 % público en Brasil, ciclo 6).
+
+Y la honestidad que el pase obliga a escribir: `farmacovigilancia` en español y portugués devuelve
+**69 repos cuyos seis primeros suman 7 estrellas**, con **una sola licencia** entre todos. **Pero no
+es retraso regional**: la población mundial del sub-plano son **12 repos con ≥10★**. LATAM no va por
+detrás de un sector poblado — el sector no está poblado en ninguna región.
+
+### ⚠️ Marcado explícitamente como NO CITABLE en este pase
+
+Ver la lista completa en `intel/trends.md`, T7. En resumen: ninguna cifra única de mercado de PV
+(cuatro firmas, horquilla del 58 %), el precio de WHODrug (no publicado), los porcentajes de
+intención de inversión (61 % / 85 % / 18 %, sin metodología), el recuento de 1.430 dispositivos de
+la FDA (fuente secundaria), la fecha exacta de CFM 2.454/2026 (discrepancia sin resolver) y
+cualquier cifra de coste evitable por interacción medicamentosa (no localizada en fuente primaria).
