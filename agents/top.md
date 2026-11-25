@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # 🎯 Agentes AI — Healthcare
@@ -188,3 +188,59 @@ resultado es precisamente el `fabric-mlv-...-starter` de 149★/1 fork. Es decir
 punto de crecimiento aparente del sector en casi cuatro meses es un artefacto de la métrica.**
 Cuarta medición consecutiva —tras legal, financial y el propio ciclo 5— de que no hay *boom*
 de agentes verticales permisivos.
+
+---
+
+## Pase 2026-11-25 — la capa agéntica sobre imagen médica y los scribes ambientales
+
+Este pase no reescribe nada: verifica lo anterior y abre **dos planos que la KB no había
+tocado nunca** — imagen médica y documentación ambiental. Todas las cifras de abajo están
+**medidas** el 2026-11-25 con `search/repositories` (estrellas, forks, push y SPDX en una
+sola llamada) y toda licencia está **confirmada abriendo el fichero**, no leyendo el metadato.
+
+### Agentes y orquestadores nuevos — verificados uno por uno
+
+| Agente | Repo | Licencia | ★/forks | Último push | Qué hace realmente |
+|---|---|---|---|---|---|
+| Healthcare Agent Orchestrator | [Azure-Samples/healthcare-agent-orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator) | MIT (1072 B) | 217★/93f | 2026-10-27 | Orquestador multi-agente para *tumor board*: reparte el caso entre agentes especialistas y consolida. El slug `microsoft/healthcare-agent-orchestrator` que circula en prensa **no existe** (`ls-remote` refs=0) |
+| healthcare-agents | [ajhcs/healthcare-agents](https://github.com/ajhcs/healthcare-agents) | Apache-2.0 (10714 B) | 55★/15f | 2026-11-18 | Pack de agentes especialistas para administración sanitaria en EEUU. Es el repo que ciclos anteriores anotaron como «51 especialistas» |
+| healthcareai-examples | [microsoft/healthcareai-examples](https://github.com/microsoft/healthcareai-examples) | MIT (1072 B) | 204★/55f | 2026-11-20 | Ejemplos de uso de modelos sanitarios multimodales, imagen incluida. Plantilla de proveedor, no plataforma |
+| Berta | [phairlab/berta-ai-scribe](https://github.com/phairlab/berta-ai-scribe) | Apache-2.0 (10726 B) | 31★/9f | 2026-10-14 | **Scribe ambiental modular**: backends WhisperX / Whisper / Parakeet-MLX / Amazon Transcribe y LLM local con Ollama, vLLM o LM Studio. Copyright «Ross Mitchell»; desarrollado y evaluado en contexto de Alberta Health Services, con artículo en JMIR Med Inform |
+| canvas-hyperscribe | [canvas-medical/canvas-hyperscribe](https://github.com/canvas-medical/canvas-hyperscribe) | MIT | 3★/7f | 2026-11-25 | Copiloto de documentación acoplado al EMR de Canvas. **Más forks que estrellas y push de hoy**: se usa, no se promociona. El slug `canvas-medical/hyperscribe` no existe |
+| OpenScribe | [Pl4tt/OpenScribe](https://github.com/Pl4tt/OpenScribe) | MIT (1069 B) | n/d — invisible a `search` | existencia por `ls-remote` (refs=2) | Graba el encuentro y redacta nota estructurada; ruta local Whisper + ruta LLM alojado |
+| open-medical-scribe | [BirgerMoell/open-medical-scribe](https://github.com/BirgerMoell/open-medical-scribe) | MIT | 13★/2f | 2026-03-16 | Scribe web/escritorio/CLI con Whisper ONNX, faster-whisper y whisper.cpp; incluye modo de nota en sueco |
+| FreeScribe | [ClinicianFOCUS/FreeScribe](https://github.com/ClinicianFOCUS/FreeScribe) | ⚠️ **AGPL-3.0** (34522 B, texto *GNU AFFERO* confirmado) | n/d — invisible a `search` | existencia por `ls-remote` (refs=36) | Scribe local o contra servidor LLM/Whisper en red. **Copyleft de red: inservible en un SaaS cerrado.** Los autores lo declaran en alfa |
+| HealthFlow | [yhzhu99/HealthFlow](https://github.com/yhzhu99/HealthFlow) | ⚠️ **sin fichero de licencia** | 61★/6f | 2026-09-23 | Framework multi-agente para análisis de historia clínica electrónica, con artículo en *npj Digital Medicine*. Sin licencia **no es utilizable en trabajo de cliente**, por bueno que sea el paper |
+| Awesome AI Agents for Healthcare | [AgenticHealthAI/Awesome-AI-Agents-for-Healthcare](https://github.com/AgenticHealthAI/Awesome-AI-Agents-for-Healthcare) | ⚠️ **sin licencia** | 1292★/173f | 2026-10-02 | El mejor índice de papers y proyectos del sector. Útil **como pista de búsqueda**; sin licencia no se redistribuye |
+| AI-Healthcare-System | [pavanbadempet/AI-Healthcare-System](https://github.com/pavanbadempet/AI-Healthcare-System) | ⚠️ **AGPL-3.0** | 81★/19f | 2026-11-09 | Apareció como «#1 trending» de noviembre en un *tracker* de terceros. Medido: **81 estrellas y AGPL-3.0**. El ranking del tracker no describe ni su tamaño ni su usabilidad |
+| fabric-mlv-agent-healthcare-starter | [muhammadusamakhan911-bit/fabric-mlv-agent-healthcare-starter](https://github.com/muhammadusamakhan911-bit/fabric-mlv-agent-healthcare-starter) | MIT | 149★/**1f** | 2026-11-06 | Plantilla de demo. Se lista **sólo** para dejar constancia de que sigue siendo el único resultado de la consulta de referencia del sector (ver abajo) |
+
+### El contador de agentes verticales no se mueve — quinta medición consecutiva
+
+La consulta de referencia que los ciclos 5 y 6 dejaron fijada para poder comparar entre pases:
+
+```
+healthcare agent created:>2026-08-01 stars:>=50   →   total = 1
+```
+
+**Sigue devolviendo 1**, y sigue siendo el mismo `fabric-mlv-...-starter`, ahora con 149★ y
+**1 solo fork**. En casi cuatro meses, el sector no ha producido un agente sanitario permisivo
+nuevo con tracción medible. Es la **quinta medición consecutiva** —legal, financial, healthcare
+c5, c6 y este pase— de que **no hay *boom* de agentes verticales permisivos**, por mucho que lo
+digan los informes. Lo que sí hay es substrato excelente en las capas de abajo.
+
+### El hueco agéntico de imagen, medido
+
+El plano de imagen tiene el substrato permisivo más fuerte de toda la sanidad (ver
+`repos/foundations.md`), y encima casi no hay agentes:
+
+| Consulta (corta, como manda la regla del ciclo 6) | Resultados |
+|---|---|
+| `dicom mcp stars:>=10` | 7 |
+| `radiology agent stars:>=10` | 9 |
+| `monai agent stars:>=10` | 2 |
+
+Siete, nueve y dos. Sobre una base de MONAI (8 865★), nnU-Net (9 069★) y OHIF (4 424★). **Es el
+hueco mejor colocado del sector**: substrato maduro y permisivo, aprobación regulatoria
+concentrada justo ahí (el 76 % de las autorizaciones de dispositivos con IA de la FDA son de
+radiología) y capa agéntica prácticamente vacía. Ver patrón P13 en `compose/patterns.md`.

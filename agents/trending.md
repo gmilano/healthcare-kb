@@ -1,13 +1,66 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # 📈 Agentes trending — Healthcare
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
 > Reescribir este archivo destruiría la tendencia que existe para registrar.
+
+## 2026-11-25 — los scribes ambientales son la primera categoría agéntica con oferta permisiva
+
+### Nuevo esta semana: documentación ambiental abierta, con coste publicado
+
+Es la primera vez en siete pases de healthcare que una categoría agéntica aparece con **varias
+implementaciones permisivas, vivas y verificables a la vez**. Todas medidas el 2026-11-25:
+
+| Agente | Licencia (fichero abierto) | ★/forks | Último push | Señal |
+|---|---|---|---|---|
+| [phairlab/berta-ai-scribe](https://github.com/phairlab/berta-ai-scribe) | Apache-2.0 (10726 B) | 31★/9f | 2026-10-14 | Backends de voz y de LLM **abstraídos** (WhisperX/Whisper/Parakeet/Transcribe · Ollama/vLLM/LM Studio). Artículo aceptado en JMIR Med Inform |
+| [canvas-medical/canvas-hyperscribe](https://github.com/canvas-medical/canvas-hyperscribe) | MIT | 3★/**7f** | **2026-11-25** | Razón 0,43 y push de hoy: se usa, nadie lo estrella |
+| [Pl4tt/OpenScribe](https://github.com/Pl4tt/OpenScribe) | MIT (1069 B) | invisible a `search` | `ls-remote` refs=2 | Ruta 100 % local (Whisper + Ollama) |
+| [BirgerMoell/open-medical-scribe](https://github.com/BirgerMoell/open-medical-scribe) | MIT | 13★/2f | 2026-03-16 | Incluye modo de nota en sueco |
+| [ClinicianFOCUS/FreeScribe](https://github.com/ClinicianFOCUS/FreeScribe) | ⚠️ **AGPL-3.0** (34522 B) | invisible a `search` | `ls-remote` refs=36 | **Copyleft de red.** Fuera de cualquier SaaS cerrado |
+
+**El dato que convierte esto en tendencia:** los autores de Berta publican un coste operativo
+**por debajo de 30 USD por médico y mes**, con sesión media de 7,6 minutos y 42 % de usuarios
+personalizando alguna plantilla. Es la primera referencia de coste pública de la categoría, y
+convierte «ambiental sí o no» en un build-vs-buy con números. ⚠️ Cifras de los autores.
+
+### Orquestadores: el slug que circula en prensa no existe
+
+[Azure-Samples/healthcare-agent-orchestrator](https://github.com/Azure-Samples/healthcare-agent-orchestrator)
+(MIT, 217★/93f, push 2026-10-27) es el orquestador multi-agente de *tumor board* real.
+`microsoft/healthcare-agent-orchestrator`, que es como lo nombran varias notas de prensa,
+**da refs=0 en `ls-remote`: no existe**. Octavo caso registrado en la KB de un slug citado en
+prensa que no resuelve. También nuevo y medido:
+[microsoft/healthcareai-examples](https://github.com/microsoft/healthcareai-examples) (MIT,
+204★/55f) y [ajhcs/healthcare-agents](https://github.com/ajhcs/healthcare-agents) (Apache-2.0,
+55★/15f, push 2026-11-18).
+
+### El contador de agentes verticales no se mueve — quinta medición consecutiva
+
+```
+healthcare agent created:>2026-08-01 stars:>=50   →   total = 1
+```
+
+Mismo repo que en los ciclos 5 y 6 (`fabric-mlv-agent-healthcare-starter`), ahora **149★ y 1
+fork**. Cuatro meses sin un agente sanitario permisivo nuevo con tracción medible.
+
+### Advertencias de este pase
+
+- **«#1 trending» no describe nada.** [pavanbadempet/AI-Healthcare-System](https://github.com/pavanbadempet/AI-Healthcare-System)
+  encabezó una lista de *trending* de terceros en noviembre. Medido: **81★/19f y AGPL-3.0**.
+  Ni es grande ni es utilizable en un entregable cerrado.
+- **Sin licencia, no entra, por bueno que sea el paper.**
+  [yhzhu99/HealthFlow](https://github.com/yhzhu99/HealthFlow) (61★/6f) tiene artículo en *npj
+  Digital Medicine* y **ningún fichero de licencia**. Igual
+  [AgenticHealthAI/Awesome-AI-Agents-for-Healthcare](https://github.com/AgenticHealthAI/Awesome-AI-Agents-for-Healthcare)
+  (1292★/173f): excelente índice de búsqueda, no redistribuible.
+- **Reconfirmado sin cambios:** [FreedomIntelligence/OpenClaw-Medical-Skills](https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills)
+  3128★ (eran 3120), **sigue sin licencia** y sigue sin push desde 2026-07-21.
 
 ## 2026-11-22 — la autorización previa cruza de «juicio» a «formato»
 

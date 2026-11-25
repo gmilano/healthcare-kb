@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # 🧩 Patrones de composición — Healthcare
@@ -368,3 +368,132 @@ pase financiero: *si* durante 2027 aparece una implementación de referencia per
 de estándares publique una representación computable del criterio de codificación —y **no**
 antes, por mucha demanda de mercado que haya. Si aparece antes, esta tesis está mal y hay que
 revisarla aquí.
+
+---
+
+## Pase 2026-11-25 — patrones P13 a P16
+
+### P13 · Triaje y segmentación en imagen con la frontera de licencia en el límite HTTP
+
+**Para qué:** un servicio radiológico que quiere pre-segmentación o priorización de estudios
+sobre su PACS. Es el hueco mejor colocado del sector: substrato permisivo enorme, 1 230
+precedentes 510(k) en radiología y sólo 7-9 repos agénticos encima.
+
+**Receta, con la decisión de licencia incorporada:**
+
+1. **Archivo DICOM — proceso separado, siempre.** [Orthanc](https://github.com/jodogne/OrthancMirror)
+   (**GPL-3.0**, 35148 B) como contenedor propio, o el PACS que el cliente ya tenga. Se alcanza
+   **exclusivamente por DICOMweb (QIDO-RS / WADO-RS / STOW-RS)**. Nada del producto se enlaza
+   contra él, nada lo importa: es un servicio remoto que habla HTTP. Así el GPL-3 **no alcanza**
+   al código entregable.
+2. **Ingesta y normalización.** [pydicom](https://github.com/pydicom/pydicom) (MIT salvo
+   porciones) para leer, y [dcmqi](https://github.com/QIICR/dcmqi) (BSD-3) para convertir la
+   salida del modelo en objetos DICOM SEG válidos. Este segundo paso es el que hace que el
+   resultado **vuelva al PACS y lo vea el radiólogo en su visor de siempre**, en lugar de morir
+   en un panel aparte. Es la diferencia entre un piloto y un servicio.
+3. **Inferencia.** [TotalSegmentator](https://github.com/wasserth/TotalSegmentator) (Apache-2.0)
+   si las ~120 estructuras cubren el caso —cubren la mayoría de los casos de volumetría—, y
+   [nnU-Net](https://github.com/MIC-DKFZ/nnUNet) (Apache-2.0) cuando hay que entrenar sobre
+   datos del cliente. Empaquetado con
+   [monai-deploy-app-sdk](https://github.com/Project-MONAI/monai-deploy-app-sdk) (Apache-2.0).
+4. **Revisión humana.** [OHIF/Viewers](https://github.com/OHIF/Viewers) (MIT) empotrado, con
+   [MONAILabel](https://github.com/Project-MONAI/MONAILabel) para que el radiólogo **corrija** la
+   segmentación y la corrección vuelva como dato de entrenamiento.
+5. **La capa agéntica, que es lo que no existe y por tanto lo vendible:** orquestar
+   priorización de la lista de trabajo, comparación con estudios previos del mismo paciente y
+   redacción del borrador estructurado. Sobre MCP, en la línea de
+   [ChristianHinge/dicom-mcp](https://github.com/ChristianHinge/dicom-mcp) (MIT).
+
+**Reglas de CI que hacen el patrón auditable:**
+- Si el manifiesto de dependencias **enlaza** Orthanc o cualquier artefacto GPL-3, **el build
+  falla**. Orthanc sólo puede aparecer como imagen de contenedor separada.
+- Si un fichero de `dcm4che` aparece **modificado** en el árbol, el build falla (MPL obliga a
+  publicar el fichero modificado).
+- `fo-dicom` **no entra** mientras no haya fichero de licencia localizable.
+- Toda salida de modelo debe pasar por `dcmqi` y validar como DICOM SEG antes de escribirse.
+
+**Lo que no hay que prometer:** que el resultado es un dispositivo aprobado. MONAI, nnU-Net y
+TotalSegmentator son **grado investigación y sin autorización regulatoria**. El entregable
+honesto es *software de apoyo con validación local documentada*, y si el cliente quiere
+indicación clínica, la conversación es 510(k) —donde, eso sí, hay 1 212 precedentes.
+
+### P14 · Scribe ambiental autoalojado con coste conocido
+
+**Para qué:** documentación clínica sin enviar la conversación del paciente a un tercero —el
+requisito que aparece en cuanto hay comité de privacidad.
+
+**Receta:** [Berta](https://github.com/phairlab/berta-ai-scribe) (**Apache-2.0**) como esqueleto,
+porque ya abstrae el backend de voz (WhisperX, Whisper, Parakeet-MLX, Amazon Transcribe) y el
+motor de LLM (Ollama, vLLM, LM Studio). Transcripción local, generación local, y la plantilla de
+nota como artefacto versionado del cliente. [OpenScribe](https://github.com/Pl4tt/OpenScribe)
+(MIT) como segunda referencia de implementación.
+
+**La abstracción de backend es el entregable con margen**, no el prompt: permite empezar con
+Whisper local y cambiar a un servicio gestionado (o al revés) sin tocar el flujo clínico, que es
+justo el requisito de arquitectura que Singapur impone por la vía de la responsabilidad
+institucional y Corea del Sur por la de la supervisión humana.
+
+**Referencia de coste para el caso de negocio:** los autores de Berta publican **< 30 USD por
+médico y mes** de coste operativo, sesión media de 7,6 minutos y 42 % de usuarios
+personalizando plantilla. ⚠️ Cifras de los autores (artículo aceptado en JMIR Med Inform): sirven
+para encuadrar un build-vs-buy, no para garantizar un número en contrato.
+
+**Exclusión explícita:** [FreeScribe](https://github.com/ClinicianFOCUS/FreeScribe) es
+**AGPL-3.0** (confirmado: el fichero dice *GNU AFFERO*, 34522 B). En un SaaS multi-inquilino el
+AGPL obliga a ofrecer el fuente a los usuarios del servicio. **No entra en un entregable cerrado**,
+y conviene decirlo antes de que alguien lo añada por parecerse a los demás.
+
+### P15 · Vigilancia y analítica de salud pública sobre DHIS2
+
+**Para qué:** ministerios de salud y programas regionales en LATAM y APAC — el comprador
+institucional que el patrón «Odoo + IA» prometía y no podía cumplir.
+
+**Receta:** [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) (**BSD-3-Clause**) como
+sistema de registro, que el cliente muy probablemente **ya tiene** (más de 80 ministerios de
+salud). Se extiende por su API de aplicaciones **sin bifurcar el núcleo**;
+[dhis2-android-capture-app](https://github.com/dhis2/dhis2-android-capture-app) para captura sin
+conexión en campo. Encima, la capa agéntica: detección de anomalías en series de notificación,
+conciliación de datos de calidad dudosa y resumen narrativo por distrito.
+
+**Por qué el encaje de licencia es el mejor de la sanidad abierta:** BSD-3 **no obliga a liberar**
+el módulo que se construye encima. Plataforma permisiva + comprador institucional + capa de IA
+sin cubrir, las tres cosas a la vez. Y la razón ★/forks de 0,88 confirma que se despliega.
+
+**Para historia clínica individual, no usar DHIS2:** es agregación y seguimiento de programas.
+Lo clínico es [Bahmni](https://github.com/Bahmni/openmrs-module-bahmniapps) (MPL-2.0, razón
+0,48) o [medplum](https://github.com/medplum/medplum) (Apache-2.0, 1 034 forks).
+
+### P16 · Puerta de licencia extendida: la quinta categoría
+
+El ciclo 6 dejó la puerta P8/P11 con cuatro categorías (permisiva genuina · `NOASSERTION` que
+hay que abrir · copyleft · código permisivo con contenido encumbrado). Este pase añade la que
+faltaba y que se cobró cuatro clasificaciones erróneas de cuatro intentos:
+
+| Categoría | Prueba | Veredicto |
+|---|---|---|
+| Permisiva genuina | Fichero abierto: MIT/Apache/BSD íntegro | Entra |
+| `NOASSERTION` en metadato | **Abrir el fichero**; 4 de 4 eran algo distinto de lo que el metadato sugería | Depende del fichero |
+| Copyleft fuerte (GPL/AGPL) | Texto del fichero | Sólo como proceso separado; **AGPL ni eso en SaaS** |
+| Permisiva con contenido encumbrado | ¿La salida emite CPT, SNOMED CT fuera de país Miembro? | El cliente licencia el contenido |
+| **NUEVA · licencia propia «estilo X»** | ¿El fichero es el texto estándar o un acuerdo redactado ad hoc? | **Revisión legal antes de incorporar.** Caso medido: `Slicer/Slicer`, «BSD style» pero es el *Contribution and Software License Agreement v1.0* del Brigham and Women's Hospital, 10514 B de condiciones propias |
+
+Y la sexta situación, que no es categoría sino ausencia: **ningún fichero de licencia encontrado**
+tras probar 9 variantes de nombre (`fo-dicom`, y el `NHSDigital/...-FHIR-SCR-IPS` del ciclo 6).
+No es permisivo por defecto: es «todos los derechos reservados». No entra.
+
+### Predicción falsable del ciclo 6 — estado al 2026-11-25: **sin refutar y a 37 días de la prueba**
+
+El ciclo 6 registró en P12 que una tarea de juicio recibe oferta open source permisiva **después**
+de que un regulador publique su representación computable, y nunca antes. El caso de prueba era
+CMS-0057-F. Hoy queda **menos de mes y medio** para su fecha de cumplimiento (1-ene-2027) y el
+estado es: los repos de `org:HL7-DaVinci` siguen vivos y **exactamente igual de medidos**
+(`prior-auth` 38★/24f, idéntico al 22-nov), `cqframework/clinical-reasoning` idéntico (52★/46f),
+y **ningún tracker público de preparación de pagadores** ha aparecido. La predicción no se ha
+refutado. Dos precisiones nuevas que cambian el alcance de cualquier propuesta:
+
+- **La API de autorización previa excluye los medicamentos.** Cubre artículos y servicios
+  médicos. Un agente que prometa «autorización previa» incluyendo farmacia **está fuera del
+  alcance de la norma** y hay que decirlo en la primera reunión.
+- La API debe comunicar **aprobación, denegación con motivo específico, o petición de más
+  información**: tres salidas, no dos. El «motivo específico» es la que obliga a trazabilidad y
+  por tanto la que justifica la biblioteca CQL como entregable.

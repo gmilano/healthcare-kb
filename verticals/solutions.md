@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # 🏭 Verticales de partida — Healthcare
@@ -110,3 +110,50 @@ dedicado. Los que sí cumplen el criterio:
 > contenido de terminología**. Un despliegue de snowstorm es Apache-2.0; el SNOMED CT que
 > sirve necesita Licencia de Afiliado, una por país. Ver la tabla de conjuntos de códigos en
 > `repos/foundations.md`.
+
+---
+
+## Pase 2026-11-25 — dos verticales reales que faltaban: salud pública y PACS
+
+El guion de esta tarea pide «plataformas reales tipo Odoo que se puedan personalizar con IA
+encima». El ciclo 6 demostró que **Odoo no se traslada a sanidad** (sus módulos clínicos son de
+terceros con licencia propietaria o LGPL por módulo). Este pase aporta los dos sistemas que sí
+cumplen ese papel y que la KB no tenía.
+
+### DHIS2 — el equivalente sanitario real del patrón «plataforma personalizable»
+
+| Plataforma | Repo | Licencia | ★/forks | Qué es y por qué encaja |
+|---|---|---|---|---|
+| DHIS2 | [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | **BSD-3-Clause** (1517 B, Univ. de Oslo) | 361★/411f | Sistema de información sanitaria usado por los **ministerios de salud de más de 80 países**. Modelo de datos configurable por metadatos y **API de aplicaciones**: se le añaden módulos sin bifurcar el núcleo — exactamente el patrón que se buscaba en un ERP |
+| DHIS2 Android Capture | [dhis2/dhis2-android-capture-app](https://github.com/dhis2/dhis2-android-capture-app) | BSD-3-Clause | 66★/142f | Captura en campo **sin conexión**, con sincronización posterior |
+| CommCare HQ | [dimagi/commcare-hq](https://github.com/dimagi/commcare-hq) | BSD-3-Clause (1532 B) | 527★/240f | Plataforma de trabajadores comunitarios de salud; despliegues grandes en Asia del Sur y África |
+| Bahmni | [Bahmni/openmrs-module-bahmniapps](https://github.com/Bahmni/openmrs-module-bahmniapps) | **MPL-2.0** (18072 B) | 160★/**336f** | Distribución clínica completa (HIS) sobre OpenMRS: consulta, farmacia, laboratorio, facturación. Razón 0,48 = se despliega de verdad. Copyleft débil por fichero: compatible con trabajo comercial encima |
+
+**Por qué BSD-3 importa aquí más que en otros sitios:** el comprador de DHIS2 es un ministerio,
+y la licencia BSD-3 permite entregar un módulo propietario encima sin obligación de liberarlo.
+Es la combinación más limpia de toda la sanidad abierta: **plataforma permisiva + comprador
+institucional + hueco de IA sin cubrir**. Las cifras de países varían por fuente (>80 en el
+registro de Digital Public Goods y en el BID para uso ministerial, >100 en la web del propio
+proyecto): usar **«más de 80 países»**, que es la cifra referida a ministerios.
+
+### El *stack* PACS como vertical personalizable
+
+Un servicio de imagen completo se compone hoy con piezas abiertas, pero **la frontera de
+licencia cae en medio del stack** y eso decide la arquitectura (ver P13 en `compose/patterns.md`):
+
+| Capa | Pieza | Licencia | ¿Dentro del producto? |
+|---|---|---|---|
+| Visor | [OHIF/Viewers](https://github.com/OHIF/Viewers) + [cornerstone3D](https://github.com/cornerstonejs/cornerstone3D) | MIT | **Sí** — se puede empotrar y modificar |
+| Modelo / inferencia | [MONAI](https://github.com/Project-MONAI/MONAI), [nnU-Net](https://github.com/MIC-DKFZ/nnUNet), [TotalSegmentator](https://github.com/wasserth/TotalSegmentator) | Apache-2.0 | **Sí** |
+| Empaquetado de inferencia | [monai-deploy-app-sdk](https://github.com/Project-MONAI/monai-deploy-app-sdk) | Apache-2.0 | **Sí** |
+| Normalización de la salida | [QIICR/dcmqi](https://github.com/QIICR/dcmqi) | BSD-3-Clause | **Sí** |
+| Etiquetado | [MONAILabel](https://github.com/Project-MONAI/MONAILabel) | Apache-2.0 | **Sí** |
+| **Archivo / PACS** | [Orthanc](https://github.com/jodogne/OrthancMirror) | ⚠️ **GPL-3.0** | **No** — sólo como proceso separado tras DICOMweb |
+| **Toolkit de grado industrial** | [dcm4che](https://github.com/dcm4che/dcm4che) | ⚠️ MPL | Sólo sin modificar sus ficheros |
+
+### Recordatorio del ciclo 6 que este pase vuelve a confirmar
+
+> Comprobar la licencia **del módulo**, no la del núcleo. Se cumplió otra vez aquí: el metadato
+> de GitHub daba `NOASSERTION` para `pydicom`, `Slicer`, `dcm4che` y `Bahmni`, y abrir el fichero
+> dio cuatro respuestas distintas — MIT con porciones, acuerdo propio del Brigham, MPL 1.1 y
+> MPL-2.0. Cuatro de cuatro habrían sido mal clasificadas confiando en el metadato.

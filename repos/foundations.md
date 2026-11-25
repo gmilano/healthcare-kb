@@ -1,7 +1,7 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # 🏗️ Repos fundacionales — Healthcare
@@ -147,3 +147,121 @@ es un entregable «todo open source» que toque CPT.
 | [google/bulk_fhir_tools](https://github.com/google/bulk_fhir_tools) | Apache-2.0 | 11358 | Herramientas de Bulk FHIR Export de Google | 68★/10f | 2024-12 |
 | [microsoft/fhir-loader](https://github.com/microsoft/fhir-loader) | MIT | 1141 | Carga masiva de recursos FHIR; 43 forks sobre 56 estrellas | 56★/43f | 2025-09 |
 | [smart-on-fhir/sample-bulk-fhir-datasets](https://github.com/smart-on-fhir/sample-bulk-fhir-datasets) | Apache-2.0 | 11357 | Datasets Bulk FHIR de muestra de SMART, sin PHI | 48★/5f | 2026-10 |
+
+---
+
+## Pase 2026-11-25 — imagen médica y salud pública: los dos planos que faltaban
+
+Dos capas enteras que la KB no tenía y que son, medidas, **las más grandes del open source
+sanitario**. Todas las cifras medidas el 2026-11-25; toda licencia confirmada abriendo el fichero.
+
+### Imagen médica — capa de modelo y de visor: permisiva y enorme
+
+| Repo | Licencia | Bytes lic. | Descripción | ★/forks | Último push |
+|---|---|---|---|---|---|
+| [MIC-DKFZ/nnUNet](https://github.com/MIC-DKFZ/nnUNet) | Apache-2.0 | 11428 | Segmentación médica auto-configurable; la referencia contra la que se comparan los demás | 9069★/2521f | 2026-11-25 |
+| [Project-MONAI/MONAI](https://github.com/Project-MONAI/MONAI) | Apache-2.0 | 11357 | Framework de *deep learning* para imagen médica; estándar de facto del sector | 8865★/1735f | 2026-11-25 |
+| [OHIF/Viewers](https://github.com/OHIF/Viewers) | MIT | 1087 | Visor DICOM web *zero-footprint* de la Open Health Imaging Foundation; habla DICOMweb con cualquier archivo | 4424★/**4395f** | 2026-11-24 |
+| [wasserth/TotalSegmentator](https://github.com/wasserth/TotalSegmentator) | Apache-2.0 | 11357 | Segmentación de ~120 estructuras anatómicas en TC/RM, lista para usar | 3183★/507f | 2026-11-25 |
+| [pydicom/pydicom](https://github.com/pydicom/pydicom) | MIT con porciones (3140 B) | 3140 | Lectura/escritura DICOM en Python. El metadato decía `NOASSERTION`; el fichero dice MIT salvo porciones acotadas | 2241★/570f | 2026-11-24 |
+| [InsightSoftwareConsortium/ITK](https://github.com/InsightSoftwareConsortium/ITK) | Apache-2.0 | 11357 | Toolkit de segmentación y registro, base de media industria de imagen | 1677★/763f | 2026-11-25 |
+| [Project-MONAI/research-contributions](https://github.com/Project-MONAI/research-contributions) | Apache-2.0 | 11357 | Implementaciones de referencia (Swin UNETR y otras) sobre MONAI | 1227★/389f | 2026-11-01 |
+| [cornerstonejs/cornerstone3D](https://github.com/cornerstonejs/cornerstone3D) | MIT | 1083 | Librería de renderizado sobre la que está construido OHIF | 1174★/542f | 2026-11-25 |
+| [Project-MONAI/MONAILabel](https://github.com/Project-MONAI/MONAILabel) | Apache-2.0 | 11357 | Etiquetado asistido por IA con *plugin* para OHIF y 3D Slicer | 918★/281f | 2026-11-25 |
+| [Project-MONAI/model-zoo](https://github.com/Project-MONAI/model-zoo) | Apache-2.0 | 11357 | Modelos preentrenados empaquetados en formato MONAI *bundle* | 350★/111f | 2026-11-23 |
+| [InsightSoftwareConsortium/ITKElastix](https://github.com/InsightSoftwareConsortium/ITKElastix) | Apache-2.0 | 11357 | Registro de imagen (elastix) empaquetado para Python | 293★/30f | 2026-11-20 |
+| [QIICR/dcmqi](https://github.com/QIICR/dcmqi) | BSD-3-Clause | 1500 | Convierte resultados de segmentación a objetos DICOM válidos: **la pieza que hace interoperable la salida de un modelo** | 282★/69f | 2026-11-16 |
+| [Project-MONAI/monai-deploy-app-sdk](https://github.com/Project-MONAI/monai-deploy-app-sdk) | Apache-2.0 | 11357 | Empaqueta un modelo MONAI como aplicación de inferencia desplegable | 146★/72f | 2026-10-28 |
+
+### ⚠️ Imagen médica — capa de archivo y servidor: **copyleft o sin licencia**
+
+Esta tabla es la razón por la que el plano de imagen necesita una decisión de arquitectura y no
+sólo una de modelo. Es el hallazgo central del pase; ver P13 en `compose/patterns.md`.
+
+| Repo | Licencia **confirmada abriendo el fichero** | Qué implica en un entregable de cliente |
+|---|---|---|
+| [jodogne/OrthancMirror](https://github.com/jodogne/OrthancMirror) | **GPL-3.0** (`COPYING`, 35148 B) | Orthanc es el PACS ligero de referencia, pero es **copyleft fuerte**. Espejo en GitHub del proyecto de UCLouvain (`orthanc-server/orthanc` **no existe**, refs=0). Utilizable **sólo como proceso separado tras DICOMweb**, nunca enlazado ni incorporado |
+| [dcm4che/dcm4che](https://github.com/dcm4che/dcm4che) | **Mozilla Public License** (`LICENSE.txt`, 25755 B) | Toolkit DICOM de grado industrial, el de los despliegues grandes. Copyleft débil **por fichero**: compatible con producto comercial si no se modifican sus ficheros. 1468★/720f, push 2026-11-19 |
+| [Slicer/Slicer](https://github.com/Slicer/Slicer) | **Licencia propia estilo BSD** (`License.txt`, 10514 B) | «3D Slicer Contribution and Software License Agreement v1.0» del Brigham and Women's Hospital. Es **permisiva en espíritu pero no es una licencia OSI estándar**: requiere lectura legal antes de incorporarla. 2745★/813f |
+| [fo-dicom/fo-dicom](https://github.com/fo-dicom/fo-dicom) | ⚠️ **ningún fichero de licencia encontrado** (9 variantes de nombre probadas; metadato `NOASSERTION`) | Librería DICOM de .NET muy usada (1220★/671f). Sin fichero de licencia localizable **no entra en un entregable**; si se necesita .NET, resolver la licencia con el proyecto antes de comprometerla |
+
+### Salud pública y despliegue nacional — el bloque de menos estrellas y más instalaciones
+
+| Repo | Licencia | Bytes lic. | Descripción | ★/forks | Último push |
+|---|---|---|---|---|---|
+| [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | BSD-3-Clause | 1517 | Sistema de información sanitaria de referencia mundial; ministerios de salud de **más de 80 países**. Copyright Universidad de Oslo 2004-2025 | 361★/**411f** | 2026-11-25 |
+| [dimagi/commcare-hq](https://github.com/dimagi/commcare-hq) | BSD-3-Clause | 1532 | Plataforma de agentes comunitarios de salud desplegada en países de renta baja y media | 527★/240f | 2026-11-25 |
+| [dhis2/dhis2-android-capture-app](https://github.com/dhis2/dhis2-android-capture-app) | BSD-3-Clause | 1517 | Captura de datos DHIS2 en Android, con funcionamiento sin conexión | 66★/**142f** | 2026-11-25 |
+
+### La razón estrellas/forks separa **sistemas desplegados** de **librerías** — refinamiento del ciclo 6
+
+El ciclo 6 estableció que una razón ★/forks cercana a 1 indica gente que despliega y por encima
+de ~50 atención sin uso. Este pase, con 30 repos medidos de golpe, muestra que la métrica dice
+algo más preciso, y es útil para leer cualquier industria:
+
+| Razón ★/forks | Qué es, medido | Ejemplos de este pase |
+|---|---|---|
+| **< 1** (más forks que estrellas) | **Sistema que instituciones operan.** Cada fork es un despliegue con parches locales. Pocas estrellas porque su público no son desarrolladores que navegan GitHub | openmrs-core 0,44 · OpenELIS-Global-2 0,43 · Bahmni 0,48 · canvas-hyperscribe 0,43 · dhis2-android 0,46 · dhis2-core 0,88 |
+| **≈ 1** | Infraestructura que se despliega y además se mira | **OHIF/Viewers 1,006** (4424★/4395f) · HL7-DaVinci/test-ehr 0,7 |
+| **3 – 6** | **Librería o modelo de adopción legítima.** Mucha gente la usa como dependencia, poca la bifurca | nnU-Net 3,6 · MONAI 5,1 · TotalSegmentator 6,3 · synthea 3,6 |
+| **> 50** | Atención sin uso | `fabric-mlv-...-starter` **149** (149★/1f) |
+
+La lectura operativa: **una razón baja no es señal de proyecto pequeño, es señal de proyecto
+operado.** DHIS2 tiene 361 estrellas y lo usan los ministerios de salud de 80 países. Si se
+descarta por número de estrellas, se descarta el sistema sanitario de medio mundo.
+
+### Verificación de lo que ya estaba — la ley del ciclo 5 se confirma por quinta vez
+
+«Medir sale barato, heredar sale caro.» Re-medido hoy contra lo que el ciclo 6 anotó el 22-nov:
+
+| Repo | Ciclo 6 (2026-11-22) | Hoy (2026-11-25) | Veredicto |
+|---|---|---|---|
+| [cqframework/clinical-reasoning](https://github.com/cqframework/clinical-reasoning) | 52★/46f | 52★/46f | **exacto** |
+| [HL7-DaVinci/prior-auth](https://github.com/HL7-DaVinci/prior-auth) | 38★/24f | 38★/24f | **exacto** |
+| [IHTSDO/snowstorm](https://github.com/IHTSDO/snowstorm) | 401★ | 401★ | **exacto** |
+| [synthetichealth/synthea](https://github.com/synthetichealth/synthea) | 3477★ | 3487★ | +10 en 3 días, coherente |
+| [medplum/medplum](https://github.com/medplum/medplum) | 2812★ | 2818★ | +6, coherente |
+| [maziyarpanahi/openmed](https://github.com/maziyarpanahi/openmed) | 5833★ | 5845★ | +12, coherente |
+| [genomoncology/biomcp](https://github.com/genomoncology/biomcp) | 683★ | 685★ | +2, coherente |
+| [FreedomIntelligence/OpenClaw-Medical-Skills](https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills) | 3120★, sin licencia, sin push desde 2026-07-21 | 3128★, **sigue sin licencia**, sigue sin push | reconfirmado: el repo médico con más estrellas de los inutilizables |
+
+Añadidos de contexto medidos hoy: [hapifhir/hapi-fhir](https://github.com/hapifhir/hapi-fhir)
+2454★/1515f (Apache-2.0) y [openmrs/openmrs-core](https://github.com/openmrs/openmrs-core)
+2002★/**4501f** — la razón 0,44 más extrema de la KB.
+
+### Capa de NLP clínico en español — el hueco (c) **se refina, no se cierra**
+
+El ciclo 6 lo dejó abierto «sin hallazgos nuevos». Hay activos, y medirlos explica por qué el
+hueco sigue siendo un hueco:
+
+| Repo / recurso | Licencia | ★/forks | Último push | Estado real |
+|---|---|---|---|---|
+| [PlanTL-GOB-ES/lm-biomedical-clinical-es](https://github.com/PlanTL-GOB-ES/lm-biomedical-clinical-es) | Apache-2.0 | 28★/2f | **2022-11-16** | Modelos biomédico-clínicos en español del Gobierno de España, corpus >1 000 M de tokens. **Permisivo pero abandonado hace cuatro años**; los pesos siguen vivos en Hugging Face |
+| [lcampillos/medspaner](https://github.com/lcampillos/medspaner) | ⚠️ **GPL-3.0** | 8★/1f | 2025-03-03 | NER médico en español con corpus anotado. **Copyleft y diminuto** |
+
+Es decir: lo permisivo está muerto y lo vivo es copyleft y de un solo autor. Para un grupo
+hospitalario hispanohablante **sigue siendo trabajo a medida con pocos competidores**, y ahora
+se puede decir exactamente por qué. Recursos adicionales localizados pero no verificados aquí
+por no ser repos: ClinText-SP y RigoBERTa Clinical (arXiv 2503.18594), y los corpus SPACCC,
+MEDDOCAN, CodiEsp y E3C.
+
+### Tooling de ABDM (India) — el hueco (f) era en parte **un artefacto del canal de búsqueda**
+
+El ciclo 6 concluyó que India «tiene pila nacional de salud digital y prácticamente ninguna
+herramienta permisiva que la hable», a partir de una consulta que devolvió 1 resultado. Medido
+por organización en lugar de por palabras clave, la National Health Authority **sí publica**:
+
+| Repo | Licencia | ★/forks | Último push | Nota |
+|---|---|---|---|---|
+| [NHA-ABDM/ABDM-wrapper](https://github.com/NHA-ABDM/ABDM-wrapper) | **Apache-2.0** (11357 B) | invisible a `search` | existencia por `ls-remote`: **refs=37** | Envoltorio oficial de las APIs de ABDM. **`org:NHA-ABDM` devuelve 7 repos y este no está entre ellos**: séptimo falso negativo de `search` registrado en la KB |
+| [NHA-ABDM/UHI](https://github.com/NHA-ABDM/UHI) | CC0-1.0 | 164★/43f | 2024-09-05 | Unified Health Interface. Dominio público pero **parado desde 2024** |
+| [NHA-ABDM/ABDM-ABHA-APP](https://github.com/NHA-ABDM/ABDM-ABHA-APP) | MIT | 8★/8f | 2023-11-03 | App de identidad sanitaria ABHA |
+| [NHA-ABDM/ABDM-MOCK-HIP](https://github.com/NHA-ABDM/ABDM-MOCK-HIP) | MIT | 3★/2f | 2023-11-03 | HIP simulado: útil como *fixture* de desarrollo |
+| [NHA-ABDM/nhcx](https://github.com/NHA-ABDM/nhcx) | ⚠️ sin licencia | 5★/0f | 2024-09-27 | National Health Claims Exchange |
+
+Conclusión corregida y más útil que la del ciclo 6: **India publica tooling oficial permisivo
+—incluido un envoltorio Apache-2.0— pero está mayormente parado desde 2024 y una parte no tiene
+licencia.** No es ausencia de material, es material oficial sin mantener. Eso cambia la
+propuesta: no hay que construir desde cero, hay que **adoptar y mantener** lo que la NHA ya
+publicó, que es un encargo más pequeño y más defendible. Y el contraste con el hueco (b) del
+NHS se afina: el NHS publica **sin licencia**; India publica **con licencia y sin mantenimiento**.

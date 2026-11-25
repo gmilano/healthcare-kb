@@ -1,12 +1,69 @@
 ---
 industry: healthcare
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # 📈 Repos trending — Healthcare
 
 > **Archivo append-only.** La sección más reciente va arriba; el historial se conserva debajo.
+
+## 2026-11-25 — entra la imagen médica: el substrato más grande del open source sanitario
+
+### Repos en movimiento — push en las últimas 48 horas, medidos hoy
+
+El plano de imagen no es «nuevo»: es que la KB no lo tenía. Es, medido, **el bloque más grande
+de todo el open source sanitario**, y casi todo él está en Apache-2.0 o MIT.
+
+| Repo | Licencia | ★/forks | Último push | Razón ★/f |
+|---|---|---|---|---|
+| [MIC-DKFZ/nnUNet](https://github.com/MIC-DKFZ/nnUNet) | Apache-2.0 | 9069★/2521f | 2026-11-25 | 3,6 |
+| [Project-MONAI/MONAI](https://github.com/Project-MONAI/MONAI) | Apache-2.0 | 8865★/1735f | 2026-11-25 | 5,1 |
+| [OHIF/Viewers](https://github.com/OHIF/Viewers) | MIT | 4424★/4395f | 2026-11-24 | **1,006** |
+| [wasserth/TotalSegmentator](https://github.com/wasserth/TotalSegmentator) | Apache-2.0 | 3183★/507f | 2026-11-25 | 6,3 |
+| [pydicom/pydicom](https://github.com/pydicom/pydicom) | MIT con porciones | 2241★/570f | 2026-11-24 | 3,9 |
+| [InsightSoftwareConsortium/ITK](https://github.com/InsightSoftwareConsortium/ITK) | Apache-2.0 | 1677★/763f | 2026-11-25 | 2,2 |
+| [cornerstonejs/cornerstone3D](https://github.com/cornerstonejs/cornerstone3D) | MIT | 1174★/542f | 2026-11-25 | 2,2 |
+| [Project-MONAI/MONAILabel](https://github.com/Project-MONAI/MONAILabel) | Apache-2.0 | 918★/281f | 2026-11-25 | 3,3 |
+| [QIICR/dcmqi](https://github.com/QIICR/dcmqi) | BSD-3-Clause | 282★/69f | 2026-11-16 | 4,1 |
+
+**OHIF/Viewers con razón 1,006** (4 424 estrellas y 4 395 forks) es el caso más limpio de la
+regla del ciclo 6 registrado hasta ahora en cualquier industria: un fork por estrella, es decir
+casi todo el que lo mira lo despliega.
+
+### Lo que la razón y la licencia descartan de este mismo plano
+
+| Repo | Motivo |
+|---|---|
+| [jodogne/OrthancMirror](https://github.com/jodogne/OrthancMirror) | **GPL-3.0** confirmado (`COPYING`, 35148 B). Es el PACS ligero de referencia, pero sólo utilizable como proceso separado tras DICOMweb. `orthanc-server/orthanc` **no existe** (refs=0): el proyecto vive en UCLouvain, GitHub es espejo |
+| [dcm4che/dcm4che](https://github.com/dcm4che/dcm4che) | **MPL** (`LICENSE.txt`, 25755 B). Copyleft débil por fichero; 1468★/720f, push 2026-11-19 |
+| [Slicer/Slicer](https://github.com/Slicer/Slicer) | Licencia **propia** del Brigham, no OSI estándar (10514 B). 2745★/813f |
+| [fo-dicom/fo-dicom](https://github.com/fo-dicom/fo-dicom) | **Ningún fichero de licencia** tras probar 9 nombres. 1220★/671f y aun así inutilizable |
+
+### Verticales de salud pública descubiertas este pase
+
+| Repo | Licencia | ★/forks | Razón | Nota |
+|---|---|---|---|---|
+| [dimagi/commcare-hq](https://github.com/dimagi/commcare-hq) | BSD-3-Clause | 527★/240f | 2,2 | Agentes comunitarios de salud; push de hoy |
+| [dhis2/dhis2-core](https://github.com/dhis2/dhis2-core) | BSD-3-Clause | 361★/411f | **0,88** | Ministerios de salud de **más de 80 países** y sólo 361 estrellas |
+| [Bahmni/openmrs-module-bahmniapps](https://github.com/Bahmni/openmrs-module-bahmniapps) | MPL-2.0 (18072 B) | 160★/336f | **0,48** | Distribución clínica completa sobre OpenMRS |
+| [dhis2/dhis2-android-capture-app](https://github.com/dhis2/dhis2-android-capture-app) | BSD-3-Clause | 66★/142f | **0,46** | Captura sin conexión |
+
+### Tooling oficial de India, recuperado de un falso negativo de `search`
+
+[NHA-ABDM/ABDM-wrapper](https://github.com/NHA-ABDM/ABDM-wrapper) es **Apache-2.0** (11357 B) y
+existe con **refs=37**, pero `org:NHA-ABDM` devuelve 7 repos y **no lo incluye**: séptimo falso
+negativo de `search` registrado en la KB. El resto de la organización (UHI CC0-1.0 164★,
+ABHA-APP MIT, MOCK-HIP MIT, nhcx sin licencia) está **parado desde 2024**.
+
+### Dos reglas de canal reconfirmadas
+
+- **Acortar la consulta antes de concluir que no hay nada.** `berta clinical documentation` → 0
+  resultados; `berta scribe` → encuentra el repo. Y `Pl4tt/OpenScribe` + `ClinicianFOCUS/FreeScribe`
+  dan `SEARCH_MISS` con `repo:<slug>` pero **existen** por `ls-remote` (refs=2 y refs=36).
+- **El metadato de licencia es un mal testigo, cuatro de cuatro veces este pase.** `NOASSERTION`
+  en `pydicom`, `Slicer`, `dcm4che` y `Bahmni` resultó ser MIT-con-porciones, acuerdo propio del
+  Brigham, MPL 1.1 y MPL-2.0 respectivamente. Abrir el fichero, siempre.
 
 ## 2026-11-22 — lo que se forkea, no lo que se estrella
 
